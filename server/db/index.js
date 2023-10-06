@@ -40,7 +40,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
-      price INT NOT NULL
+      price INT NOT NULL,
+      description VARCHAR(1600)
     );
 
     CREATE TABLE orders(
