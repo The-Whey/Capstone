@@ -24,7 +24,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                     ): null
                   }
                 </li>
-                <p>{product.description}</p>
+                {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
               </div>
             );
           })
