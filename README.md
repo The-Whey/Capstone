@@ -9,8 +9,8 @@
 
 # features
 
-- [ ] as a user I should see that a product has prices
-- [ ] as a user I should see a description for a product
+- [x] as a user I should see that a product has prices
+- [x] as a user I should see a description for a product
 - [ ] as a user I should be able to bookmark a product (product detail page)
 - [ ] as a user I should see the total amount in my cart as well as my orders
 - [ ] as a user I should be able to increment and decrement items in my cart

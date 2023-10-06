@@ -10,19 +10,22 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
           products.map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
-              <li key={ product.id }>
-                { product.name }
-                {
-                  auth.id ? (
-                    cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
-                  ): null 
-                }
-                {
-                  auth.is_admin ? (
-                    <Link to={`/products/${product.id}/edit`}>Edit</Link>
-                  ): null
-                }
-              </li>
+              <div key={ product.id }>
+                <li>
+                  { product.name }
+                  {
+                    auth.id ? (
+                      cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
+                    ): null
+                  }
+                  {
+                    auth.is_admin ? (
+                      <Link to={`/products/${product.id}/edit`}>Edit</Link>
+                    ): null
+                  }
+                </li>
+                {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+              </div>
             );
           })
         }
