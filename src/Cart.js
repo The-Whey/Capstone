@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products })=> {
+const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem })=> {
+
+  // Update adds 1 to quantity, so i subtract two here to make it subtract 1 instead of adding.
+  const minus = (lineItem) => {
+    lineItem.quantity -= 2;
+    updateLineItem(lineItem)
+  }
+
   return (
     <div>
       <h2>Cart</h2>
@@ -12,7 +19,10 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products })=> {
               <li key={ lineItem.id }>
                 { product.name }
                 ({ lineItem.quantity })
-                <button onClick={ ()=> removeFromCart(lineItem)}>Remove From Cart</button>
+                <button onClick={lineItem.quantity === 1 ? () => removeFromCart(lineItem) 
+                  :() => minus(lineItem)}>-</button>
+                <button onClick={() => updateLineItem(lineItem)}>+</button>
+                {lineItem.quantity > 1 ? <button onClick={ ()=> removeFromCart(lineItem)}>Remove All</button> : null }
               </li>
             );
           })
