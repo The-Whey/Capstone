@@ -1,7 +1,5 @@
 # the store 
 
-This is a test - Michael
-
 - npm install
 - modify connection string
 - create database
