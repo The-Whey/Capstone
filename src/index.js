@@ -107,6 +107,7 @@ const App = ()=> {
                 products = { products }
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
+                updateLineItem = { updateLineItem }
               />
               <Orders
                 orders = { orders }
