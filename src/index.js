@@ -95,7 +95,13 @@ const App = ()=> {
               </span>
             </nav>
             <Routes>
-              <Route path='/products/:id' element={<Product products={products} auth={auth} cartItems={cartItems} createLineItem={createLineItem} updateLineItem={updateLineItem}/>}/>
+              <Route path='/products/:id' element={
+              <Product 
+              products={products} 
+              auth={auth} 
+              cartItems={cartItems} 
+              createLineItem={createLineItem} 
+              updateLineItem={updateLineItem}/>}/>
             </Routes>
             <main>
               <Products
@@ -123,6 +129,15 @@ const App = ()=> {
         ):(
           <div>
             <Login login={ login }/>
+            <Routes>
+              <Route path='/products/:id' element={
+              <Product 
+              products={products} 
+              auth={auth} 
+              cartItems={cartItems} 
+              createLineItem={createLineItem} 
+              updateLineItem={updateLineItem}/>}/>
+            </Routes>
             <Products
               products={ products }
               cartItems = { cartItems }
