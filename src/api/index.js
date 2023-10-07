@@ -77,6 +77,10 @@ const logout = (setAuth)=> {
   setAuth({});
 }
 
+const createUser = async(user) => {
+  await axios.post('/api/users', user);
+}
+
 const api = {
   login,
   logout,
@@ -87,7 +91,8 @@ const api = {
   updateLineItem,
   updateOrder,
   removeFromCart,
-  attemptLoginWithToken
+  attemptLoginWithToken,
+  createUser
 };
 
 export default api;

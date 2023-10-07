@@ -1,6 +1,7 @@
 const {
   authenticate,
-  findUserByToken
+  findUserByToken,
+  createUser
 } = require('../db');
 
 const express = require('express');
@@ -27,5 +28,13 @@ app.get('/me', isLoggedIn, (req, res, next)=> {
     next(ex);
   }
 });
+
+app.post('/users', async(req,res,next) => {
+  try {
+    res.send(await createUser(req.body))
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = app;
