@@ -13,7 +13,6 @@ const Product = ({
   const cartItem = cartItems.find(
     (lineItem) => lineItem.product_id === product.id
   );
-  console.log(product);
 
   return product ? (
     <>
