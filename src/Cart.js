@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem })=> {
 
@@ -17,7 +18,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
             const product = products.find(product => product.id === lineItem.product_id) || {};
             return (
               <li key={ lineItem.id }>
-                { product.name }
+                <Link to={`/products/${product.id}`}>{product.name}</Link>
                 ({ lineItem.quantity })
                 <button onClick={lineItem.quantity === 1 ? () => removeFromCart(lineItem) 
                   :() => minus(lineItem)}>-</button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Orders = ({ orders, products, lineItems })=> {
   return (
@@ -17,7 +18,7 @@ const Orders = ({ orders, products, lineItems })=> {
                       const product = products.find(product => product.id === lineItem.product_id);
                       return (
                         <li key={ lineItem.id }>
-                          { product ? product.name: '' }
+                          { product ? <Link to={`/products/${product.id}`}>{product.name}</Link>: '' }
                         </li>
                       );
                     })
