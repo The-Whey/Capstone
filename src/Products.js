@@ -12,7 +12,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
             return (
               <div key={ product.id }>
                 <li>
-                  { product.name }
+                  <Link to={`/products/${product.id}`}>{product.name}</Link>
                   {
                     auth.id ? (
                       cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
