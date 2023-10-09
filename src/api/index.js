@@ -65,12 +65,18 @@ const attemptLoginWithToken = async(setAuth)=> {
   }
 }
 
-const login = async({ credentials, setAuth })=> {
+const login = async({ credentials, setAuth, setError })=> {
+  try{
   const response = await axios.post('/api/login', credentials);
   const { token } = response.data;
   window.localStorage.setItem('token', token);
   attemptLoginWithToken(setAuth);
-}
+}catch(error){if (error.response && error.response.status === 401){
+  setError("Invalid credentials.");
+} else {
+  setError("An error occurred during login.");
+}}}
+
 
 const logout = (setAuth)=> {
   window.localStorage.removeItem('token');
