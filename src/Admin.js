@@ -14,7 +14,6 @@ const Admin = ({users, setUsers}) => {
     const response = await api.setVipStatus(user);
     setUsers(users.map(item => item.id === response.id ? response : item)) 
   }
-  console.log(users)
 
   return (
     <div>

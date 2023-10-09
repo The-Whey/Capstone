@@ -17,7 +17,7 @@ const Login = ({ login })=> {
 
   const newUser = async(ev) => {
     try {
-      const user = {password, username, is_admin: false}
+      const user = {password, username, is_admin: false, is_vip: false}
       await api.createUser(user)
       _login(ev)
     } catch (error) {
