@@ -71,6 +71,7 @@ const login = async({ credentials, setAuth, setError })=> {
   const { token } = response.data;
   window.localStorage.setItem('token', token);
   attemptLoginWithToken(setAuth);
+  setError('');
 }catch(error){if (error.response && error.response.status === 401){
   setError("Invalid credentials.");
 } else {

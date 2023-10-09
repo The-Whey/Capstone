@@ -14,7 +14,7 @@ const App = ()=> {
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
