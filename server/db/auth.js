@@ -75,8 +75,6 @@ const fetchUser = async(id) => {
 }
 
 const updateUser = async(user, id)=> {
-  console.log(user)
-  console.log(id)
   const SQL =`
   UPDATE users
   SET is_vip = $1

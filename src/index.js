@@ -115,7 +115,8 @@ const App = ()=> {
               updateLineItem={updateLineItem}/>}/>
               <Route path='/admin' element={
               <Admin
-              users={users} />}/>
+              users={users}
+              setUsers={setUsers} />}/>
             </Routes>
             <main>
               <Products

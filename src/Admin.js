@@ -1,11 +1,20 @@
 import React from 'react'
+import api from './api';
 
-const Admin = ({users}) => {
+const Admin = ({users, setUsers}) => {
 
-  const makeVip = (id) => {
-    console.log(id)
+  const setVipTrue = async (user) => {
+    user.is_vip = true;
+    const response = await api.setVipStatus(user);
+    setUsers(users.map(item => item.id === response.id ? response : item))
   }
 
+  const setVipFalse = async (user) => {
+    user.is_vip = false;
+    const response = await api.setVipStatus(user);
+    setUsers(users.map(item => item.id === response.id ? response : item)) 
+  }
+  console.log(users)
 
   return (
     <div>
@@ -14,7 +23,7 @@ const Admin = ({users}) => {
         {
           users.map(user => {
             return <li key={user.id}>{user.username} 
-            <button onClick={() => makeVip(user.id)}>lol</button>
+            {user.is_vip ? <button onClick={() => setVipFalse(user)}>Remove VIP Status</button> : <button onClick={() => setVipTrue(user)}>Make VIP</button>}
             </li>
           })
         }
