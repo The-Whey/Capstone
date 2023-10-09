@@ -15,6 +15,7 @@ const App = ()=> {
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
   const [users, setUsers] = useState([])
+  const [error, setError] = useState("");
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -83,7 +84,7 @@ const App = ()=> {
   }, 0);
 
   const login = async(credentials)=> {
-    await api.login({ credentials, setAuth });
+    await api.login({ credentials, setAuth, setError });
   }
 
   const logout = ()=> {
@@ -143,6 +144,7 @@ const App = ()=> {
             </>
         ):(
           <div>
+            <p>{error}</p>
             <Login login={ login }/>
             <Routes>
               <Route path='/products/:id' element={
