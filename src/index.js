@@ -58,7 +58,6 @@ const App = ()=> {
     }
   }, [auth])
 
-
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
   };
@@ -114,7 +113,9 @@ const App = ()=> {
               cartItems={cartItems} 
               createLineItem={createLineItem} 
               updateLineItem={updateLineItem}/>}/>
-              <Route path='/admin' element={<Admin/>}/>
+              <Route path='/admin' element={
+              <Admin
+              users={users} />}/>
             </Routes>
             <main>
               <Products

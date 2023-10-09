@@ -91,6 +91,7 @@ const api = {
   logout,
   fetchProducts,
   fetchOrders,
+  fetchUsers,
   fetchLineItems,
   createLineItem,
   updateLineItem,

@@ -1,8 +1,19 @@
 import React from 'react'
 
-const Admin = () => {
+const Admin = ({users}) => {
+
+  console.log(users)
   return (
-    <div>Admin</div>
+    <div>
+      <h3>Users</h3>
+      <ul>
+        {
+          users.map(user => {
+            return <li>{user.username}</li>
+          })
+        }
+      </ul>
+    </div>
   )
 }
 
