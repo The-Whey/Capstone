@@ -14,6 +14,7 @@ const App = ()=> {
   const [orders, setOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
+  const [users, setUsers] = useState([])
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -47,6 +48,15 @@ const App = ()=> {
       fetchData();
     }
   }, [auth]);
+
+  useEffect(() => {
+    if(auth.is_admin){
+      const fetchData = async() => {
+        await api.fetchUsers(setUsers);
+      }
+      fetchData();
+    }
+  }, [auth])
 
 
   const createLineItem = async(product)=> {

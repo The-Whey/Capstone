@@ -8,7 +8,8 @@ const {
 const {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  fetchUsers
 } = require('./auth');
 
 const {
@@ -96,5 +97,6 @@ module.exports = {
   findUserByToken,
   seed,
   createUser,
+  fetchUsers,
   client
 };

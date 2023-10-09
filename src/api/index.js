@@ -13,6 +13,11 @@ const fetchProducts = async(setProducts)=> {
   setProducts(response.data);
 };
 
+const fetchUsers = async(setUsers) => {
+  const response = await axios.get('/api/users');
+  setUsers(response.data);
+}
+
 const fetchOrders = async(setOrders)=> {
   const response = await axios.get('/api/orders', getHeaders());
   setOrders(response.data);
