@@ -2,7 +2,9 @@ const {
   authenticate,
   findUserByToken,
   createUser,
-  fetchUsers
+  fetchUsers,
+  fetchUser,
+  updateUser
 } = require('../db');
 
 const express = require('express');
@@ -41,6 +43,23 @@ app.post('/users', async(req,res,next) => {
 app.get('/users', async(req,res,next) => {
   try {
     res.send(await fetchUsers())
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/users/:id', async(req,res,next) => {
+  try {
+    res.send(await fetchUser(req.params.id))
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/users/:id', async(req,res,next) => {
+  try {
+    console.log(req.body)
+    res.send(await updateUser(req.body.is_vip, req.params.id))
   } catch (error) {
     next(error)
   }
