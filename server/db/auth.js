@@ -3,6 +3,8 @@ const { v4 } = require('uuid');
 const uuidv4 = v4;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { cli } = require('webpack');
+
 
 const findUserByToken = async(token) => {
   try {
@@ -57,14 +59,45 @@ const createUser = async(user)=> {
   }
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, password, is_admin) VALUES($1, $2, $3, $4) RETURNING *
+    INSERT INTO users (id, username, password, is_admin, is_vip) VALUES($1, $2, $3, $4, $5) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin, user.is_vip ]);
   return response.rows[0];
 };
+
+const fetchUser = async(id) => {
+  SQL = `
+  SELECT * FROM users
+  WHERE id = $1
+  `
+  const response = await client.query(SQL, [id])
+  return response.rows[0]
+}
+
+const updateUser = async(user, id)=> {
+  const SQL =`
+  UPDATE users
+  SET is_vip = $1
+  WHERE id = $2
+  RETURNING *
+  `;
+  const response = await client.query(SQL, [user, id]);
+  return response.rows[0];
+}
+
+const fetchUsers = async() => {
+  const SQL = `
+  SELECT * FROM users
+  `
+  const response = await client.query(SQL);
+  return response.rows
+}
 
 module.exports = {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  fetchUsers,
+  fetchUser,
+  updateUser
 };

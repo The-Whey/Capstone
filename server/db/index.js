@@ -8,7 +8,10 @@ const {
 const {
   createUser,
   authenticate,
-  findUserByToken
+  findUserByToken,
+  fetchUsers,
+  fetchUser,
+  updateUser
 } = require('./auth');
 
 const {
@@ -33,7 +36,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       username VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
-      is_admin BOOLEAN DEFAULT false NOT NULL
+      is_admin BOOLEAN DEFAULT false NOT NULL,
+      is_vip BOOLEAN NOT NULL
     );
 
     CREATE TABLE products(
@@ -64,9 +68,9 @@ const seed = async()=> {
   await client.query(SQL);
 
   const [moe, lucy, ethyl] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true})
+    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   const [foo, bar, bazz] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100 }),
@@ -96,5 +100,8 @@ module.exports = {
   findUserByToken,
   seed,
   createUser,
+  fetchUsers,
+  fetchUser,
+  updateUser,
   client
 };
