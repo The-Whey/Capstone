@@ -33,6 +33,11 @@ const fetchLineItems = async(setLineItems)=> {
   setLineItems(response.data);
 };
 
+const fetchAllLineItems = async(setAllLineItems) => {
+  const response = await axios.get('/api/lineitems/admin');
+  setAllLineItems(response.data)
+}
+
 const createLineItem = async({ product, cart, lineItems, setLineItems })=> {
   const response = await axios.post('/api/lineItems', {
     order_id: cart.id,
@@ -129,7 +134,8 @@ const api = {
   submitNewProduct,
   editProduct,
   createUser,
-  fetchAllOrders
+  fetchAllOrders,
+  fetchAllLineItems
 };
 
 export default api;

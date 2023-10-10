@@ -15,11 +15,12 @@ const App = ()=> {
   const [orders, setOrders] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
+  const [allLineItems, setAllLineItems] = useState([]);
   const [auth, setAuth] = useState({});
   const [users, setUsers] = useState([])
   const [error, setError] = useState("");
 
-  console.log(lineItems)
+  
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -53,6 +54,15 @@ const App = ()=> {
       fetchData();
     }
   }, [auth]);
+
+  useEffect(()=> {
+    if(auth.is_admin){
+      const fetchData = async() => {
+        await api.fetchAllLineItems(setAllLineItems)
+      }
+      fetchData()
+    }
+  }, [auth, lineItems])
 
   useEffect(() => {
     if(auth.is_admin){
@@ -135,7 +145,7 @@ const App = ()=> {
               setProducts={setProducts}
               orders={orders}
               allOrders={allOrders}
-              lineItems={lineItems} />}/>
+              allLineItems={allLineItems} />}/>
               <Route path='/products/:id/edit' element={
               <Edit 
               products={products}
