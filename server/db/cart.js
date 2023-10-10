@@ -105,7 +105,6 @@ const fetchAllOrders = async()=> {
     SELECT * FROM orders
   `;
   let response = await client.query(SQL);
-  console.log(`Fetch all orders response: ${response.rows}`)
   return response.rows;
 };
 

@@ -13,6 +13,7 @@ import Edit from './Edit';
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
   const [auth, setAuth] = useState({});
   const [users, setUsers] = useState([])
@@ -59,6 +60,15 @@ const App = ()=> {
       fetchData();
     }
   }, [auth])
+
+  useEffect(() => {
+    if(auth.is_admin){
+      const fetchData = async () => {
+        await api.fetchAllOrders(setAllOrders)
+      }
+      fetchData()
+    }
+  }, [auth, orders])
 
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
@@ -121,7 +131,9 @@ const App = ()=> {
               setUsers={setUsers}
               products={products}
               setProducts={setProducts}
-              orders={orders} />}/>
+              orders={orders}
+              allOrders={allOrders}
+              lineItems={lineItems} />}/>
               <Route path='/products/:id/edit' element={
               <Edit 
               products={products}

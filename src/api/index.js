@@ -23,6 +23,11 @@ const fetchOrders = async(setOrders)=> {
   setOrders(response.data);
 };
 
+const fetchAllOrders = async(setAllOrders)=> {
+  const response = await axios.get('/api/orders/admin')
+  setAllOrders(response.data);
+}
+
 const fetchLineItems = async(setLineItems)=> {
   const response = await axios.get('/api/lineItems', getHeaders());
   setLineItems(response.data);
@@ -123,7 +128,8 @@ const api = {
   setVipStatus,
   submitNewProduct,
   editProduct,
-  createUser
+  createUser,
+  fetchAllOrders
 };
 
 export default api;

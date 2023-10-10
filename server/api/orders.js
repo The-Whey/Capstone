@@ -21,7 +21,7 @@ app.put('/:id', isLoggedIn, async(req, res, next)=> {
 
 app.get('/', isLoggedIn, async(req, res, next)=> {
   try {
-    res.send(fetchAllOrders);
+    res.send(await fetchOrders(req.user.id));
   }
   catch(ex){
     next(ex);
