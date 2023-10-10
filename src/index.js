@@ -117,7 +117,9 @@ const App = ()=> {
               <Route path='/admin' element={
               <Admin
               users={users}
-              setUsers={setUsers} />}/>
+              setUsers={setUsers}
+              products={products}
+              setProducts={setProducts} />}/>
             </Routes>
             <main>
               <Products

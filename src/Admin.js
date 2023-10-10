@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import api from './api';
 
-const Admin = ({users, setUsers}) => {
+const Admin = ({users, setUsers, products, setProducts}) => {
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState('');
 
   const setVipTrue = async (user) => {
     user.is_vip = true;
@@ -13,6 +16,13 @@ const Admin = ({users, setUsers}) => {
     user.is_vip = false;
     const response = await api.setVipStatus(user);
     setUsers(users.map(item => item.id === response.id ? response : item)) 
+  }
+
+  const submitNewProduct = async(ev) => {
+    ev.preventDefault();
+    const json = {name, price: (price *  100), description};
+    const response = await api.submitNewProduct(json);
+    setProducts([...products, response])
   }
 
   return (
@@ -27,6 +37,15 @@ const Admin = ({users, setUsers}) => {
           })
         }
       </ul>
+      <form onSubmit={ev => submitNewProduct(ev)}>
+        <label>Name:</label>
+        <input type='text' value={name} onChange={ev => setName(ev.target.value)}></input>
+        <label>Price:</label>
+        <input type='number' value={price} min={0} onChange={ev => setPrice(ev.target.value)}></input>
+        <label>Desription:</label>
+        <input type='text' value={description} onChange={ev => setDescription(ev.target.value)}></input>
+        <button disabled={!name || !description || price === 0}>Create New Product</button>
+      </form>
     </div>
   )
 }

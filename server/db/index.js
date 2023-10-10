@@ -72,11 +72,13 @@ const seed = async()=> {
     createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
+  // Creates a generic description for development
+  const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
   const [foo, bar, bazz] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100 }),
-    createProduct({ name: 'Bass', price: 500 }),
-    createProduct({ name: 'Keyboard', price: 1000 }),
-    createProduct({ name: 'Drums', price: 12000 }),
+    createProduct({ name: 'Guitar', price: 100, description: loremIpsum}),
+    createProduct({ name: 'Bass', price: 500, description: loremIpsum }),
+    createProduct({ name: 'Keyboard', price: 1000, description: loremIpsum }),
+    createProduct({ name: 'Drums', price: 12000, description: loremIpsum }),
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
