@@ -121,7 +121,10 @@ const App = ()=> {
               setUsers={setUsers}
               products={products}
               setProducts={setProducts} />}/>
-              <Route path='/products/:id/edit' element={<Edit products={products}/>}/>
+              <Route path='/products/:id/edit' element={
+              <Edit 
+              products={products}
+              setProducts={setProducts} />}/>
             </Routes>
             <main>
               <Products

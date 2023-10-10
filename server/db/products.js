@@ -24,7 +24,7 @@ const editProduct = async(product) => {
     UPDATE products set
     name = $1,
     price = $2,
-    description = $3,
+    description = $3
     WHERE id = $4
     RETURNING *
   `;

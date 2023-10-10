@@ -104,7 +104,8 @@ const submitNewProduct = async(json) => {
 }
 
 const editProduct = async(json) => {
-  console.log(`json got called: ${json.id}`)
+  const response = await axios.put(`/api/products/${json.id}`, json);
+  return response.data;
 }
 
 const api = {
