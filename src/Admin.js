@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import api from './api';
 
-const Admin = ({users, setUsers}) => {
+const Admin = ({users, setUsers, products, setProducts}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -20,8 +20,9 @@ const Admin = ({users, setUsers}) => {
 
   const submitNewProduct = async(ev) => {
     ev.preventDefault();
-    const json = {name, price, description}
-    console.log(json)
+    const json = {name, price, description};
+    const response = await api.submitNewProduct(json);
+    setProducts([...products, response])
   }
 
   return (

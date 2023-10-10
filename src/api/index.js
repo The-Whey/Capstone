@@ -98,6 +98,11 @@ const setVipStatus = async(user) => {
   return response.data;
 }
 
+const submitNewProduct = async(json) => {
+  const response = await axios.post('/api/products', json);
+  return response.data;
+}
+
 const api = {
   login,
   logout,
@@ -111,6 +116,7 @@ const api = {
   removeFromCart,
   attemptLoginWithToken,
   setVipStatus,
+  submitNewProduct,
   createUser
 };
 
