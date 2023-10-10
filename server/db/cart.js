@@ -100,11 +100,21 @@ const fetchOrders = async(userId)=> {
   return response.rows;
 };
 
+const fetchAllOrders = async()=> {
+  const SQL = `
+    SELECT * FROM orders
+  `;
+  let response = await client.query(SQL);
+  console.log(`Fetch all orders response: ${response.rows}`)
+  return response.rows;
+};
+
 module.exports = {
   fetchLineItems,
   createLineItem,
   updateLineItem,
   deleteLineItem,
   updateOrder,
-  fetchOrders
+  fetchOrders,
+  fetchAllOrders
 };

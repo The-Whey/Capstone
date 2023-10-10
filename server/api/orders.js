@@ -1,7 +1,9 @@
 const {
   fetchOrders,
   updateOrder,
+  fetchAllOrders
 } = require('../db');
+
 
 const express = require('express');
 const app = express.Router();
@@ -19,11 +21,19 @@ app.put('/:id', isLoggedIn, async(req, res, next)=> {
 
 app.get('/', isLoggedIn, async(req, res, next)=> {
   try {
-    res.send(await fetchOrders(req.user.id));
+    res.send(fetchAllOrders);
   }
   catch(ex){
     next(ex);
   }
 });
+
+app.get('/admin', async(req,res,next) => {
+  try {
+    res.send(await fetchAllOrders())
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = app;

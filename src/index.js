@@ -120,7 +120,8 @@ const App = ()=> {
               users={users}
               setUsers={setUsers}
               products={products}
-              setProducts={setProducts} />}/>
+              setProducts={setProducts}
+              orders={orders} />}/>
               <Route path='/products/:id/edit' element={
               <Edit 
               products={products}

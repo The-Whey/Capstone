@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import api from './api';
 
-const Admin = ({users, setUsers, products, setProducts}) => {
+const Admin = ({users, setUsers, products, setProducts, orders}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
-
+  console.log(orders)
   const setVipTrue = async (user) => {
     user.is_vip = true;
     const response = await api.setVipStatus(user);
@@ -24,6 +24,8 @@ const Admin = ({users, setUsers, products, setProducts}) => {
     const response = await api.submitNewProduct(json);
     setProducts([...products, response])
   }
+
+  
 
   return (
     <div>
