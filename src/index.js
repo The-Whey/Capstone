@@ -19,6 +19,8 @@ const App = ()=> {
   const [users, setUsers] = useState([])
   const [error, setError] = useState("");
 
+  console.log(lineItems)
+
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }

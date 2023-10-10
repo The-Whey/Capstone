@@ -18,6 +18,14 @@ const fetchLineItems = async(userId)=> {
   return response.rows;
 };
 
+const fetchAllLineItems = async()=> {
+  const SQL = `
+  SELECT * FROM line_items
+  `;
+  const response = await client.query(SQL);
+  return response.rows;
+}
+
 const ensureCart = async(lineItem)=> {
   let orderId = lineItem.order_id;
   if(!orderId){
@@ -115,5 +123,6 @@ module.exports = {
   deleteLineItem,
   updateOrder,
   fetchOrders,
-  fetchAllOrders
+  fetchAllOrders,
+  fetchAllLineItems
 };

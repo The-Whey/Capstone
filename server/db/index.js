@@ -22,7 +22,8 @@ const {
   deleteLineItem,
   updateOrder,
   fetchOrders,
-  fetchAllOrders
+  fetchAllOrders,
+  fetchAllLineItems
 } = require('./cart');
 
 
@@ -110,5 +111,6 @@ module.exports = {
   editProduct,
   createProduct,
   fetchAllOrders,
+  fetchAllLineItems,
   client
 };
