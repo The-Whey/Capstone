@@ -103,6 +103,11 @@ const submitNewProduct = async(json) => {
   return response.data;
 }
 
+const editProduct = async(json) => {
+  const response = await axios.put(`/api/products/${json.id}`, json);
+  return response.data;
+}
+
 const api = {
   login,
   logout,
@@ -117,6 +122,7 @@ const api = {
   attemptLoginWithToken,
   setVipStatus,
   submitNewProduct,
+  editProduct,
   createUser
 };
 
