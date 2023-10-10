@@ -8,6 +8,7 @@ import Cart from './Cart';
 import Login from './Login';
 import api from './api';
 import Admin from './Admin';
+import Edit from './Edit';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -120,6 +121,7 @@ const App = ()=> {
               setUsers={setUsers}
               products={products}
               setProducts={setProducts} />}/>
+              <Route path='/products/:id/edit' element={<Edit/>}/>
             </Routes>
             <main>
               <Products
