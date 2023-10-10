@@ -103,6 +103,10 @@ const submitNewProduct = async(json) => {
   return response.data;
 }
 
+const editProduct = async(json) => {
+  console.log(`json got called: ${json.id}`)
+}
+
 const api = {
   login,
   logout,
@@ -117,6 +121,7 @@ const api = {
   attemptLoginWithToken,
   setVipStatus,
   submitNewProduct,
+  editProduct,
   createUser
 };
 
