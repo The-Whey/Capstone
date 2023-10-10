@@ -13,10 +13,14 @@ import Edit from './Edit';
 const App = ()=> {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
   const [lineItems, setLineItems] = useState([]);
+  const [allLineItems, setAllLineItems] = useState([]);
   const [auth, setAuth] = useState({});
   const [users, setUsers] = useState([])
   const [error, setError] = useState("");
+
+  
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -51,6 +55,15 @@ const App = ()=> {
     }
   }, [auth]);
 
+  useEffect(()=> {
+    if(auth.is_admin){
+      const fetchData = async() => {
+        await api.fetchAllLineItems(setAllLineItems)
+      }
+      fetchData()
+    }
+  }, [auth, lineItems])
+
   useEffect(() => {
     if(auth.is_admin){
       const fetchData = async() => {
@@ -59,6 +72,15 @@ const App = ()=> {
       fetchData();
     }
   }, [auth])
+
+  useEffect(() => {
+    if(auth.is_admin){
+      const fetchData = async () => {
+        await api.fetchAllOrders(setAllOrders)
+      }
+      fetchData()
+    }
+  }, [auth, orders])
 
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
@@ -120,7 +142,10 @@ const App = ()=> {
               users={users}
               setUsers={setUsers}
               products={products}
-              setProducts={setProducts} />}/>
+              setProducts={setProducts}
+              orders={orders}
+              allOrders={allOrders}
+              allLineItems={allLineItems} />}/>
               <Route path='/products/:id/edit' element={
               <Edit 
               products={products}

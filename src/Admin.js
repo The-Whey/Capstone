@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import api from './api';
+import Orders from './Orders';
 
-const Admin = ({users, setUsers, products, setProducts}) => {
+const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -25,6 +26,8 @@ const Admin = ({users, setUsers, products, setProducts}) => {
     setProducts([...products, response])
   }
 
+  if (!allOrders || !allLineItems || !products) return null;
+
   return (
     <div>
       <h3>Users</h3>
@@ -46,6 +49,11 @@ const Admin = ({users, setUsers, products, setProducts}) => {
         <input type='text' value={description} onChange={ev => setDescription(ev.target.value)}></input>
         <button disabled={!name || !description || price === 0}>Create New Product</button>
       </form>
+      <hr/>
+      <Orders orders={allOrders} lineItems={allLineItems} products={products}/>
+      <hr/>
+      <h3>---- end of admin page here ----</h3>
+      <hr/>
     </div>
   )
 }

@@ -3,6 +3,7 @@ const {
   createLineItem,
   updateLineItem,
   deleteLineItem,
+  fetchAllLineItems
 } = require('../db');
 
 const express = require('express');
@@ -17,6 +18,14 @@ app.get('/', isLoggedIn, async(req, res, next)=> {
     next(ex);
   }
 });
+
+app.get('/admin', async(req,res,next)=> {
+  try {
+    res.send(await fetchAllLineItems())
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.post('/', isLoggedIn, async(req, res, next)=> {
   try {
