@@ -20,7 +20,7 @@ const Admin = ({users, setUsers, products, setProducts}) => {
 
   const submitNewProduct = async(ev) => {
     ev.preventDefault();
-    const json = {name, price, description};
+    const json = {name, price: (price *  100), description};
     const response = await api.submitNewProduct(json);
     setProducts([...products, response])
   }
@@ -44,7 +44,7 @@ const Admin = ({users, setUsers, products, setProducts}) => {
         <input type='number' value={price} min={0} onChange={ev => setPrice(ev.target.value)}></input>
         <label>Desription:</label>
         <input type='text' value={description} onChange={ev => setDescription(ev.target.value)}></input>
-        <button>Create New Product</button>
+        <button disabled={!name || !description || price === 0}>Create New Product</button>
       </form>
     </div>
   )
