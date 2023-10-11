@@ -8,7 +8,6 @@ const express = require('express');
 const app = express.Router();
 const { isLoggedIn, isAdmin } = require('./middleware');
 
-
 app.get('/', async(req, res, next)=> {
   try {
     res.send(await fetchProducts());
@@ -33,6 +32,5 @@ app.put('/:id', async(req,res,next) => {
     next(error)
   }
 })
-
 
 module.exports = app;

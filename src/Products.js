@@ -12,19 +12,14 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
             return (
               <div key={ product.id }>
                 <li>
-                  <Link to={`/products/${product.id}`}>{product.name}</Link>
-                  {
-                    auth.id ? (
-                      cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add</button>
-                    ): null
-                  }
-                  {
-                    auth.is_admin ? (
-                      <Link to={`/products/${product.id}/edit`}>Edit</Link>
-                    ): null
-                  }
+                  <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`} {auth.is_admin ? (<Link to={`/products/${product.id}/edit`}>Edit</Link>): null}</h3>
                 </li>
                 {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+                {
+                    auth.id ? (
+                      cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
+                    ): null
+                  }
               </div>
             );
           })
