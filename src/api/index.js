@@ -23,10 +23,20 @@ const fetchOrders = async(setOrders)=> {
   setOrders(response.data);
 };
 
+const fetchAllOrders = async(setAllOrders)=> {
+  const response = await axios.get('/api/orders/admin')
+  setAllOrders(response.data);
+}
+
 const fetchLineItems = async(setLineItems)=> {
   const response = await axios.get('/api/lineItems', getHeaders());
   setLineItems(response.data);
 };
+
+const fetchAllLineItems = async(setAllLineItems) => {
+  const response = await axios.get('/api/lineitems/admin');
+  setAllLineItems(response.data)
+}
 
 const createLineItem = async({ product, cart, lineItems, setLineItems })=> {
   const response = await axios.post('/api/lineItems', {
@@ -103,6 +113,11 @@ const submitNewProduct = async(json) => {
   return response.data;
 }
 
+const editProduct = async(json) => {
+  const response = await axios.put(`/api/products/${json.id}`, json);
+  return response.data;
+}
+
 const api = {
   login,
   logout,
@@ -117,7 +132,10 @@ const api = {
   attemptLoginWithToken,
   setVipStatus,
   submitNewProduct,
-  createUser
+  editProduct,
+  createUser,
+  fetchAllOrders,
+  fetchAllLineItems
 };
 
 export default api;
