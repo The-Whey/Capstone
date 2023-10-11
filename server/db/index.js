@@ -32,8 +32,8 @@ const {
 
 const seed = async()=> {
   const SQL = `
-    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS product_tags;
+    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
@@ -72,15 +72,17 @@ const seed = async()=> {
       quantity INTEGER DEFAULT 1,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
-    CREATE TABLE product_tags (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      product_id UUID REFERENCES products(id) NOT NULL,
-
-    );
     CREATE TABLE tags (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       tag VARCHAR(100)
     );
+    CREATE TABLE product_tags (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      tag_id UUID REFERENCES tags(id) NOT NULL
+
+    );
+
   `;
   await client.query(SQL);
 
@@ -111,9 +113,10 @@ const seed = async()=> {
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
+  console.log(woodwinds.id)
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id),
-    insertProductTags(bass.id, string.id),
+    insertProductTags(bass.id,string.id),
     insertProductTags(keyboard.id, keyboards.id),
   ]);
 };

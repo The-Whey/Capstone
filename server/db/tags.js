@@ -13,29 +13,25 @@ const fetchTags = async()=> {
 
 
 const insertProductTags = async (product_id, tag_id) => {
-    try {
+
       const SQL = `
-        INSERT INTO product_tags (product_id, tag_id) VALUES ($1, $2);
+        INSERT INTO product_tags (id, product_id, tag_id) VALUES ($1, $2, $3)  RETURNING *;
       `
-      await client.query(SQL, [product_id, tag_id])
-  
-      console.log(`Successfully inserted product tag for product_id: ${product_id}, tag_name: ${tag_id}`)
-    } catch (error) {
-      console.error(`Error inserting product tag: ${error.message}`)
+      const response = await client.query(SQL, [uuidv4(), product_id, tag_id])
+      return response.rows;
     }
-  }
+  
   const createTags = async (tag) => {
-    try {
+
       const SQL = `
-        INSERT INTO tags (id, tag) VALUES ($1, $2);
+        INSERT INTO tags (id, tag) VALUES ($1, $2)  RETURNING *;
       `
       const response = await client.query(SQL, [ uuidv4(), tag.tag])
+      console.log(`inserting tag: ${tag.tag}`)
       return response.rows[0];
-  
-    } catch (error) {
-      console.error(`Error inserting product tag: ${error.message}`)
+
     }
-  }
+
 module.exports = {
   fetchTags,
   insertProductTags,
