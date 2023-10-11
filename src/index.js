@@ -145,7 +145,8 @@ const App = ()=> {
               setProducts={setProducts}
               orders={orders}
               allOrders={allOrders}
-              allLineItems={allLineItems} />}/>
+              allLineItems={allLineItems}
+              auth={auth} />}/>
               <Route path='/products/:id/edit' element={
               <Edit 
               products={products}
