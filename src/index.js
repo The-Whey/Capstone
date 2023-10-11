@@ -9,6 +9,7 @@ import Login from './Login';
 import api from './api';
 import Admin from './Admin';
 import Edit from './Edit';
+import Profile from './Profile';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -123,6 +124,7 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
+              <Link to='/profile'>Profile</Link>
               {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
               <span>
                 Welcome { auth.username }!
@@ -131,26 +133,34 @@ const App = ()=> {
             </nav>
             <Routes>
               <Route path='/products/:id' element={
-              <Product 
-              products={products} 
-              auth={auth} 
-              cartItems={cartItems} 
-              createLineItem={createLineItem} 
-              updateLineItem={updateLineItem}/>}/>
+                <Product 
+                  products={products} 
+                  auth={auth} 
+                  cartItems={cartItems} 
+                  createLineItem={createLineItem} 
+                  updateLineItem={updateLineItem}/>}
+              />
               <Route path='/admin' element={
-              <Admin
-              users={users}
-              setUsers={setUsers}
-              products={products}
-              setProducts={setProducts}
-              orders={orders}
-              allOrders={allOrders}
-              allLineItems={allLineItems}
-              auth={auth} />}/>
+                <Admin
+                  users={users}
+                  setUsers={setUsers}
+                  products={products}
+                  setProducts={setProducts}
+                  orders={orders}
+                  allOrders={allOrders}
+                  allLineItems={allLineItems}
+                  auth={auth} />}
+              />
               <Route path='/products/:id/edit' element={
-              <Edit 
-              products={products}
-              setProducts={setProducts} />}/>
+                <Edit 
+                  products={products}
+                  setProducts={setProducts} />}
+              />
+              <Route path='/profile' element={
+                <Profile
+                  auth={auth}
+                  users={users} />}
+              />
             </Routes>
             <main>
               <Products
