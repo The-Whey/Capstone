@@ -19,7 +19,6 @@ const Orders = ({ orders, products, lineItems })=> {
                       const product = products.find(product => product.id === lineItem.product_id);
                       if (!product) return null;
                       total += lineItem.quantity * product.price
-                      console.log(total)
                       
                       return (
                         <li key={ lineItem.id }>
