@@ -1,7 +1,9 @@
 const {
   fetchOrders,
   updateOrder,
-  fetchAllOrders
+  fetchBookmarks, 
+  fetchAllOrders,
+  deleteBookmark
 } = require('../db');
 
 
@@ -35,5 +37,24 @@ app.get('/admin', async(req,res,next) => {
     next(error)
   }
 })
+
+app.get('/bookmarks', isLoggedIn, async(req, res, next)=> {
+  try {
+    res.send(await fetchBookmarks(req.user.id));
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+app.delete('/bookmarks/:id', isLoggedIn, async(req, res, next)=> {
+  try {
+    await deleteBookmark({ id: req.params.id, user_id: req.user.id});
+    res.sendStatus(201);
+  }
+  catch(ex){
+    next(ex);
+  }
+});
 
 module.exports = app;

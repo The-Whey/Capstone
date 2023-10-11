@@ -1,7 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
+  return (
+    <div>
+      {
+        bookmark ? <button onClick={ ()=> removeBookmark(bookmark)}>Remove Bookmark</button> : <button onClick={ ()=> createBookmark({ product_id: product.id })}>Add Bookmark</button>
+      }
+    </div>
+  );
+}
+
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark})=> {
+  console.log(createBookmark, removeBookmark);
   return (
     <div>
       <h2>Products</h2>
@@ -20,6 +31,9 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                       cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
                     ): null
                   }
+                  {
+                  auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null
+                }
               </div>
             );
           })

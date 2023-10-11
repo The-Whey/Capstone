@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Link, HashRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
 import Orders from './Orders';
@@ -17,10 +18,17 @@ const App = ()=> {
   const [lineItems, setLineItems] = useState([]);
   const [allLineItems, setAllLineItems] = useState([]);
   const [auth, setAuth] = useState({});
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const [bookmarks, setBookmarks] = useState([]);
 
-  
+  const getHeaders = ()=> {
+    return {
+      headers: {
+        authorization: window.localStorage.getItem('token')
+      }
+    };
+  };
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -45,6 +53,17 @@ const App = ()=> {
       fetchData();
     }
   }, [auth]);
+
+  useEffect(()=> {
+    if(auth.id){
+      const fetchData = async()=> {
+        const response = await axios.get('/api/orders/bookmarks', getHeaders());
+        setBookmarks(response.data);
+      };
+      fetchData();
+    }
+  }, [auth]);
+  console.log(bookmarks)
 
   useEffect(()=> {
     if(auth.id){
@@ -98,6 +117,16 @@ const App = ()=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
 
+  const createBookmark = async(bookmark)=> {
+    const response = await axios.post('/api/orders/bookmarks', bookmark, getHeaders());
+    setBookmarks([...bookmarks, response.data]);
+  };
+
+  const removeBookmark = async(bookmark)=> {
+    await axios.delete(`/api/orders/bookmarks/${bookmark.id}`, getHeaders());
+    setBookmarks(bookmarks.filter(_bookmark => _bookmark.id !== bookmark.id));
+  };
+  
   const cart = orders.find(order => order.is_cart) || {};
 
   const cartItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
@@ -113,6 +142,8 @@ const App = ()=> {
   const logout = ()=> {
     api.logout(setAuth);
   }
+
+  console.log(bookmarks);
 
   return (
     <div>
@@ -158,6 +189,9 @@ const App = ()=> {
                 cartItems = { cartItems }
                 createLineItem = { createLineItem }
                 updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
               />
               <Cart
                 cart = { cart }
@@ -193,6 +227,9 @@ const App = ()=> {
               createLineItem = { createLineItem }
               updateLineItem = { updateLineItem }
               auth = { auth }
+              bookmarks = { bookmarks }
+              createBookmark= { createBookmark}
+              removeBookmark={ removeBookmark}
             />
           </div>
         )
