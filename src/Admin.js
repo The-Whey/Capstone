@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import api from './api';
 import Orders from './Orders';
 
-const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}) => {
+const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems, auth}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -27,6 +27,7 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}
   }
 
   if (!allOrders || !allLineItems || !products) return null;
+  if (!auth.is_admin) return <p>Access Denied</p>
 
   return (
     <div>
