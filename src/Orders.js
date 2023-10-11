@@ -23,7 +23,6 @@ const Orders = ({ orders, products, lineItems })=> {
                       return (
                         <li key={ lineItem.id }>
                           <Link to={`/products/${product.id}`}>{product.name}</Link> ({lineItem.quantity}) at ${(product.price / 100).toFixed(2)} each
-                          
                         </li>
                       );
                     })
