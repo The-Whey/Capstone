@@ -7,6 +7,12 @@ const {
 } = require('./products');
 
 const {
+  fetchTags,
+  insertProductTags,
+  createTags,
+} = require('./tags');
+
+const {
   createUser,
   authenticate,
   findUserByToken,
@@ -29,10 +35,13 @@ const {
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS product_tags;
+    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
     CREATE TABLE users(
       id UUID PRIMARY KEY,
@@ -66,6 +75,16 @@ const seed = async()=> {
       quantity INTEGER DEFAULT 1,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
+    CREATE TABLE tags (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      tag VARCHAR(100)
+    );
+    CREATE TABLE product_tags (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      tag_id UUID REFERENCES tags(id) NOT NULL
+
+    );
 
   `;
   await client.query(SQL);
@@ -77,7 +96,7 @@ const seed = async()=> {
   ]);
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
-  const [foo, bar, bazz] = await Promise.all([
+  const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: loremIpsum}),
     createProduct({ name: 'Bass', price: 500, description: loremIpsum }),
     createProduct({ name: 'Keyboard', price: 1000, description: loremIpsum }),
@@ -85,12 +104,24 @@ const seed = async()=> {
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
-  let lineItem = await createLineItem({ order_id: cart.id, product_id: foo.id});
+  let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
   lineItem.quantity++;
   await updateLineItem(lineItem);
-  lineItem = await createLineItem({ order_id: cart.id, product_id: bar.id});
+  lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
   cart.is_cart = false;
   await updateOrder(cart);
+  const [string, percussion, keyboards, woodwinds] = await Promise.all([
+    createTags({tag : "string"}),
+    createTags({tag : "percussion"}),
+    createTags({tag : "keyboards"}),
+    createTags({tag : "woodwinds"}),
+  ]);
+  console.log(woodwinds.id)
+  const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
+    insertProductTags(guitar.id, string.id),
+    insertProductTags(bass.id,string.id),
+    insertProductTags(keyboard.id, keyboards.id),
+  ]);
 };
 
 module.exports = {
@@ -108,6 +139,7 @@ module.exports = {
   fetchUsers,
   fetchUser,
   updateUser,
+  fetchTags,
   editProduct,
   createProduct,
   fetchAllOrders,

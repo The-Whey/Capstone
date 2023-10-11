@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=> {
+  
+
   return (
     <div>
       <h2>Products</h2>
@@ -20,6 +22,9 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                       cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
                     ): null
                   }
+                </li>
+                {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+
               </div>
             );
           })
