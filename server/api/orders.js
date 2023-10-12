@@ -5,7 +5,6 @@ const {
   fetchAllOrders,
   deleteBookmark,
   createBookmark,
-  fetchAllOrders,
   updateOrderFulfilled
 } = require('../db');
 
