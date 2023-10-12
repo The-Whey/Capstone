@@ -12,10 +12,10 @@ const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
 }
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark})=> {
-  console.log(createBookmark, removeBookmark);
   return (
     <div>
       <h2>Products</h2>
+      <h3>{bookmarks.length} Bookmarks</h3>
       <ul>
         {
           products.map( product => {

@@ -63,7 +63,6 @@ const App = ()=> {
       fetchData();
     }
   }, [auth]);
-  console.log(bookmarks)
 
   useEffect(()=> {
     if(auth.id){
@@ -142,8 +141,6 @@ const App = ()=> {
   const logout = ()=> {
     api.logout(setAuth);
   }
-
-  console.log(bookmarks);
 
   return (
     <div>
