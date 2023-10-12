@@ -22,9 +22,6 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth})=
                       cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
                     ): null
                   }
-                </li>
-                {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
-
               </div>
             );
           })
