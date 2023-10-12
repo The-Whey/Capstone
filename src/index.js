@@ -21,8 +21,8 @@ const App = ()=> {
   const [auth, setAuth] = useState({});
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
-
   const getHeaders = ()=> {
     return {
       headers: {
@@ -42,6 +42,13 @@ const App = ()=> {
   useEffect(()=> {
     const fetchData = async()=> {
       await api.fetchProducts(setProducts);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(()=> {
+    const fetchData = async()=> {
+      await api.fetchReviews(setReviews);
     };
     fetchData();
   }, []);
@@ -163,11 +170,11 @@ const App = ()=> {
               <Route path='/products/:id' element={
                 <Product 
                   products={products} 
+                  reviews={reviews}
                   auth={auth} 
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
-                  updateLineItem={updateLineItem}/>}
-              />
+                  updateLineItem={updateLineItem}/>}/>
               <Route path='/admin' element={
                 <Admin
                   users={users}

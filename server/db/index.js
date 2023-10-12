@@ -5,7 +5,9 @@ const uuidv4 = v4;
 const {
   fetchProducts,
   createProduct,
-  editProduct
+  editProduct,
+  fetchReviews,
+  createReview
 } = require('./products');
 
 const {
@@ -48,6 +50,7 @@ const createBookmark = async(bookmark)=> {
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS bookmarks;
     DROP TABLE IF EXISTS product_tags;
     DROP TABLE IF EXISTS tags;
@@ -110,6 +113,14 @@ const seed = async()=> {
     );
 
 
+    CREATE TABLE reviews(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      product_id UUID REFERENCES products(id) NOT NULL,
+      txt VARCHAR(255) NOT NULL,
+      rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
+    );
+
   `;
   await client.query(SQL);
 
@@ -118,13 +129,11 @@ const seed = async()=> {
     createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
-  // Creates a generic description for development
-  const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
   const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100, description: loremIpsum}),
-    createProduct({ name: 'Bass', price: 500, description: loremIpsum }),
-    createProduct({ name: 'Keyboard', price: 1000, description: loremIpsum }),
-    createProduct({ name: 'Drums', price: 12000, description: loremIpsum }),
+    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.' }),
+    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
+    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
+    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
@@ -136,6 +145,17 @@ const seed = async()=> {
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
+  // Creates a generic description for development
+  const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
+  const [reviews] = await Promise.all([
+    createReview({ product_id: bar.id, txt: loremIpsum, rating: '4' }),
+    createReview({ product_id: foo.id, txt: loremIpsum, rating: '5' }),
+    createReview({ product_id: bar.id, txt: loremIpsum, rating: '1' })
+  ]);
+  const productReviews = reviews.filter((review) => {
+    const matchingProduct = products.find((product) => product.id === review.product_id);
+    return matchingProduct !== undefined;
+  });
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
@@ -173,6 +193,8 @@ module.exports = {
   fetchTags,
   editProduct,
   createProduct,
+  createReview,
+  fetchReviews,
   fetchAllOrders,
   fetchAllLineItems,
   fetchBookmarks,

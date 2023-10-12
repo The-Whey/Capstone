@@ -1,7 +1,9 @@
 const {
   fetchProducts,
   editProduct,
-  createProduct
+  createProduct,
+  createReview,
+  fetchReviews
 } = require('../db');
 
 const express = require('express');
@@ -17,9 +19,26 @@ app.get('/', async(req, res, next)=> {
   }
 });
 
+app.get('/', async(req, res, next)=> {
+  try {
+    res.send(await fetchReviews());
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
 app.post('/', async(req, res, next)=> {
   try {
     res.send(await createProduct(req.body))
+  } catch (error) {
+    next(error)
+  }
+});
+
+app.post('/', async(req, res, next)=> {
+  try {
+    res.send(await createReview(req.body))
   } catch (error) {
     next(error)
   }
