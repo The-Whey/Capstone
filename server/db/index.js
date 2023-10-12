@@ -1,4 +1,6 @@
 const client = require('./client');
+const { v4 } = require('uuid');
+const uuidv4 = v4;
 
 const {
   fetchProducts,
@@ -30,12 +32,23 @@ const {
   fetchOrders,
   fetchAllOrders,
   fetchAllLineItems,
+  fetchBookmarks,
+  deleteBookmark,
   updateOrderFulfilled
 } = require('./cart');
+
+const createBookmark = async(bookmark)=> {
+  const SQL = `
+  INSERT INTO bookmarks (product_id, user_id, id) VALUES($1, $2, $3) RETURNING *
+`;
+ response = await client.query(SQL, [ bookmark.product_id, bookmark.user_id, uuidv4()]);
+  return response.rows[0];
+};
 
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS bookmarks;
     DROP TABLE IF EXISTS product_tags;
     DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS line_items;
@@ -88,6 +101,15 @@ const seed = async()=> {
 
     );
 
+    CREATE TABLE bookmarks(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      product_id UUID REFERENCES products(id) NOT NULL,
+      user_id UUID REFERENCES users(id) NOT NULL,
+      CONSTRAINT product_and_user_key UNIQUE(product_id, user_id)
+    );
+
+
   `;
   await client.query(SQL);
 
@@ -103,6 +125,13 @@ const seed = async()=> {
     createProduct({ name: 'Bass', price: 500, description: loremIpsum }),
     createProduct({ name: 'Keyboard', price: 1000, description: loremIpsum }),
     createProduct({ name: 'Drums', price: 12000, description: loremIpsum }),
+  ]);
+  await Promise.all([
+    createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
+    createBookmark({ user_id: ethyl.id, product_id: bass.id }),
+    createBookmark({ user_id: moe.id, product_id: drums.id }),
+    createBookmark({ user_id: moe.id, product_id: keyboard.id })
+
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
@@ -146,6 +175,9 @@ module.exports = {
   createProduct,
   fetchAllOrders,
   fetchAllLineItems,
+  fetchBookmarks,
+  deleteBookmark,
+  createBookmark,
   updateOrderFulfilled,
   client
 };
