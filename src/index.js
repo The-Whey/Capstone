@@ -23,6 +23,9 @@ const App = ()=> {
   const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
+
+  console.log(reviews);
+
   const getHeaders = ()=> {
     return {
       headers: {
@@ -171,6 +174,7 @@ const App = ()=> {
                 <Product 
                   products={products} 
                   reviews={reviews}
+                  setReviews={setReviews}
                   auth={auth} 
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
@@ -235,6 +239,8 @@ const App = ()=> {
               <Product 
               products={products} 
               auth={auth} 
+              reviews={reviews}
+              setReviews={setReviews}
               cartItems={cartItems} 
               createLineItem={createLineItem} 
               updateLineItem={updateLineItem}/>}/>

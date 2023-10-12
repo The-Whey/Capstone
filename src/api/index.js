@@ -128,6 +128,11 @@ const orderFulfilled = async(json) => {
   return response.data;
 }
 
+const submitReview = async(json) => {
+  const response = await axios.post(`/api/products/reviews`, json);
+  return response.data;
+}
+
 const api = {
   login,
   logout,
@@ -147,7 +152,8 @@ const api = {
   createUser,
   fetchAllOrders,
   fetchAllLineItems,
-  orderFulfilled
+  orderFulfilled,
+  submitReview
 };
 
 export default api;

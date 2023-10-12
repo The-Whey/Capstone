@@ -1,10 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from './ReviewForm';
+import api from "./api";
 
 const Product = ({
   products,
   reviews,
+  setReviews,
   auth,
   cartItems,
   createLineItem,
@@ -14,6 +16,20 @@ const Product = ({
   const product = products.find((item) => item.id === id);
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
+
+  const handleReviewSubmission = async (newReview) => {
+    //try {
+      // Make an API call to submit the review using your API functions
+      const response = await api.submitReview(newReview);
+      console.log(response);
+
+      // If the submission is successful, show a success message to the user
+      // update the reviews state or take any other necessary action
+    //   setReviews([...reviews, newReview]);
+    // } catch (error) {
+    //   console.error("Error submitting review:", error);
+    // }
+  };
 
   return product ? (
     <>
@@ -31,7 +47,7 @@ const Product = ({
         )
       ) : null}
 
-      {auth.id && <ReviewForm productId={id} onSubmit={handleReviewSubmission} />}
+      {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} />}
     </>
   ) : (
     <h2>Loading</h2>
