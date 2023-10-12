@@ -143,5 +143,6 @@ module.exports = {
   fetchAllLineItems,
   fetchBookmarks,
   deleteBookmark,
+  createBookmark,
   client
 };
