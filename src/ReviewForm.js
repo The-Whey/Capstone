@@ -15,7 +15,7 @@ const ReviewForm = ({ productId, onSubmit }) => {
     };
 
     // Call the onSubmit function with the new review data
-    onSubmit(newReview);
+    //onSubmit(newReview);
 
     // Clear the form inputs
     setReviewText("");

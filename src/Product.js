@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import ReviewForm from './ReviewForm';
 
 const Product = ({
   products,
@@ -29,6 +30,8 @@ const Product = ({
           <button onClick={() => createLineItem(product)}>Add to Cart</button>
         )
       ) : null}
+
+      {auth.id && <ReviewForm productId={id} onSubmit={handleReviewSubmission} />}
     </>
   ) : (
     <h2>Loading</h2>
