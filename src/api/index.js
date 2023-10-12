@@ -123,6 +123,11 @@ const editProduct = async(json) => {
   return response.data;
 }
 
+const orderFulfilled = async(json) => {
+  const response = await axios.put(`/api/orders/${json.id}/fulfilled`, json);
+  return response.data;
+}
+
 const api = {
   login,
   logout,
@@ -141,7 +146,8 @@ const api = {
   editProduct,
   createUser,
   fetchAllOrders,
-  fetchAllLineItems
+  fetchAllLineItems,
+  orderFulfilled
 };
 
 export default api;

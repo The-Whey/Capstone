@@ -1,10 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import api from './api';
 
-const Orders = ({ orders, products, lineItems })=> {
+const Orders = ({ orders, setorders, products, lineItems, auth })=> {
+
+  const orderFulfilled = async(id, fulfilled) => {
+    const json = {id, fulfilled}
+    const response = await api.orderFulfilled(json)
+    setorders(orders.map(order => order.id === response.id ? response : order))
+  }
+
   return (
     <div>
-      <h2>Orders</h2>
+      <h2>Orders ({orders.length - 1})</h2>
       <ul>
         {
           orders.filter(order => !order.is_cart).map( order => {
@@ -12,7 +20,11 @@ const Orders = ({ orders, products, lineItems })=> {
             let total = 0;
             return (
               <li key={ order.id }>
-                ({ new Date(order.created_at).toLocaleString() })
+                <h4>Order ID: {order.id}</h4>
+                <p>{order.fulfilled ? `Order Fulfilled` : 'order pending'}</p>
+                {auth.is_admin ? order.fulfilled ? <button onClick={() => orderFulfilled(order.id, false)}>reopen?</button> : null : null}
+                <br/> 
+                ({ new Date(order.created_at).toLocaleString() }) 
                 <ul>
                   {
                     orderLineItems.map( lineItem => {
@@ -23,7 +35,6 @@ const Orders = ({ orders, products, lineItems })=> {
                       return (
                         <li key={ lineItem.id }>
                           <Link to={`/products/${product.id}`}>{product.name}</Link> ({lineItem.quantity}) at ${(product.price / 100).toFixed(2)} each
-                          
                         </li>
                       );
                     })
@@ -31,6 +42,7 @@ const Orders = ({ orders, products, lineItems })=> {
                   }
                 </ul>
                 <h4>{`Total Price: $${(total / 100).toFixed(2)}`}</h4>
+                {auth.is_admin ? !order.fulfilled ? <button onClick={() => orderFulfilled(order.id, true)}>Mark order as fulfilled</button> : null : null}
               </li>
             );
           })

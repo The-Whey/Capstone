@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Link, HashRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
 import Orders from './Orders';
@@ -9,6 +10,7 @@ import Login from './Login';
 import api from './api';
 import Admin from './Admin';
 import Edit from './Edit';
+import Profile from './Profile';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -17,11 +19,17 @@ const App = ()=> {
   const [lineItems, setLineItems] = useState([]);
   const [allLineItems, setAllLineItems] = useState([]);
   const [auth, setAuth] = useState({});
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
-
-  
+  const [bookmarks, setBookmarks] = useState([]);
+  const getHeaders = ()=> {
+    return {
+      headers: {
+        authorization: window.localStorage.getItem('token')
+      }
+    };
+  };
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -49,6 +57,16 @@ const App = ()=> {
     if(auth.id){
       const fetchData = async()=> {
         await api.fetchOrders(setOrders);
+      };
+      fetchData();
+    }
+  }, [auth]);
+
+  useEffect(()=> {
+    if(auth.id){
+      const fetchData = async()=> {
+        const response = await axios.get('/api/orders/bookmarks', getHeaders());
+        setBookmarks(response.data);
       };
       fetchData();
     }
@@ -106,6 +124,16 @@ const App = ()=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
   };
 
+  const createBookmark = async(bookmark)=> {
+    const response = await axios.post('/api/orders/bookmarks', bookmark, getHeaders());
+    setBookmarks([...bookmarks, response.data]);
+  };
+
+  const removeBookmark = async(bookmark)=> {
+    await axios.delete(`/api/orders/bookmarks/${bookmark.id}`, getHeaders());
+    setBookmarks(bookmarks.filter(_bookmark => _bookmark.id !== bookmark.id));
+  };
+  
   const cart = orders.find(order => order.is_cart) || {};
 
   const cartItems = lineItems.filter(lineItem => lineItem.order_id === cart.id);
@@ -131,6 +159,7 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
+              <Link to='/profile'>Profile</Link>
               {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
               <span>
                 Welcome { auth.username }!
@@ -139,26 +168,35 @@ const App = ()=> {
             </nav>
             <Routes>
               <Route path='/products/:id' element={
-              <Product 
-              products={products} 
-              reviews={reviews}
-              auth={auth} 
-              cartItems={cartItems} 
-              createLineItem={createLineItem} 
-              updateLineItem={updateLineItem}/>}/>
+                <Product 
+                  products={products} 
+                  reviews={reviews}
+                  auth={auth} 
+                  cartItems={cartItems} 
+                  createLineItem={createLineItem} 
+                  updateLineItem={updateLineItem}/>}/>
               <Route path='/admin' element={
-              <Admin
-              users={users}
-              setUsers={setUsers}
-              products={products}
-              setProducts={setProducts}
-              orders={orders}
-              allOrders={allOrders}
-              allLineItems={allLineItems} />}/>
+                <Admin
+                  users={users}
+                  setUsers={setUsers}
+                  products={products}
+                  setProducts={setProducts}
+                  orders={orders}
+                  allOrders={allOrders}
+                  setAllOrders = {setAllOrders}
+                  allLineItems={allLineItems}
+                  auth={auth} />}
+              />
               <Route path='/products/:id/edit' element={
-              <Edit 
-              products={products}
-              setProducts={setProducts} />}/>
+                <Edit 
+                  products={products}
+                  setProducts={setProducts} />}
+              />
+              <Route path='/profile' element={
+                <Profile
+                  auth={auth}
+                  users={users} />}
+              />
             </Routes>
             <main>
               <Products
@@ -167,6 +205,9 @@ const App = ()=> {
                 cartItems = { cartItems }
                 createLineItem = { createLineItem }
                 updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
               />
               <Cart
                 cart = { cart }
@@ -178,8 +219,10 @@ const App = ()=> {
               />
               <Orders
                 orders = { orders }
+                setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
+                auth={auth}
               />
             </main>
             </>
@@ -202,6 +245,9 @@ const App = ()=> {
               createLineItem = { createLineItem }
               updateLineItem = { updateLineItem }
               auth = { auth }
+              bookmarks = { bookmarks }
+              createBookmark= { createBookmark}
+              removeBookmark={ removeBookmark}
             />
           </div>
         )
