@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import api from './api';
 import Orders from './Orders';
 
-const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}) => {
+const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders, allLineItems, auth}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -27,6 +27,7 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}
   }
 
   if (!allOrders || !allLineItems || !products) return null;
+  if (!auth.is_admin) return <p>Access Denied</p>
 
   return (
     <div>
@@ -50,7 +51,7 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, allLineItems}
         <button disabled={!name || !description || price === 0}>Create New Product</button>
       </form>
       <hr/>
-      <Orders orders={allOrders} lineItems={allLineItems} products={products}/>
+      <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth}/>
       <hr/>
       <h3>---- end of admin page here ----</h3>
       <hr/>

@@ -12,11 +12,11 @@
 - [X] as a user I should see that a product has prices
 - [X] as a user I should see a description for a product
 - [ ] as a user I should be able to bookmark a product (product detail page)
-- [ ] as a user I should see the total amount in my cart as well as my orders
+- [x] as a user I should see the total amount in my cart as well as my orders
 - [X] as a user I should be able to increment and decrement items in my cart
 - [X] as a user if I decrement an quantity to zero, the line_item should be deleted
 - [X] as a user I should see an error message if my credentials are not correct
-- [ ] as a user I should be able to create an account.
+- [X] as a user I should be able to create an account.
 - [ ] as a user I should have profile settings which I can edit
 - [ ] as a user I should be able to add an avatar to my profile
 - [ ] as a user I should be able to add a shipping address to an order

@@ -9,6 +9,12 @@ const {
 } = require('./products');
 
 const {
+  fetchTags,
+  insertProductTags,
+  createTags,
+} = require('./tags');
+
+const {
   createUser,
   authenticate,
   findUserByToken,
@@ -27,7 +33,8 @@ const {
   fetchAllOrders,
   fetchAllLineItems,
   fetchBookmarks,
-  deleteBookmark
+  deleteBookmark,
+  updateOrderFulfilled
 } = require('./cart');
 
 const createBookmark = async(bookmark)=> {
@@ -42,10 +49,13 @@ const createBookmark = async(bookmark)=> {
 const seed = async()=> {
   const SQL = `
     DROP TABLE IF EXISTS bookmarks;
+    DROP TABLE IF EXISTS product_tags;
+    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
     CREATE TABLE users(
       id UUID PRIMARY KEY,
@@ -68,7 +78,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
-      user_id UUID REFERENCES users(id) NOT NULL
+      user_id UUID REFERENCES users(id) NOT NULL,
+      fulfilled BOOLEAN NOT NULL DEFAULT false
     );
 
     CREATE TABLE line_items(
@@ -78,6 +89,16 @@ const seed = async()=> {
       order_id UUID REFERENCES orders(id) NOT NULL,
       quantity INTEGER DEFAULT 1,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
+    );
+    CREATE TABLE tags (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      tag VARCHAR(100)
+    );
+    CREATE TABLE product_tags (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      tag_id UUID REFERENCES tags(id) NOT NULL
+
     );
 
     CREATE TABLE bookmarks(
@@ -120,6 +141,18 @@ const seed = async()=> {
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
   cart.is_cart = false;
   await updateOrder(cart);
+  const [string, percussion, keyboards, woodwinds] = await Promise.all([
+    createTags({tag : "string"}),
+    createTags({tag : "percussion"}),
+    createTags({tag : "keyboards"}),
+    createTags({tag : "woodwinds"}),
+  ]);
+  console.log(woodwinds.id)
+  const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
+    insertProductTags(guitar.id, string.id),
+    insertProductTags(bass.id,string.id),
+    insertProductTags(keyboard.id, keyboards.id),
+  ]);
 };
 
 module.exports = {
@@ -137,6 +170,7 @@ module.exports = {
   fetchUsers,
   fetchUser,
   updateUser,
+  fetchTags,
   editProduct,
   createProduct,
   fetchAllOrders,
@@ -144,5 +178,6 @@ module.exports = {
   fetchBookmarks,
   deleteBookmark,
   createBookmark,
+  updateOrderFulfilled,
   client
 };

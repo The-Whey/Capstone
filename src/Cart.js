@@ -8,14 +8,16 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     lineItem.quantity -= 2;
     updateLineItem(lineItem)
   }
+  let totalPrice = 0;
 
   return (
     <div>
-      <h2>Cart</h2>
+      <h2>Cart ({lineItems.filter(lineItem => lineItem.order_id === cart.id && !lineItem.is_cart).reduce((total, lineItem) => total + lineItem.quantity, 0)})</h2>
       <ul>
         {
           lineItems.filter(lineItem=> lineItem.order_id === cart.id).map( lineItem => {
             const product = products.find(product => product.id === lineItem.product_id) || {};
+            totalPrice += product.price * lineItem.quantity / 100
             return (
               <li key={ lineItem.id }>
                 <Link to={`/products/${product.id}`}>{product.name}</Link>
@@ -24,11 +26,13 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
                   :() => minus(lineItem)}>-</button>
                 <button onClick={() => updateLineItem(lineItem)}>+</button>
                 {lineItem.quantity > 1 ? <button onClick={ ()=> removeFromCart(lineItem)}>Remove All</button> : null }
+                <h4>{`price: $${(lineItem.quantity * product.price / 100).toFixed(2)}`}</h4>
               </li>
             );
           })
         }
       </ul>
+      <h4>{`Total Price: $${totalPrice.toFixed(2)}`}</h4>
       {
         lineItems.filter(lineItem => lineItem.order_id === cart.id ).length ? <button onClick={()=> {
           updateOrder({...cart, is_cart: false });

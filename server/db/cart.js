@@ -88,6 +88,14 @@ const updateOrder = async(order)=> {
   return response.rows[0];
 };
 
+const updateOrderFulfilled = async(order)=> {
+  const SQL = `
+    UPDATE orders SET fulfilled = $1 WHERE id = $2 RETURNING *
+  `;
+  const response = await client.query(SQL, [order.fulfilled, order.id]);
+  return response.rows[0];
+};
+
 const fetchOrders = async(userId)=> {
   const SQL = `
     SELECT * FROM orders
@@ -97,7 +105,7 @@ const fetchOrders = async(userId)=> {
   const cart = response.rows.find(row => row.is_cart);
   if(!cart){
     await client.query(`
-      INSERT INTO orders(is_cart, id, user_id) VALUES(true, $1, $2)
+      INSERT INTO orders(is_cart, id, user_id, fulfilled) VALUES(true, $1, $2, false)
       `,
       [uuidv4(), userId]
     ); 
@@ -152,5 +160,6 @@ module.exports = {
   fetchAllLineItems,
   fetchBookmarks,
   deleteBookmark,
-  createBookmark
+  createBookmark,
+  updateOrderFulfilled
 };
