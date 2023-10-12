@@ -1,6 +1,8 @@
 const client = require('./client');
 const { v4 } = require('uuid');
 const uuidv4 = v4;
+const path = require('path');
+const fs = require('fs')
 
 const {
   fetchProducts,
@@ -47,6 +49,19 @@ const createBookmark = async(bookmark)=> {
   return response.rows[0];
 };
 
+const loadImage = (filepath) => {
+  return new Promise((resolve, reject) => {
+    const fullPath = path.join(__dirname, filepath)
+    console.log(fullPath)
+    fs.readFile(fullPath, 'base64', (error, result) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(`data:image/png;base64,${result}`)
+      }
+    });  
+  });
+}
 
 const seed = async()=> {
   const SQL = `
@@ -66,7 +81,8 @@ const seed = async()=> {
       username VARCHAR(100) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL,
-      is_vip BOOLEAN NOT NULL
+      is_vip BOOLEAN NOT NULL,
+      image TEXT
     );
 
     CREATE TABLE products(
@@ -123,11 +139,12 @@ const seed = async()=> {
 
   `;
   await client.query(SQL);
-
+  const profileImage = await loadImage('images/github.png')
+  console.log(profileImage)
   const [moe, lucy, ethyl] = await Promise.all([
     createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
     createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
+    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true, image: profileImage})
   ]);
   const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.' }),
@@ -147,7 +164,7 @@ const seed = async()=> {
   let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
-  const [reviews] = await Promise.all([
+  await Promise.all([
     createReview({ product_id: bass.id, txt: loremIpsum, rating: '4' }),
     createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
     createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
