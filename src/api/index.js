@@ -13,6 +13,11 @@ const fetchProducts = async(setProducts)=> {
   setProducts(response.data);
 };
 
+const fetchReviews = async(setReviews)=> {
+  const response = await axios.get('/api/products');
+  setReviews(response.data);
+};
+
 const fetchUsers = async(setUsers) => {
   const response = await axios.get('/api/users');
   setUsers(response.data);
@@ -122,6 +127,7 @@ const api = {
   login,
   logout,
   fetchProducts,
+  fetchReviews,
   fetchOrders,
   fetchUsers,
   fetchLineItems,

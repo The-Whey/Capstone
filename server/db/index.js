@@ -3,7 +3,9 @@ const client = require('./client');
 const {
   fetchProducts,
   createProduct,
-  editProduct
+  editProduct,
+  fetchReviews,
+  createReview
 } = require('./products');
 
 const {
@@ -29,6 +31,7 @@ const {
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
@@ -67,6 +70,14 @@ const seed = async()=> {
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
 
+    CREATE TABLE reviews(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      product_id UUID REFERENCES products(id) NOT NULL,
+      txt VARCHAR(255) NOT NULL,
+      rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
+    );
+
   `;
   await client.query(SQL);
 
@@ -86,6 +97,15 @@ const seed = async()=> {
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: foo.id});
+  const [reviews] = await Promise.all([
+    createReview({ product_id: bar.id, txt: loremIpsum, rating: '4' }),
+    createReview({ product_id: foo.id, txt: loremIpsum, rating: '5' }),
+    createReview({ product_id: bar.id, txt: loremIpsum, rating: '1' })
+  ]);
+  const productReviews = reviews.filter((review) => {
+    const matchingProduct = products.find((product) => product.id === review.product_id);
+    return matchingProduct !== undefined;
+  });
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bar.id});
@@ -110,6 +130,8 @@ module.exports = {
   updateUser,
   editProduct,
   createProduct,
+  createReview,
+  fetchReviews,
   fetchAllOrders,
   fetchAllLineItems,
   client
