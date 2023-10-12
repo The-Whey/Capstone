@@ -12,7 +12,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
   return (
     <div>
-      <h2>Cart</h2>
+      <h2>Cart ({lineItems.filter(lineItem => lineItem.order_id === cart.id && !lineItem.is_cart).reduce((total, lineItem) => total + lineItem.quantity, 0)})</h2>
       <ul>
         {
           lineItems.filter(lineItem=> lineItem.order_id === cart.id).map( lineItem => {
