@@ -20,9 +20,9 @@ app.put('/:id', isLoggedIn, async(req, res, next)=> {
   }
 });
 
-app.put('/:id/fulfilled', isLoggedIn, async(req, res, next)=> {
+app.put('/:id/fulfilled', async(req, res, next)=> {
   try {
-    res.send(await updateOrderFulfilled({ ...req.body, id: req.params.id}));
+    res.send(await updateOrderFulfilled(req.body));
   }
   catch(ex){
     next(ex);

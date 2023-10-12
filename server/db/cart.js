@@ -90,7 +90,7 @@ const updateOrder = async(order)=> {
 
 const updateOrderFulfilled = async(order)=> {
   const SQL = `
-    UPDATE orders SET fulfilled WHERE id = $2 RETURNING *
+    UPDATE orders SET fulfilled = $1 WHERE id = $2 RETURNING *
   `;
   const response = await client.query(SQL, [order.fulfilled, order.id]);
   return response.rows[0];

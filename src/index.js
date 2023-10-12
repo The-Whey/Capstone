@@ -21,7 +21,6 @@ const App = ()=> {
   const [users, setUsers] = useState([])
   const [error, setError] = useState("");
 
-  
 
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
@@ -148,6 +147,7 @@ const App = ()=> {
                   setProducts={setProducts}
                   orders={orders}
                   allOrders={allOrders}
+                  setAllOrders = {setAllOrders}
                   allLineItems={allLineItems}
                   auth={auth} />}
               />
@@ -180,8 +180,10 @@ const App = ()=> {
               />
               <Orders
                 orders = { orders }
+                setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
+                auth={auth}
               />
             </main>
             </>

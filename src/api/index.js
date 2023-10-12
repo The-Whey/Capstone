@@ -119,7 +119,7 @@ const editProduct = async(json) => {
 }
 
 const orderFulfilled = async(json) => {
-  const response = await axios.put(`/api/cart/${json.id}/fulfilled`, json);
+  const response = await axios.put(`/api/orders/${json.id}/fulfilled`, json);
   return response.data;
 }
 
