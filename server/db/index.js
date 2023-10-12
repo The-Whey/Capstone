@@ -29,7 +29,8 @@ const {
   updateOrder,
   fetchOrders,
   fetchAllOrders,
-  fetchAllLineItems
+  fetchAllLineItems,
+  updateOrderFulfilled
 } = require('./cart');
 
 
@@ -64,7 +65,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
-      user_id UUID REFERENCES users(id) NOT NULL
+      user_id UUID REFERENCES users(id) NOT NULL,
+      fulfilled BOOLEAN NOT NULL DEFAULT false
     );
 
     CREATE TABLE line_items(
@@ -144,5 +146,6 @@ module.exports = {
   createProduct,
   fetchAllOrders,
   fetchAllLineItems,
+  updateOrderFulfilled,
   client
 };
