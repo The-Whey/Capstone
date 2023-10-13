@@ -1,14 +1,17 @@
 import React from 'react'
 
 const Profile = ({auth, users}) => {
-  console.log(auth)
+  const user = users.find(user => user.id === auth.id)
+
+
+  if (!user) return null;
 
   return (
     <div>
         <h2>Profile Settings</h2>
-        {auth.image ? <img src={auth.image} /> : null}
-        <h4>{`Username: ${auth.username}`}</h4>
-        <h4>{auth.is_vip ? 'Thanks for being a vip!' : 'Upgrade to our VIP club for exclusive deals and promotions.'}</h4>
+        {user.image ? <img src={user.image} /> : null}
+        <h4>{`Username: ${user.username}`}</h4>
+        <h4>{user.is_vip ? 'Thanks for being a vip!' : 'Upgrade to our VIP club for exclusive deals and promotions.'}</h4>
     </div>
   )
 }

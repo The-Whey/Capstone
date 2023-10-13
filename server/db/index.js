@@ -52,7 +52,6 @@ const createBookmark = async(bookmark)=> {
 const loadImage = (filepath) => {
   return new Promise((resolve, reject) => {
     const fullPath = path.join(__dirname, filepath)
-    console.log(fullPath)
     fs.readFile(fullPath, 'base64', (error, result) => {
       if (error) {
         reject(error)
@@ -90,7 +89,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       name VARCHAR(100) UNIQUE NOT NULL,
       price INT NOT NULL,
-      description VARCHAR(1600)
+      description VARCHAR(1600),
+      image TEXT
     );
 
     CREATE TABLE orders(
@@ -109,10 +109,12 @@ const seed = async()=> {
       quantity INTEGER DEFAULT 1,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
+
     CREATE TABLE tags (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       tag VARCHAR(100)
     );
+
     CREATE TABLE product_tags (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       product_id UUID REFERENCES products(id) NOT NULL,
@@ -128,7 +130,6 @@ const seed = async()=> {
       CONSTRAINT product_and_user_key UNIQUE(product_id, user_id)
     );
 
-
     CREATE TABLE reviews(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
@@ -136,21 +137,21 @@ const seed = async()=> {
       txt VARCHAR(3000) NOT NULL,
       rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
     );
-
   `;
+  
   await client.query(SQL);
-  const profileImage = await loadImage('images/github.png')
-  console.log(profileImage)
+  const profileImage = await loadImage('images/profile-placeholder.png')
   const [moe, lucy, ethyl] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false, image: profileImage}),
+    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false, image: profileImage}),
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true, image: profileImage})
   ]);
+  const productImage = await loadImage('images/product-placeholder.png')
   const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.' }),
-    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
-    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
-    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
+    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.', image: productImage }),
+    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.', image: productImage }),
+    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.', image: productImage }),
+    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.', image: productImage }),
   ]);
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
@@ -184,7 +185,7 @@ const seed = async()=> {
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
-  console.log(woodwinds.id)
+
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id),
     insertProductTags(bass.id,string.id),
