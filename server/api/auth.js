@@ -58,7 +58,7 @@ app.get('/users/:id', async(req,res,next) => {
 
 app.put('/users/:id', async(req,res,next) => {
   try {
-    res.send(await updateUser(req.body.is_vip, req.params.id))
+    res.send(await updateUser(req.body))
   } catch (error) {
     next(error)
   }

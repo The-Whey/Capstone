@@ -9,13 +9,13 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
 
   const setVipTrue = async (user) => {
     user.is_vip = true;
-    const response = await api.setVipStatus(user);
+    const response = await api.updateUser(user);
     setUsers(users.map(item => item.id === response.id ? response : item))
   }
 
   const setVipFalse = async (user) => {
     user.is_vip = false;
-    const response = await api.setVipStatus(user);
+    const response = await api.updateUser(user);
     setUsers(users.map(item => item.id === response.id ? response : item)) 
   }
 
