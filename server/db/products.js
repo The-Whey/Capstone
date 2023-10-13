@@ -41,11 +41,12 @@ const editProduct = async(product) => {
     UPDATE products set
     name = $1,
     price = $2,
-    description = $3
-    WHERE id = $4
+    description = $3,
+    image = $4
+    WHERE id = $5
     RETURNING *
   `;
-  const response = await client.query(SQL, [product.name, product.price, product.description, product.id]);
+  const response = await client.query(SQL, [product.name, product.price, product.description, product.image || null, product.id]);
   return response.rows[0];
 }
 

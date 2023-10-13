@@ -146,13 +146,15 @@ const seed = async()=> {
     createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false, image: profileImage}),
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true, image: profileImage})
   ]);
+  
   const productImage = await loadImage('images/product-placeholder.png')
   const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.', image: productImage }),
+    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.', image: productImage}),
     createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.', image: productImage }),
     createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.', image: productImage }),
     createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.', image: productImage }),
   ]);
+  await editProduct({...guitar, image: profileImage})
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
     createBookmark({ user_id: ethyl.id, product_id: bass.id }),
