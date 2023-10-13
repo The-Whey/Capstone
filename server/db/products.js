@@ -20,11 +20,12 @@ const fetchReviews = async()=> {
   return response.rows;
 };
 
+
 const createProduct = async(product)=> {
   const SQL = `
-    INSERT INTO products (id, name, price, description, image) VALUES($1, $2, $3, $4, $5) RETURNING *
+    INSERT INTO products (id, name, price, description) VALUES($1, $2, $3, $4) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), product.name, product.price, product.description, product.image]);
+  const response = await client.query(SQL, [ uuidv4(), product.name, product.price, product.description]);
   return response.rows[0];
 };
 
@@ -46,7 +47,7 @@ const editProduct = async(product) => {
     WHERE id = $5
     RETURNING *
   `;
-  const response = await client.query(SQL, [product.name, product.price, product.description, product.image || null, product.id]);
+  const response = await client.query(SQL, [product.name, product.price, product.description, product.image, product.id]);
   return response.rows[0];
 }
 

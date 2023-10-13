@@ -63,6 +63,9 @@ const loadImage = (filepath) => {
 }
 
 const seed = async()=> {
+  const productImage = await loadImage('images/product-placeholder.png')
+  const profileImage = await loadImage('images/profile-placeholder.png')
+
   const SQL = `
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS bookmarks;
@@ -81,7 +84,7 @@ const seed = async()=> {
       password VARCHAR(100) NOT NULL,
       is_admin BOOLEAN DEFAULT false NOT NULL,
       is_vip BOOLEAN NOT NULL,
-      image TEXT
+      image TEXT DEFAULT '${profileImage}'
     );
 
     CREATE TABLE products(
@@ -90,7 +93,7 @@ const seed = async()=> {
       name VARCHAR(100) UNIQUE NOT NULL,
       price INT NOT NULL,
       description VARCHAR(1600),
-      image TEXT
+      image TEXT DEFAULT '${productImage}'
     );
 
     CREATE TABLE orders(
@@ -140,19 +143,19 @@ const seed = async()=> {
   `;
   
   await client.query(SQL);
-  const profileImage = await loadImage('images/profile-placeholder.png')
+
   const [moe, lucy, ethyl] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false, image: profileImage}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false, image: profileImage}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true, image: profileImage})
+    createUser({ username: 'moe', password: 'm_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'lucy', password: 'l_password', is_admin: false, is_vip: false}),
+    createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
-  const productImage = await loadImage('images/product-placeholder.png')
+
   const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.', image: productImage}),
-    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.', image: productImage }),
-    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.', image: productImage }),
-    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.', image: productImage }),
+    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
+    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
+    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
+    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
   await editProduct({...guitar, image: profileImage})
   await Promise.all([
