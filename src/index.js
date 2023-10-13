@@ -178,7 +178,8 @@ const App = ()=> {
               <Route path='/products/:id' element={
                 <Product 
                   tags={tags}
-                  products={products} 
+                  products={products}
+                  setProducts={setProducts} 
                   reviews={reviews}
                   auth={auth} 
                   cartItems={cartItems} 
