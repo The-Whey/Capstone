@@ -51,7 +51,7 @@ const Product = ({
   )
 
   if (product && editMode) return (
-    <Edit products={products} setProducts={setProducts}/>
+    <Edit products={products} setProducts={setProducts} setEditMode={setEditMode}/>
   )
 };
 

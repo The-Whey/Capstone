@@ -4,7 +4,7 @@ import api from './api';
 
 
 
-const Edit = ({products, setProducts}) => {
+const Edit = ({products, setProducts, setEditMode}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
@@ -25,7 +25,7 @@ const Edit = ({products, setProducts}) => {
     };
     const response = await api.editProduct(updatedProduct)
     setProducts(products.map(item => item.id === id ? response : item))
-    navigate(`/products/${id}`)
+    setEditMode(false)
    }
 
   useEffect(() => {
@@ -61,6 +61,7 @@ const Edit = ({products, setProducts}) => {
         <label>Description:</label>
         <input type='text' value={description} onChange={ev => setDescription(ev.target.value)}></input>
         <button>Submit Changes</button>
+        <button type='button' onClick={() => setEditMode(false)}>Cancel</button>
       </form>
     </div>
   )

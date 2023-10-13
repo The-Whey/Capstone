@@ -29,7 +29,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
             return (
               <div key={ product.id }>
                 <li>
-                  <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`} {auth.is_admin ? (<Link to={`/products/${product.id}/edit`}>Edit</Link>): null}</h3>
+                  <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
                 </li>
                 {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
                 {
