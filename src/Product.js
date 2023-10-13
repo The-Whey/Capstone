@@ -23,6 +23,7 @@ const Product = ({
     <>
       <h2>{product.name}</h2>
       <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
+      <img src={product.image}/>
       <p>{product.description}</p>
       {productReviews.map((review) => (
         <p key={review.id}>{review.text}</p> 
@@ -41,7 +42,7 @@ const Product = ({
         )
       ) : null}
 
-      {auth.id && <ReviewForm productId={id} onSubmit={handleReviewSubmission} />}
+      {auth.id && <ReviewForm productId={product.id} />}
     </>
   ) : (
     <h2>Loading</h2>
