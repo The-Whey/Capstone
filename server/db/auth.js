@@ -53,6 +53,7 @@ const authenticate = async(credentials)=> {
   return jwt.sign({ id: response.rows[0].id }, process.env.JWT);
 };
 
+
 const createUser = async(user)=> {
   if(!user.username.trim() || !user.password.trim()){
     throw Error('must have username and password');
@@ -61,7 +62,7 @@ const createUser = async(user)=> {
   const SQL = `
     INSERT INTO users (id, username, password, is_admin, is_vip) VALUES($1, $2, $3, $4, $5) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin, user.is_vip ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin, user.is_vip]);
   return response.rows[0];
 };
 
