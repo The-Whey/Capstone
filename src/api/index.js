@@ -12,6 +12,10 @@ const fetchProducts = async(setProducts)=> {
   const response = await axios.get('/api/products');
   setProducts(response.data);
 };
+const fetchTags = async(setTags)=> {
+  const response = await axios.get('/api/tags');
+  setTags(response.data);
+};
 
 const fetchReviews = async(setReviews)=> {
   const response = await axios.get('/api/products');
@@ -147,7 +151,8 @@ const api = {
   createUser,
   fetchAllOrders,
   fetchAllLineItems,
-  orderFulfilled
+  orderFulfilled,
+  fetchTags
 };
 
 export default api;

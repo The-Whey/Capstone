@@ -23,6 +23,7 @@ const App = ()=> {
   const [error, setError] = useState("");
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
+  const [tags, setTags] = useState([]);
   const getHeaders = ()=> {
     return {
       headers: {
@@ -42,6 +43,12 @@ const App = ()=> {
   useEffect(()=> {
     const fetchData = async()=> {
       await api.fetchProducts(setProducts);
+    };
+    fetchData();
+  }, []);
+  useEffect(()=> {
+    const fetchData = async()=> {
+      await api.fetchTags(setTags);
     };
     fetchData();
   }, []);
@@ -169,6 +176,7 @@ const App = ()=> {
             <Routes>
               <Route path='/products/:id' element={
                 <Product 
+                  tags={tags}
                   products={products} 
                   reviews={reviews}
                   auth={auth} 
@@ -200,6 +208,7 @@ const App = ()=> {
             </Routes>
             <main>
               <Products
+                tags={tags}
                 auth = { auth }
                 products={ products }
                 cartItems = { cartItems }
@@ -233,6 +242,7 @@ const App = ()=> {
             <Routes>
               <Route path='/products/:id' element={
               <Product 
+              tags={tags}
               products={products} 
               auth={auth} 
               cartItems={cartItems} 
@@ -240,6 +250,7 @@ const App = ()=> {
               updateLineItem={updateLineItem}/>}/>
             </Routes>
             <Products
+              tags={tags}
               products={ products }
               cartItems = { cartItems }
               createLineItem = { createLineItem }

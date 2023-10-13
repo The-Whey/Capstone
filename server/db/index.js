@@ -100,8 +100,8 @@ const seed = async()=> {
     CREATE TABLE product_tags (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       product_id UUID REFERENCES products(id) NOT NULL,
-      tag_id UUID REFERENCES tags(id) NOT NULL
-
+      tag_id UUID REFERENCES tags(id) NOT NULL,
+      tag VARCHAR(100)
     );
 
     CREATE TABLE bookmarks(
@@ -117,7 +117,7 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       product_id UUID REFERENCES products(id) NOT NULL,
-      txt VARCHAR(255) NOT NULL,
+      txt VARCHAR(3000) NOT NULL,
       rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
     );
 
@@ -148,14 +148,14 @@ const seed = async()=> {
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
   const [reviews] = await Promise.all([
-    createReview({ product_id: bar.id, txt: loremIpsum, rating: '4' }),
-    createReview({ product_id: foo.id, txt: loremIpsum, rating: '5' }),
-    createReview({ product_id: bar.id, txt: loremIpsum, rating: '1' })
+    createReview({ product_id: bass.id, txt: loremIpsum, rating: '4' }),
+    createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
+    createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
   ]);
-  const productReviews = reviews.filter((review) => {
-    const matchingProduct = products.find((product) => product.id === review.product_id);
-    return matchingProduct !== undefined;
-  });
+  // const productReviews = reviews.filter((review) => {
+  //   const matchingProduct = products.find((product) => product.id === review.product_id);
+  //   return matchingProduct !== undefined;
+  // });
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
@@ -169,9 +169,10 @@ const seed = async()=> {
   ]);
   console.log(woodwinds.id)
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
-    insertProductTags(guitar.id, string.id),
-    insertProductTags(bass.id,string.id),
-    insertProductTags(keyboard.id, keyboards.id),
+    insertProductTags(guitar.id, string.id, string.tag),
+    insertProductTags(bass.id,string.id, string.tag),
+    insertProductTags(keyboard.id, keyboards.id, keyboards.tag),
+    insertProductTags(keyboard.id, percussion.id, percussion.tag),
   ]);
 };
 

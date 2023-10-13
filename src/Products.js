@@ -11,7 +11,8 @@ const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   );
 }
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark})=> {
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark, tags})=> {
+
   return (
     <div>
       <h2>Products</h2>
