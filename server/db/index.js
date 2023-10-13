@@ -121,8 +121,8 @@ const seed = async()=> {
     CREATE TABLE product_tags (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       product_id UUID REFERENCES products(id) NOT NULL,
-      tag_id UUID REFERENCES tags(id) NOT NULL
-
+      tag_id UUID REFERENCES tags(id) NOT NULL,
+      tag VARCHAR(100)
     );
 
     CREATE TABLE bookmarks(
@@ -192,9 +192,10 @@ const seed = async()=> {
   ]);
 
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
-    insertProductTags(guitar.id, string.id),
-    insertProductTags(bass.id,string.id),
-    insertProductTags(keyboard.id, keyboards.id),
+    insertProductTags(guitar.id, string.id, string.tag),
+    insertProductTags(bass.id,string.id, string.tag),
+    insertProductTags(keyboard.id, keyboards.id, keyboards.tag),
+    insertProductTags(keyboard.id, percussion.id, percussion.tag),
   ]);
 };
 

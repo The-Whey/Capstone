@@ -11,12 +11,18 @@ const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   );
 }
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark})=> {
+const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark, tags})=> {
+  const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
   return (
     <div>
       <h2>Products</h2>
       <h3>{bookmarks.length} Bookmarks</h3>
       <ul>
+        {uniqueTagNames.map((tagName) => (
+          <li key={tagName}>
+            <Link to={`/products/tags/${tagName}`}>{tagName}</Link>
+          </li>
+        ))}
         {
           products.map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
@@ -38,6 +44,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
             );
           })
         }
+        
       </ul>
     </div>
   );
