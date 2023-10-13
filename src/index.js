@@ -11,6 +11,7 @@ import api from './api';
 import Admin from './Admin';
 import Edit from './Edit';
 import Profile from './Profile';
+import FilteredProducts from './FilteredProducts';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -183,6 +184,10 @@ const App = ()=> {
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
                   updateLineItem={updateLineItem}/>}/>
+              <Route path="/products/tags/:tag" element={
+                <FilteredProducts 
+                  products={products} 
+                  tags={tags}/>} />
               <Route path='/admin' element={
                 <Admin
                   users={users}
