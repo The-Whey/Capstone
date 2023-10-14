@@ -18,7 +18,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
   return (
     <div>
       <h2>Products</h2>
-      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value}`: `/products`)}/>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
       <h3>{bookmarks.length} Bookmarks</h3>
       <h3>Search by Tag</h3>
       <ul>
@@ -28,7 +28,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
           </li>
         ))}
         {
-          products.filter(product => !term || product.name.indexOf(term) !== -1)
+          products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
           .map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
