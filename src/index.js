@@ -213,7 +213,8 @@ const App = ()=> {
               />
             </Routes>
             <main>
-              <Products
+            <Routes>
+            <Route path='/products' element={<Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -223,22 +224,38 @@ const App = ()=> {
                 bookmarks = {bookmarks}
                 createBookmark= { createBookmark}
                 removeBookmark={ removeBookmark}
-              />
-              <Cart
+              />}/>
+              <Route path='/products/search/:term' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              </Routes>
+              <Routes>
+                <Route path='/cart' element={<Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
-              />
-              <Orders
+              />}/>
+              </Routes>
+              <Routes>
+                <Route path='/orders' element={<Orders
                 orders = { orders }
                 setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
-              />
+              />}/>
+              </Routes>
             </main>
             </>
         ):(
@@ -255,17 +272,30 @@ const App = ()=> {
               createLineItem={createLineItem} 
               updateLineItem={updateLineItem}/>}/>
             </Routes>
-            <Products
-              tags={tags}
-              products={ products }
-              cartItems = { cartItems }
-              createLineItem = { createLineItem }
-              updateLineItem = { updateLineItem }
-              auth = { auth }
-              bookmarks = { bookmarks }
-              createBookmark= { createBookmark}
-              removeBookmark={ removeBookmark}
-            />
+            <Routes>
+            <Route path='/products' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              <Route path='/products/search/:term' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              </Routes>
           </div>
         )
       }
