@@ -212,7 +212,8 @@ const App = ()=> {
               />
             </Routes>
             <main>
-              <Products
+            <Routes>
+                <Route path='/products' element={<Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -222,22 +223,27 @@ const App = ()=> {
                 bookmarks = {bookmarks}
                 createBookmark= { createBookmark}
                 removeBookmark={ removeBookmark}
-              />
-              <Cart
+              />}/>
+              </Routes>
+              <Routes>
+                <Route path='/cart' element={<Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
-              />
-              <Orders
+              />}/>
+              </Routes>
+              <Routes>
+                <Route path='/orders' element={<Orders
                 orders = { orders }
                 setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
-              />
+              />}/>
+              </Routes>
             </main>
             </>
         ):(
