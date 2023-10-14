@@ -213,7 +213,18 @@ const App = ()=> {
             </Routes>
             <main>
             <Routes>
-                <Route path='/products' element={<Products
+            <Route path='/products' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              <Route path='/products/search/:term' element={<Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
