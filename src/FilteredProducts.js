@@ -15,6 +15,9 @@ const FilteredProducts = ({ products, tags }) => {
           <h3>
             <Link to={`/products/${product.id}`}>{product.name}</Link>
           </h3>
+          <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
+          <img src={product.image}/>
+          <p>{product.description}</p>
         </div>
       ))}
     </div>
