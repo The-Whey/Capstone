@@ -271,6 +271,10 @@ const App = ()=> {
               cartItems={cartItems} 
               createLineItem={createLineItem} 
               updateLineItem={updateLineItem}/>}/>
+              <Route path="/products/tags/:tag" element={
+                <FilteredProducts 
+                  products={products} 
+                  tags={tags}/>} />
             </Routes>
             <Routes>
             <Route path='/products' element={<Products
