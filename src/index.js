@@ -26,7 +26,7 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
-  const apikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
+  const HEREapikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
 
   const getHeaders = ()=> {
     return {
@@ -87,7 +87,6 @@ const App = ()=> {
     if(auth.id){
       const fetchData = async()=> {
         await api.fetchLineItems(setLineItems);
-        // await api.mapAutofill()
       };
       fetchData();
     }
@@ -132,9 +131,10 @@ const App = ()=> {
     await api.updateOrder({ order, setOrders });
   };
 
-  const addAddress = async(address)=> {
-    await api.addAddress(address);
-  };
+  // const addAddress = async(address)=> {
+  //   await api.addAddress(address);
+  //   console.log(fart)
+  // };
 
   const removeFromCart = async(lineItem)=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
@@ -239,7 +239,6 @@ const App = ()=> {
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
-                addAddress = {addAddress}
               />
               <Orders
                 orders = { orders }
@@ -248,7 +247,7 @@ const App = ()=> {
                 lineItems = { lineItems }
                 auth={auth}
               />
-              {/* <Map apikey={apikey} /> */}
+              <Map apikey={HEREapikey} />
             </main>
             </>
         ):(
@@ -276,6 +275,7 @@ const App = ()=> {
               createBookmark= { createBookmark}
               removeBookmark={ removeBookmark}
             />
+            <Map apikey={HEREapikey} />
           </div>
         )
       }

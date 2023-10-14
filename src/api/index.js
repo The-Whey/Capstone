@@ -74,9 +74,9 @@ const removeFromCart = async({ lineItem, lineItems, setLineItems })=> {
   setLineItems(lineItems.filter( _lineItem => _lineItem.id !== lineItem.id));
 };
 
-const addAddress = async(address) => {
-  // const response = await axios.post(`/api/addresses`, address);
-  console.log(address)
+const addAddress = async(json) => {
+  const response = await axios.post(`/api/orders/addresses`, json);
+  return response.data;
 }
 
 const attemptLoginWithToken = async(setAuth)=> {

@@ -24,8 +24,7 @@ const {
   findUserByToken,
   fetchUsers,
   fetchUser,
-  updateUser,
-  createAddress
+  updateUser
 } = require('./auth');
 
 const {
@@ -40,7 +39,8 @@ const {
   fetchBookmarks,
   createBookmark,
   deleteBookmark,
-  updateOrderFulfilled
+  updateOrderFulfilled,
+  createAddress
 } = require('./cart');
 
 const loadImage = (filepath) => {
@@ -154,9 +154,6 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
-  await createAddress({user_id: ethyl.id, data: {formatted_address: 'earth'}})
-  await createAddress({user_id: moe.id, data: {formatted_address: 'mars'}})
-
   const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
     createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),

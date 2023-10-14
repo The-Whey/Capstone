@@ -82,9 +82,9 @@ const deleteLineItem = async(lineItem)=> {
 
 const updateOrder = async(order)=> {
   const SQL = `
-    UPDATE orders SET is_cart = $1 WHERE id = $2 RETURNING *
+    UPDATE orders SET is_cart = $1, address =$2 WHERE id = $3 RETURNING *
   `;
-  const response = await client.query(SQL, [order.is_cart, order.id]);
+  const response = await client.query(SQL, [order.is_cart, order.address, order.id]);
   return response.rows[0];
 };
 
@@ -149,6 +149,14 @@ const deleteBookmark = async(bookmark)=> {
   await client.query(SQL, [bookmark.id, bookmark.user_id]);
 };
 
+const createAddress = async(json) => {
+  const SQL =`
+  INSERT INTO addresses (id, data, user_id, nickname) VALUES ($1, $2, $3, $4) RETURNING *
+  `;
+  const response = await client.query(SQL, [uuidv4(), json.data, json.user_id, json.nickname]);
+  return response.rows[0];
+}
+
 module.exports = {
   fetchLineItems,
   createLineItem,
@@ -161,5 +169,6 @@ module.exports = {
   fetchBookmarks,
   deleteBookmark,
   createBookmark,
-  updateOrderFulfilled
+  updateOrderFulfilled,
+  createAddress
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import H from '@here/maps-api-for-javascript';
-import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
 
 const Map = ( props ) => {
     const [test, setTest] = useState('')
@@ -8,10 +7,8 @@ const Map = ( props ) => {
     const map = useRef(null);
     const platform = useRef(null)
     const { apikey } = props;
-
-    const autocomplete = 'https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey={apikey}&query=Pariser+1+Berl&beginHighlight=<b>&endHighlight=</b>'  
     const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
-    console.log(test)
+
     useEffect(
         () => {
             // Check if the map object has already been created
@@ -58,10 +55,6 @@ const Map = ( props ) => {
         // Return a div element to hold the map
         return (
         <div>
-            <h3>This is an input</h3>
-            <GeoapifyContext apiKey={geoapifyapikey}>
-             <GeoapifyGeocoderAutocomplete  placeSelect={(value) => setTest(value)}/>
-            </GeoapifyContext>
             <h3>This is a map</h3>
             <div style={ { width: "100%", height: "150px" } } ref={mapRef} />
         </div>);

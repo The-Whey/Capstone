@@ -5,7 +5,8 @@ const {
   fetchAllOrders,
   deleteBookmark,
   createBookmark,
-  updateOrderFulfilled
+  updateOrderFulfilled,
+  createAddress
 } = require('../db');
 
 
@@ -77,5 +78,13 @@ app.post('/bookmarks', isLoggedIn, async(req, res, next)=> {
     next(ex);
   }
 });
+
+app.post('/addresses', async(req, res, next)=> {
+  try {
+    res.send(await createAddress(req.body))
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = app;
