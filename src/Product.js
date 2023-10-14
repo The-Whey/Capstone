@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from './ReviewForm';
+import Edit from './Edit';
 
 const Product = ({
   products,
+  setProducts,
   reviews,
   auth,
   cartItems,
@@ -12,6 +14,7 @@ const Product = ({
   handleReviewSubmission,
   tags,
 }) => {
+  const [editMode, setEditMode] = useState(false)
   const { id } = useParams();
   const product = products.find((item) => item.id === id);
   if (!product){return <div>Loading</div>}
@@ -19,9 +22,10 @@ const Product = ({
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
   const productTags = tags.filter((tag) => tag.product_id === product.id);
 
-  return product ? (
+  if (product && !editMode) return (
     <>
-      <h2>{product.name}</h2>
+
+      <h2>{product.name} {auth.is_admin ? <button onClick={() => setEditMode(true)} >Edit Product</button> : null}</h2>
       <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
       <img src={product.image}/>
       <p>{product.description}</p>
@@ -44,9 +48,11 @@ const Product = ({
 
       {auth.id && <ReviewForm productId={product.id} />}
     </>
-  ) : (
-    <h2>Loading</h2>
-  );
+  )
+
+  if (product && editMode) return (
+    <Edit products={products} setProducts={setProducts} setEditMode={setEditMode}/>
+  )
 };
 
 export default Product;
