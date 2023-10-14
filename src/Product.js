@@ -21,7 +21,6 @@ const Product = ({
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
   const productTags = tags.filter((tag) => tag.product_id === product.id);
-
   if (product && !editMode) return (
     <>
 

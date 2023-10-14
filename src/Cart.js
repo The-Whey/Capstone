@@ -4,7 +4,7 @@ import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-g
 import api from './api';
 
 
-const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem })=> {
+const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses })=> {
   const [addressMode, setAddressMode] = useState(false);
   const [data, setData] = useState({})
   const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
@@ -18,6 +18,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
   const submitOrder = async() => {
     const json = {data, user_id: cart.user_id}
     const response = await api.addAddress(json)
+    setAddresses([...addresses, response])
     updateOrder({...cart, is_cart: false, address: response.id })
     setAddressMode(false)
     // when routing is done have this navigate to orders.

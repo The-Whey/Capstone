@@ -103,14 +103,11 @@ const App = ()=> {
   }, [auth, lineItems])
 
   useEffect(() => {
-    if(auth.is_admin){
-      const fetchAddresses = async() =>{
-        await api.fetchAddresses(setAddresses)
-      }
-      fetchAddresses();
-      
+    const fetchAddresses = async() =>{
+      await api.fetchAddresses(setAddresses)
     }
-  }, [orders])
+    fetchAddresses();
+  }, [orders, auth])
 
   useEffect(() => {
     if(auth.is_admin){
@@ -213,7 +210,8 @@ const App = ()=> {
                   allOrders={allOrders}
                   setAllOrders = {setAllOrders}
                   allLineItems={allLineItems}
-                  auth={auth} />}
+                  auth={auth}
+                  addresses={addresses} />}
               />
               <Route path='/products/:id/edit' element={
                 <Edit 
@@ -245,6 +243,8 @@ const App = ()=> {
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
+                setAddresses = {setAddresses}
+                addresses = {addresses}
               />
               <Orders
                 orders = { orders }
@@ -252,6 +252,7 @@ const App = ()=> {
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
+                addresses={addresses}
               />
               <Map apikey={HEREapikey} />
             </main>

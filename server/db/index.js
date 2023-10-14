@@ -179,11 +179,12 @@ const seed = async()=> {
     createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
     createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
   ]);
-
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
+  const address = await createAddress({user_id: ethyl.id, data: {properties: {formatted: '742 Evergreen Terrace, Springfield, MO 77747'}}})
   cart.is_cart = false;
+  cart.address = address.id
   await updateOrder(cart);
   const [string, percussion, keyboards, woodwinds] = await Promise.all([
     createTags({tag : "string"}),
@@ -191,7 +192,6 @@ const seed = async()=> {
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
-
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),
