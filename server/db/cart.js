@@ -157,6 +157,14 @@ const createAddress = async(json) => {
   return response.rows[0];
 }
 
+const fetchAddresses = async() => {
+  const SQL =`
+  SELECT * FROM addresses
+  `;
+  const response = await client.query(SQL);
+  return response.rows;
+}
+
 module.exports = {
   fetchLineItems,
   createLineItem,
@@ -170,5 +178,6 @@ module.exports = {
   deleteBookmark,
   createBookmark,
   updateOrderFulfilled,
-  createAddress
+  createAddress,
+  fetchAddresses
 };

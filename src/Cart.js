@@ -18,7 +18,6 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
   const submitOrder = async() => {
     const json = {data, user_id: cart.user_id}
     const response = await api.addAddress(json)
-    console.log(response)
     updateOrder({...cart, is_cart: false, address: response.id })
     setAddressMode(false)
     // when routing is done have this navigate to orders.

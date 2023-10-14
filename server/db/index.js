@@ -40,7 +40,8 @@ const {
   createBookmark,
   deleteBookmark,
   updateOrderFulfilled,
-  createAddress
+  createAddress,
+  fetchAddresses
 } = require('./cart');
 
 const loadImage = (filepath) => {
@@ -226,5 +227,6 @@ module.exports = {
   createBookmark,
   updateOrderFulfilled,
   createAddress,
+  fetchAddresses,
   client
 };

@@ -26,6 +26,7 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
+  const [addresses, setAddresses] = useState([]);
   const HEREapikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
 
   const getHeaders = ()=> {
@@ -103,6 +104,16 @@ const App = ()=> {
 
   useEffect(() => {
     if(auth.is_admin){
+      const fetchAddresses = async() =>{
+        await api.fetchAddresses(setAddresses)
+      }
+      fetchAddresses();
+      
+    }
+  }, [orders])
+
+  useEffect(() => {
+    if(auth.is_admin){
       const fetchData = async() => {
         await api.fetchUsers(setUsers);
       }
@@ -130,11 +141,6 @@ const App = ()=> {
   const updateOrder = async(order)=> {
     await api.updateOrder({ order, setOrders });
   };
-
-  // const addAddress = async(address)=> {
-  //   await api.addAddress(address);
-  //   console.log(fart)
-  // };
 
   const removeFromCart = async(lineItem)=> {
     await api.removeFromCart({ lineItem, lineItems, setLineItems });
