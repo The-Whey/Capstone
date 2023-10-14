@@ -68,6 +68,7 @@ const seed = async()=> {
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS addresses;
     DROP TABLE IF EXISTS users;
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -94,7 +95,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       data JSON DEFAULT '{}',
-      user_id UUID REFERENCES users(id) NOT NULL
+      user_id UUID REFERENCES users(id) NOT NULL,
+      nickname VARCHAR(50)
     );
 
     CREATE TABLE orders(
@@ -102,7 +104,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
       user_id UUID REFERENCES users(id) NOT NULL,
-      fulfilled BOOLEAN NOT NULL DEFAULT false
+      fulfilled BOOLEAN NOT NULL DEFAULT false,
+      address UUID REFERENCES addresses(id)
     );
 
     CREATE TABLE line_items(

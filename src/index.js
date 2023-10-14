@@ -35,7 +35,7 @@ const App = ()=> {
       }
     };
   };
-
+  
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
@@ -87,6 +87,7 @@ const App = ()=> {
     if(auth.id){
       const fetchData = async()=> {
         await api.fetchLineItems(setLineItems);
+        // await api.mapAutofill()
       };
       fetchData();
     }
@@ -129,6 +130,10 @@ const App = ()=> {
 
   const updateOrder = async(order)=> {
     await api.updateOrder({ order, setOrders });
+  };
+
+  const addAddress = async(address)=> {
+    await api.addAddress(address);
   };
 
   const removeFromCart = async(lineItem)=> {
@@ -234,6 +239,7 @@ const App = ()=> {
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
+                addAddress = {addAddress}
               />
               <Orders
                 orders = { orders }
@@ -242,7 +248,7 @@ const App = ()=> {
                 lineItems = { lineItems }
                 auth={auth}
               />
-              <Map apikey={apikey} />
+              {/* <Map apikey={apikey} /> */}
             </main>
             </>
         ):(
