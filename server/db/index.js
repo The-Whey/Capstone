@@ -24,8 +24,7 @@ const {
   findUserByToken,
   fetchUsers,
   fetchUser,
-  updateUser,
-  createAddress
+  updateUser
 } = require('./auth');
 
 const {
@@ -40,7 +39,9 @@ const {
   fetchBookmarks,
   createBookmark,
   deleteBookmark,
-  updateOrderFulfilled
+  updateOrderFulfilled,
+  createAddress,
+  fetchAddresses
 } = require('./cart');
 
 const loadImage = (filepath) => {
@@ -68,6 +69,7 @@ const seed = async()=> {
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS addresses;
     DROP TABLE IF EXISTS users;
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -94,7 +96,8 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       data JSON DEFAULT '{}',
-      user_id UUID REFERENCES users(id) NOT NULL
+      user_id UUID REFERENCES users(id) NOT NULL,
+      nickname VARCHAR(50)
     );
 
     CREATE TABLE orders(
@@ -102,7 +105,8 @@ const seed = async()=> {
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
       user_id UUID REFERENCES users(id) NOT NULL,
-      fulfilled BOOLEAN NOT NULL DEFAULT false
+      fulfilled BOOLEAN NOT NULL DEFAULT false,
+      address UUID REFERENCES addresses(id)
     );
 
     CREATE TABLE line_items(
@@ -151,9 +155,6 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
-  await createAddress({user_id: ethyl.id, data: {formatted_address: 'earth'}})
-  await createAddress({user_id: moe.id, data: {formatted_address: 'mars'}})
-
   const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
     createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
@@ -178,11 +179,12 @@ const seed = async()=> {
     createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
     createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
   ]);
-
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
+  const address = await createAddress({user_id: ethyl.id, data: {properties: {formatted: '742 Evergreen Terrace, Springfield, MO 77747'}}})
   cart.is_cart = false;
+  cart.address = address.id
   await updateOrder(cart);
   const [string, percussion, keyboards, woodwinds] = await Promise.all([
     createTags({tag : "string"}),
@@ -190,7 +192,6 @@ const seed = async()=> {
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
-
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),
@@ -226,5 +227,6 @@ module.exports = {
   createBookmark,
   updateOrderFulfilled,
   createAddress,
+  fetchAddresses,
   client
 };

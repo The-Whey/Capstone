@@ -96,19 +96,11 @@ const fetchUsers = async() => {
   return response.rows
 }
 
-const createAddress = async(json) => {
-  const SQL =`
-  INSERT INTO addresses (id, data, user_id) VALUES ($1, $2, $3)
-  `;
-  const response = await client.query(SQL, [uuidv4(), json.data, json.user_id])
-}
-
 module.exports = {
   createUser,
   authenticate,
   findUserByToken,
   fetchUsers,
   fetchUser,
-  updateUser,
-  createAddress
+  updateUser
 };

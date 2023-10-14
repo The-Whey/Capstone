@@ -26,7 +26,8 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
-  const apikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
+  const [addresses, setAddresses] = useState([]);
+  const HEREapikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
 
   const getHeaders = ()=> {
     return {
@@ -35,7 +36,7 @@ const App = ()=> {
       }
     };
   };
-
+  
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
@@ -100,6 +101,13 @@ const App = ()=> {
       fetchData()
     }
   }, [auth, lineItems])
+
+  useEffect(() => {
+    const fetchAddresses = async() =>{
+      await api.fetchAddresses(setAddresses)
+    }
+    fetchAddresses();
+  }, [orders, auth])
 
   useEffect(() => {
     if(auth.is_admin){
@@ -202,7 +210,8 @@ const App = ()=> {
                   allOrders={allOrders}
                   setAllOrders = {setAllOrders}
                   allLineItems={allLineItems}
-                  auth={auth} />}
+                  auth={auth}
+                  addresses={addresses} />}
               />
               <Route path='/products/:id/edit' element={
                 <Edit 
@@ -248,7 +257,10 @@ const App = ()=> {
                 updateOrder = { updateOrder }
                 removeFromCart = { removeFromCart }
                 updateLineItem = { updateLineItem }
-              />}/>
+                setAddresses = {setAddresses}
+                addresses = {addresses}
+              />
+
               </Routes>
               <Routes>
                 <Route path='/orders' element={<Orders
@@ -257,9 +269,11 @@ const App = ()=> {
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
+                addresses={addresses}
                 />}/>
               </Routes>
               <Map apikey={apikey} />
+
             </main>
             </>
         ):(
@@ -304,6 +318,7 @@ const App = ()=> {
                 removeBookmark={ removeBookmark}
               />}/>
               </Routes>
+              <Map apikey={HEREapikey} />
           </div>
         )
       }

@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import H from '@here/maps-api-for-javascript';
 
 const Map = ( props ) => {
+    const [test, setTest] = useState('')
     const mapRef = useRef(null);
     const map = useRef(null);
     const platform = useRef(null)
     const { apikey } = props;
+    const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
 
     useEffect(
         () => {
@@ -51,7 +53,11 @@ const Map = ( props ) => {
         );
         
         // Return a div element to hold the map
-        return <div style={ { width: "100%", height: "500px" } } ref={mapRef} />;
+        return (
+        <div>
+            <h3>This is a map</h3>
+            <div style={ { width: "100%", height: "150px" } } ref={mapRef} />
+        </div>);
    }
 
 export default Map;

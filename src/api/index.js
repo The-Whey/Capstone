@@ -12,6 +12,12 @@ const fetchProducts = async(setProducts)=> {
   const response = await axios.get('/api/products');
   setProducts(response.data);
 };
+
+const fetchAddresses = async(setAddresses) => {
+  const response = await axios.get('/api/orders/addresses');
+  setAddresses(response.data)
+}
+
 const fetchTags = async(setTags)=> {
   const response = await axios.get('/api/tags');
   setTags(response.data);
@@ -74,6 +80,11 @@ const removeFromCart = async({ lineItem, lineItems, setLineItems })=> {
   setLineItems(lineItems.filter( _lineItem => _lineItem.id !== lineItem.id));
 };
 
+const addAddress = async(json) => {
+  const response = await axios.post(`/api/orders/addresses`, json);
+  return response.data;
+}
+
 const attemptLoginWithToken = async(setAuth)=> {
   const token = window.localStorage.getItem('token');
   if(token){
@@ -112,7 +123,7 @@ const createUser = async(user) => {
   await axios.post('/api/users', user);
 }
 
-const updateUser = async(user) => {
+const setVipStatus = async(user) => {
   const response = await axios.put(`/api/users/${user.id}`, user);
   return response.data;
 }
@@ -145,14 +156,16 @@ const api = {
   updateOrder,
   removeFromCart,
   attemptLoginWithToken,
-  updateUser,
+  setVipStatus,
   submitNewProduct,
   editProduct,
   createUser,
   fetchAllOrders,
   fetchAllLineItems,
   orderFulfilled,
-  fetchTags
+  addAddress,
+  fetchTags,
+  fetchAddresses
 };
 
 export default api;
