@@ -271,17 +271,30 @@ const App = ()=> {
               createLineItem={createLineItem} 
               updateLineItem={updateLineItem}/>}/>
             </Routes>
-            <Products
-              tags={tags}
-              products={ products }
-              cartItems = { cartItems }
-              createLineItem = { createLineItem }
-              updateLineItem = { updateLineItem }
-              auth = { auth }
-              bookmarks = { bookmarks }
-              createBookmark= { createBookmark}
-              removeBookmark={ removeBookmark}
-            />
+            <Routes>
+            <Route path='/products' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              <Route path='/products/search/:term' element={<Products
+                tags={tags}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+              />}/>
+              </Routes>
           </div>
         )
       }
