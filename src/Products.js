@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   return (
@@ -13,10 +13,14 @@ const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
 
 const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark, tags})=> {
   const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
+  const navigate = useNavigate();
+  const {term}=useParams();
   return (
     <div>
       <h2>Products</h2>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
       <h3>{bookmarks.length} Bookmarks</h3>
+      <h3>Search by Tag</h3>
       <ul>
         {uniqueTagNames.map((tagName) => (
           <li key={tagName}>
@@ -24,7 +28,8 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
           </li>
         ))}
         {
-          products.map( product => {
+          products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
+          .map( product => {
             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
             return (
               <div key={ product.id }>
