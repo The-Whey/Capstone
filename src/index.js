@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Link, HashRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import Admin from './Admin';
 import Edit from './Edit';
 import Profile from './Profile';
 import FilteredProducts from './FilteredProducts';
+import Map from './Map';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,8 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
+  const apikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
+
   const getHeaders = ()=> {
     return {
       headers: {
@@ -254,8 +257,9 @@ const App = ()=> {
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
-              />}/>
+                />}/>
               </Routes>
+              <Map apikey={apikey} />
             </main>
             </>
         ):(

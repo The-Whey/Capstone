@@ -24,7 +24,8 @@ const {
   findUserByToken,
   fetchUsers,
   fetchUser,
-  updateUser
+  updateUser,
+  createAddress
 } = require('./auth');
 
 const {
@@ -89,6 +90,13 @@ const seed = async()=> {
       image TEXT DEFAULT '${productImage}'
     );
 
+    CREATE TABLE addresses(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      data JSON DEFAULT '{}',
+      user_id UUID REFERENCES users(id) NOT NULL
+    );
+
     CREATE TABLE orders(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
@@ -143,6 +151,8 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
+  await createAddress({user_id: ethyl.id, data: {formatted_address: 'earth'}})
+  await createAddress({user_id: moe.id, data: {formatted_address: 'mars'}})
 
   const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
@@ -215,5 +225,6 @@ module.exports = {
   deleteBookmark,
   createBookmark,
   updateOrderFulfilled,
+  createAddress,
   client
 };
