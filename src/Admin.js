@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import api from './api';
 import Orders from './Orders';
 
-const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders, allLineItems, auth}) => {
+const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders, allLineItems, auth, addresses}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
 
   const setVipTrue = async (user) => {
     user.is_vip = true;
-    const response = await api.setVipStatus(user);
+    const response = await api.updateUser(user);
     setUsers(users.map(item => item.id === response.id ? response : item))
   }
 
   const setVipFalse = async (user) => {
     user.is_vip = false;
-    const response = await api.setVipStatus(user);
+    const response = await api.updateUser(user);
     setUsers(users.map(item => item.id === response.id ? response : item)) 
   }
 
@@ -51,10 +51,7 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
         <button disabled={!name || !description || price === 0}>Create New Product</button>
       </form>
       <hr/>
-      <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth}/>
-      <hr/>
-      <h3>---- end of admin page here ----</h3>
-      <hr/>
+      <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth} addresses={addresses} users={users}/>
     </div>
   )
 }

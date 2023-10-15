@@ -11,13 +11,21 @@ const fetchTags = async()=> {
   return response.rows;
 };
 
+const fetchTagList = async() => {
+  const SQL = `
+    SELECT * FROM tags
+  `;
+  const response = await client.query(SQL);
+  return response.rows
+}
 
-const insertProductTags = async (product_id, tag_id) => {
+
+const insertProductTags = async (product_id, tag_id, tag) => {
 
       const SQL = `
-        INSERT INTO product_tags (id, product_id, tag_id) VALUES ($1, $2, $3)  RETURNING *;
+        INSERT INTO product_tags (id, product_id, tag_id, tag) VALUES ($1, $2, $3, $4)  RETURNING *;
       `
-      const response = await client.query(SQL, [uuidv4(), product_id, tag_id])
+      const response = await client.query(SQL, [uuidv4(), product_id, tag_id, tag])
       return response.rows;
     }
   
@@ -36,4 +44,5 @@ module.exports = {
   fetchTags,
   insertProductTags,
   createTags,
+  fetchTagList
 };
