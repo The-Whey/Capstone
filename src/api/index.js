@@ -130,7 +130,7 @@ const orderFulfilled = async(json) => {
 
 const submitReview = async (json) => {
   try {
-    const existingReviews = await axios.get(`/api/products/reviews?product_id=${json.product_id}&user_id=${json.user_id}`);
+    const existingReviews = await axios.post(`/api/products/reviews?product_id=${json.product_id}&user_id=${json.user_id}`, json);
 
     if (existingReviews.data.length > 0) {
       return {

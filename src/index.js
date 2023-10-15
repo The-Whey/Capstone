@@ -24,7 +24,6 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
 
-  console.log(reviews);
 
   const getHeaders = ()=> {
     return {

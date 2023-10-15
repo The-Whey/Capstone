@@ -6,11 +6,15 @@ const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews, onEr
   const [rating, setRating] = useState(0);
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const handleReviewSubmission = async () => {
+console.log(reviewText);
+console.log(rating);
+  const handleReviewSubmission = async (ev) => {
+    ev.preventDefault()
     try {
-      const json = { txt: reviewText, rating, product_id: productId };
+      console.log(productId);
+      const json = { txt: reviewText, rating, product_id: productId, user_id:auth.id };
       const response = await api.submitReview(json);
+      console.log(response);
 
       if (response.error) {
         console.error(response.error);
@@ -25,13 +29,13 @@ const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews, onEr
     }
   };
 
-  useEffect(() => {
-    if (existingReview) {
-      setHasSubmittedReview(true);
-      setReviewText(existingReview.txt);
-      setRating(existingReview.rating);
-    }
-  }, [existingReview]);
+  // useEffect(() => {
+  //   if (existingReview) {
+  //     setHasSubmittedReview(true);
+  //     setReviewText(existingReview.txt);
+  //     setRating(existingReview.rating);
+  //   }
+  // }, [existingReview]);
 
   return (
     <div>
