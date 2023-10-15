@@ -226,7 +226,8 @@ const App = ()=> {
                   users={users}
                   addresses={addresses} />}/>
 
-              <Route path='/products' element={<Products
+              <Route path='/products' element={
+              <Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -238,7 +239,8 @@ const App = ()=> {
                 removeBookmark={ removeBookmark}
               />}/>
 
-              <Route path='/products/search/:term' element={<Products
+              <Route path='/products/search/:term' element={
+              <Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -250,7 +252,8 @@ const App = ()=> {
                 removeBookmark={ removeBookmark}
               />}/>
 
-              <Route path='/cart' element={<Cart
+              <Route path='/cart' element={
+              <Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
@@ -259,6 +262,7 @@ const App = ()=> {
                 updateLineItem = { updateLineItem }
                 setAddresses = {setAddresses}
                 addresses = {addresses}
+                auth={auth}
               />}/>
 
               <Route path='/orders' element={<Orders

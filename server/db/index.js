@@ -182,7 +182,7 @@ const seed = async()=> {
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
-  const address = await createAddress({user_id: ethyl.id, data: {properties: {formatted: '742 Evergreen Terrace, Springfield, MO 77747'}}})
+  const address = await createAddress({user_id: ethyl.id, nickname: 'Home', data: {properties: {formatted: '742 Evergreen Terrace, Springfield, MO 77747'}}})
   cart.is_cart = false;
   cart.address = address.id
   await updateOrder(cart);

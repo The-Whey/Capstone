@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
 import api from './api';
 
 
-const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses })=> {
-  const [addressMode, setAddressMode] = useState(false); 
+const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses, auth })=> {
+  const [addressMode, setAddressMode] = useState(false);
   const [data, setData] = useState({})
   const [checked, setChecked] = useState(false)
   const [nickname, setNickname] = useState('');
+  const [savedAddresses, setSavedAddresses] = useState([])
   const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
 
   // Update adds 1 to quantity, so i subtract two here to make it subtract 1 instead of adding.
@@ -18,14 +19,16 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
   }
   let totalPrice = 0;
 
-  const submitOrder = async() => {
+  const submitOrder = async(addy) => {
+    if (!savedAddresses.length){
     const json = {data, user_id: cart.user_id}
     if (nickname) json.nickname = nickname;
-    console.log(json)
     const response = await api.addAddress(json)
-    console.log(response)
     setAddresses([...addresses, response])
     updateOrder({...cart, is_cart: false, address: response.id })
+    } else {
+    updateOrder({...cart, is_cart: false, address: addy.id })
+    }
     setAddressMode(false)
     // when routing is done have this navigate to orders.
   }
@@ -34,6 +37,12 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     setChecked(!checked);
   }
 
+  useEffect(() => {
+    if(addresses){
+      const useraddresses = addresses.filter(addy => addy.user_id === auth.id).filter(addy => addy.nickname)
+      setSavedAddresses(useraddresses)
+    }
+  }, [addresses, auth])
 
  if (!addressMode) return (
     <div>
@@ -64,7 +73,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     </div>
   );
 
-  if (addressMode) return (
+  if (addressMode) return !savedAddresses.length ?(
     <div>
       <h3>Where do you want your order shipped?</h3>
       <GeoapifyContext  apiKey={geoapifyapikey}>
@@ -77,9 +86,20 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
           Save address for future purchases?
         </label>
       </div>
+
       <br/>
       <button disabled={!Object.keys(data).length} onClick={() => submitOrder()}>Submit Order</button>
       <button onClick={() => setAddressMode(false)}>Cancel</button>
+    </div>
+  ): (
+    <div>
+      <h2>Where should we send your package?</h2>
+      {
+        savedAddresses.map(addy => {
+          return <button onClick={() => submitOrder(addy)} key={addy.id}>{addy.nickname}</button>
+        })
+      }
+      <button onClick={() => setSavedAddresses([])}>Somewhere Else</button>
     </div>
   )
 };
