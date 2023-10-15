@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
 import api from './api';
 
 
 const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses, auth })=> {
   const [addressMode, setAddressMode] = useState(false);
-  const [data, setData] = useState({})
-  const [checked, setChecked] = useState(false)
+  const [data, setData] = useState({});
+  const [checked, setChecked] = useState(false);
   const [nickname, setNickname] = useState('');
-  const [savedAddresses, setSavedAddresses] = useState([])
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const navigate = useNavigate();
   const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
 
   // Update adds 1 to quantity, so i subtract two here to make it subtract 1 instead of adding.
@@ -30,7 +31,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     updateOrder({...cart, is_cart: false, address: addy.id })
     }
     setAddressMode(false)
-    // when routing is done have this navigate to orders.
+    navigate('/orders')
   }
 
   const handlCheck = async() => {
