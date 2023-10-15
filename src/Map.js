@@ -55,7 +55,6 @@ const Map = ( props ) => {
         // Return a div element to hold the map
         return (
         <div>
-            <h3>This is a map</h3>
             <div style={ { width: "100%", height: "150px" } } ref={mapRef} />
         </div>);
    }
