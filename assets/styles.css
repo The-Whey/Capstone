@@ -24,3 +24,6 @@ nav a {
 nav a:hover {
   color: dodgerblue;
 }
+.uniqueTags a:hover {
+  color: tomato;
+}

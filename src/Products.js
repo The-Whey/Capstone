@@ -21,12 +21,12 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
       <h3>{bookmarks.length} Bookmarks</h3>
       <h3>Search by Tag</h3>
-      <ul>
+      <ul className='uniqueTags'>
         {uniqueTagNames.map((tagName) => (
           <li key={tagName}>
             <Link to={`/products/tags/${tagName}`}>{tagName}</Link>
           </li>
-        ))}
+        ))}</ul><ul>
         {
           products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
           .map( product => {
