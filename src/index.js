@@ -201,6 +201,7 @@ const App = ()=> {
                   products={products}
                   setProducts={setProducts} 
                   reviews={reviews}
+                  setReviews={setReviews}
                   auth={auth} 
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
@@ -309,6 +310,8 @@ const App = ()=> {
                 tags={tags}
                 products={products} 
                 auth={auth} 
+                reviews={reviews}
+                setReviews={setReviews}
                 cartItems={cartItems} 
                 createLineItem={createLineItem} 
                 updateLineItem={updateLineItem}
@@ -325,6 +328,8 @@ const App = ()=> {
                     tags={tags}
                     tagsList = {tagsList}
                     auth = { auth }
+                    reviews={reviews}
+                    setReviews={setReviews}
                     products={ products }
                     cartItems = { cartItems }
                     createLineItem = { createLineItem }
@@ -339,6 +344,8 @@ const App = ()=> {
                     tags={tags}
                     tagsList={tagsList}
                     auth = { auth }
+                    reviews={reviews}
+                    setReviews={setReviews}
                     products={ products }
                     cartItems = { cartItems }
                     createLineItem = { createLineItem }

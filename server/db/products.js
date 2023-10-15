@@ -31,9 +31,9 @@ const createProduct = async(product)=> {
 
 const createReview = async(review)=> {
   const SQL = `
-  INSERT INTO reviews (id, product_id, txt, rating) VALUES($1, $2, $3, $4) RETURNING * 
+  INSERT INTO reviews (id, product_id, user_id, txt, rating) VALUES($1, $2, $3, $4, $5) RETURNING * 
   `;
-  const response = await client.query(SQL, [ uuidv4(), review.product_id, review.txt, review.rating]);
+  const response = await client.query(SQL, [ uuidv4(), review.product_id, review.user_id, review.txt, review.rating]);
   return response.rows[0];
 };
 

@@ -45,6 +45,29 @@ const {
   fetchAddresses
 } = require('./cart');
 
+const createBookmark = async(bookmark)=> {
+  const SQL = `
+  INSERT INTO bookmarks (product_id, user_id, id) VALUES($1, $2, $3) RETURNING *
+`;
+ response = await client.query(SQL, [ bookmark.product_id, bookmark.user_id, uuidv4()]);
+  return response.rows[0];
+};
+
+const checkExistingReview = async (user_id, product_id) => {
+  const SQL = `
+    SELECT *
+    FROM reviews
+    WHERE user_id = $1 AND product_id = $2
+  `;
+  const response = await client.query(SQL, [user_id, product_id]);
+
+  if (response.rows.length > 0) {
+    return response.rows[0];
+  } else {
+    return null;
+  }
+};
+
 const loadImage = (filepath) => {
   return new Promise((resolve, reject) => {
     const fullPath = path.join(__dirname, filepath)
@@ -143,8 +166,10 @@ const seed = async()=> {
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       product_id UUID REFERENCES products(id) NOT NULL,
+      user_id UUID REFERENCES users(id) NOT NULL,
       txt VARCHAR(3000) NOT NULL,
-      rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
+      rating INTEGER NOT NULL CHECK (rating>0 AND rating<6),
+      CONSTRAINT unique_user_product_review UNIQUE (user_id, product_id)
     );
   `;
   
@@ -176,12 +201,11 @@ const seed = async()=> {
   
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
-  await Promise.all([
-    createReview({ product_id: bass.id, txt: loremIpsum, rating: '4' }),
-    createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
-    createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
+  const [reviews] = await Promise.all([
+    createReview({ product_id: bass.id, user_id: moe.id, txt: loremIpsum, rating: '4' }),
+    createReview({ product_id: guitar.id, user_id: moe.id, txt: loremIpsum, rating: '5' }),
+    createReview({ product_id: bass.id, user_id: ethyl.id, txt: loremIpsum, rating: '1' })
   ]);
-
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
@@ -231,6 +255,7 @@ module.exports = {
   deleteBookmark,
   createBookmark,
   updateOrderFulfilled,
+  checkExistingReview,
   createAddress,
   fetchAddresses,
   fetchTagList,

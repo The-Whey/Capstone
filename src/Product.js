@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from './ReviewForm';
+import api from "./api";
 import Edit from './Edit';
 
 const Product = ({
   products,
   setProducts,
   reviews,
+  setReviews,
   auth,
   cartItems,
   createLineItem,
@@ -20,6 +22,29 @@ const Product = ({
   if (!product){return <div>Loading</div>}
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleReviewError = (error) => {
+    setErrorMessage(error);
+  };
+
+  const handleReviewSubmission = async () => {
+    try {
+      const response = await api.submitReview(json);
+  
+      if (response.error) {
+        console.error(response.error);
+        handleReviewError(response.error); 
+      } else {
+        setReviews([...reviews, response]);
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      handleReviewError("An error occurred while submitting your review.");
+    }
+  };
+  
   const productTags = tags.filter((tag) => tag.product_id === product.id);
   if (product && !editMode) return (
     <>
@@ -31,6 +56,7 @@ const Product = ({
       {productReviews.map((review) => (
         <p key={review.id}>{review.text}</p> 
       ))}
+      {errorMessage && <p>{errorMessage}</p>} 
       <h5>Tags:</h5>
       <ul>
         {productTags.map((tag) => (
@@ -45,7 +71,7 @@ const Product = ({
         )
       ) : null}
 
-      {auth.id && <ReviewForm productId={product.id} />}
+      {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
     </>
   )
 
