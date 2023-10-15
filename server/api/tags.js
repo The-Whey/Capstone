@@ -1,5 +1,6 @@
 const {
     fetchTags,
+    fetchTagList
   } = require('../db');
   
   const express = require('express');
@@ -23,6 +24,14 @@ const {
       next(error)
     }
   });
+
+  app.get('/list', async(req, res, next) => {
+    try {
+      res.send(await fetchTagList())
+    } catch (error) {
+      next(error)
+    }
+  })
   
   
   module.exports = app;

@@ -26,6 +26,7 @@ const App = ()=> {
   const [reviews, setReviews] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
+  const [tagsList, setTagsList] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const HEREapikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
 
@@ -51,12 +52,20 @@ const App = ()=> {
     };
     fetchData();
   }, []);
+
   useEffect(()=> {
     const fetchData = async()=> {
       await api.fetchTags(setTags);
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      await api.fetchTagsList(setTagsList);
+    }
+    fetchData()
+  }, [])
 
   useEffect(()=> {
     const fetchData = async()=> {
@@ -195,12 +204,14 @@ const App = ()=> {
                   auth={auth} 
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
-                  updateLineItem={updateLineItem}/>}/>
+                  updateLineItem={updateLineItem}
+                />}/>
                   
               <Route path="/products/tags/:tag" element={
                 <FilteredProducts 
                   products={products} 
-                  tags={tags}/>} />
+                  tags={tags}
+                />} />
 
               <Route path='/admin' element={
                 <Admin
@@ -213,67 +224,72 @@ const App = ()=> {
                   setAllOrders = {setAllOrders}
                   allLineItems={allLineItems}
                   auth={auth}
-                  addresses={addresses} />}/>
+                  addresses={addresses} 
+                />}/>
 
               <Route path='/products/:id/edit' element={
                 <Edit 
                   products={products}
-                  setProducts={setProducts} />}/>
+                  setProducts={setProducts} 
+                />}/>
 
               <Route path='/profile' element={
                 <Profile
                   auth={auth}
                   users={users}
-                  addresses={addresses} />}/>
+                  addresses={addresses} 
+                />}/>
 
               <Route path='/products' element={
-              <Products
-                tags={tags}
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-                bookmarks = {bookmarks}
-                createBookmark= { createBookmark}
-                removeBookmark={ removeBookmark}
+                <Products
+                  tags={tags}
+                  tagsList={tagsList}
+                  auth = { auth }
+                  products={ products }
+                  cartItems = { cartItems }
+                  createLineItem = { createLineItem }
+                  updateLineItem = { updateLineItem }
+                  bookmarks = {bookmarks}
+                  createBookmark= { createBookmark}
+                  removeBookmark={ removeBookmark}
               />}/>
 
               <Route path='/products/search/:term' element={
-              <Products
-                tags={tags}
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-                bookmarks = {bookmarks}
-                createBookmark= { createBookmark}
-                removeBookmark={ removeBookmark}
+                <Products
+                  tags={tags}
+                  tagsList={tagsList}
+                  auth = { auth }
+                  products={ products }
+                  cartItems = { cartItems }
+                  createLineItem = { createLineItem }
+                  updateLineItem = { updateLineItem }
+                  bookmarks = {bookmarks}
+                  createBookmark= { createBookmark}
+                  removeBookmark={ removeBookmark}
               />}/>
 
               <Route path='/cart' element={
-              <Cart
-                cart = { cart }
-                lineItems = { lineItems }
-                products = { products }
-                updateOrder = { updateOrder }
-                removeFromCart = { removeFromCart }
-                updateLineItem = { updateLineItem }
-                setAddresses = {setAddresses}
-                addresses = {addresses}
-                auth={auth}
+                <Cart
+                  cart = { cart }
+                  lineItems = { lineItems }
+                  products = { products }
+                  updateOrder = { updateOrder }
+                  removeFromCart = { removeFromCart }
+                  updateLineItem = { updateLineItem }
+                  setAddresses = {setAddresses}
+                  addresses = {addresses}
+                  auth={auth}
               />}/>
 
               <Route path='/orders' element={
-              <Orders
-                orders = { orders }
-                setorders={ setOrders}
-                products = { products }
-                lineItems = { lineItems }
-                auth={auth}
-                addresses={addresses}
-                users={users}
+                <Orders
+                  orders = { orders }
+                  setorders={ setOrders}
+                  products = { products }
+                  lineItems = { lineItems }
+                  auth={auth}
+                  addresses={addresses}
+                  users={users}
               />}/>
 
             </Routes>
@@ -307,6 +323,7 @@ const App = ()=> {
               <Route path='/products' element={
                 <Products
                     tags={tags}
+                    tagsList = {tagsList}
                     auth = { auth }
                     products={ products }
                     cartItems = { cartItems }
@@ -320,6 +337,7 @@ const App = ()=> {
                 <Route path='/products/search/:term' element={
                   <Products
                     tags={tags}
+                    tagsList={tagsList}
                     auth = { auth }
                     products={ products }
                     cartItems = { cartItems }
