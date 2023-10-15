@@ -27,7 +27,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     <div>
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
-      <ul>
+      <ul className='uniqueTags'>
          {uniqueTagNames.map((tagName) => (
           <li key={tagName}>
             <Link to={`/products/tags/${tagName}`}>{tagName}</Link>

@@ -10,3 +10,20 @@ form {
 form > * {
   margin: 0.5rem;
 }
+nav {
+  display: flex;
+}
+
+nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: dodgerblue;
+}
+.uniqueTags a:hover {
+  color: tomato;
+}
