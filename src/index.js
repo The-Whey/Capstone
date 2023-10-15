@@ -196,10 +196,12 @@ const App = ()=> {
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
                   updateLineItem={updateLineItem}/>}/>
+                  
               <Route path="/products/tags/:tag" element={
                 <FilteredProducts 
                   products={products} 
                   tags={tags}/>} />
+
               <Route path='/admin' element={
                 <Admin
                   users={users}
@@ -211,22 +213,19 @@ const App = ()=> {
                   setAllOrders = {setAllOrders}
                   allLineItems={allLineItems}
                   auth={auth}
-                  addresses={addresses} />}
-              />
+                  addresses={addresses} />}/>
+
               <Route path='/products/:id/edit' element={
                 <Edit 
                   products={products}
-                  setProducts={setProducts} />}
-              />
+                  setProducts={setProducts} />}/>
+
               <Route path='/profile' element={
                 <Profile
                   auth={auth}
-                  users={users} />}
-              />
-            </Routes>
-            <main>
-            <Routes>
-            <Route path='/products' element={<Products
+                  users={users} />}/>
+
+              <Route path='/products' element={<Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -237,6 +236,7 @@ const App = ()=> {
                 createBookmark= { createBookmark}
                 removeBookmark={ removeBookmark}
               />}/>
+
               <Route path='/products/search/:term' element={<Products
                 tags={tags}
                 auth = { auth }
@@ -248,9 +248,8 @@ const App = ()=> {
                 createBookmark= { createBookmark}
                 removeBookmark={ removeBookmark}
               />}/>
-              </Routes>
-              <Routes>
-                <Route path='/cart' element={<Cart
+
+              <Route path='/cart' element={<Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
@@ -259,21 +258,20 @@ const App = ()=> {
                 updateLineItem = { updateLineItem }
                 setAddresses = {setAddresses}
                 addresses = {addresses}
-              />
+              />}/>
 
-              </Routes>
-              <Routes>
-                <Route path='/orders' element={<Orders
+              <Route path='/orders' element={<Orders
                 orders = { orders }
                 setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
                 addresses={addresses}
-                />}/>
-              </Routes>
-              <Map apikey={apikey} />
+              />}/>
 
+            </Routes>
+            <main>
+              <Map apikey={HEREapikey} />
             </main>
             </>
         ):(

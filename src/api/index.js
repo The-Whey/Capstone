@@ -123,7 +123,7 @@ const createUser = async(user) => {
   await axios.post('/api/users', user);
 }
 
-const setVipStatus = async(user) => {
+const updateUser = async(user) => {
   const response = await axios.put(`/api/users/${user.id}`, user);
   return response.data;
 }
@@ -156,7 +156,7 @@ const api = {
   updateOrder,
   removeFromCart,
   attemptLoginWithToken,
-  setVipStatus,
+  updateUser,
   submitNewProduct,
   editProduct,
   createUser,
