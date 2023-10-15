@@ -16,6 +16,7 @@ const {
   fetchTags,
   insertProductTags,
   createTags,
+  fetchTagList
 } = require('./tags');
 
 const {
@@ -232,5 +233,6 @@ module.exports = {
   updateOrderFulfilled,
   createAddress,
   fetchAddresses,
+  fetchTagList,
   client
 };

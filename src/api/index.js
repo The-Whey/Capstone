@@ -23,6 +23,11 @@ const fetchTags = async(setTags)=> {
   setTags(response.data);
 };
 
+const fetchTagsList = async(setTagsList)=> {
+  const response = await axios.get('/api/tags/list');
+  setTagsList(response.data)
+}
+
 const fetchReviews = async(setReviews)=> {
   const response = await axios.get('/api/products');
   setReviews(response.data);
@@ -165,7 +170,8 @@ const api = {
   orderFulfilled,
   addAddress,
   fetchTags,
-  fetchAddresses
+  fetchAddresses,
+  fetchTagsList
 };
 
 export default api;
