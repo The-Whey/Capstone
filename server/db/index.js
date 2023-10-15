@@ -161,17 +161,18 @@ const seed = async()=> {
     createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
     createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
-  await editProduct({...guitar, image: profileImage})
+
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
     createBookmark({ user_id: ethyl.id, product_id: bass.id }),
     createBookmark({ user_id: moe.id, product_id: drums.id }),
     createBookmark({ user_id: moe.id, product_id: keyboard.id })
-
   ]);
+
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
+  
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
   await Promise.all([
@@ -179,6 +180,7 @@ const seed = async()=> {
     createReview({ product_id: guitar.id, txt: loremIpsum, rating: '5' }),
     createReview({ product_id: bass.id, txt: loremIpsum, rating: '1' })
   ]);
+
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
@@ -186,12 +188,14 @@ const seed = async()=> {
   cart.is_cart = false;
   cart.address = address.id
   await updateOrder(cart);
+
   const [string, percussion, keyboards, woodwinds] = await Promise.all([
     createTags({tag : "string"}),
     createTags({tag : "percussion"}),
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
+  
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),

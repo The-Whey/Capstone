@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import api from './api';
 
-const Orders = ({ orders, setorders, products, lineItems, auth, addresses })=> {
+const Orders = ({ orders, setorders, products, lineItems, auth, addresses, users })=> {
 
   const orderFulfilled = async(id, fulfilled) => {
     const json = {id, fulfilled}
@@ -22,15 +22,14 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses })=> {
             const orderLineItems = lineItems.filter(lineItem => lineItem.order_id === order.id);
             const address = addresses.find(item => item.id === order.address)
             const formattedAddress = address.data.properties.formatted;
+            const user = users.find(item => item.id === order.user_id)
 
             let total = 0;
             return (
               <li key={ order.id }>
-                <h4>Order ID: {order.id}</h4>
-                <h4>Shipping Address: {formattedAddress}</h4>
-                <p>{order.fulfilled ? `Order Fulfilled` : 'order pending'}</p>
-                {auth.is_admin ? order.fulfilled ? <button onClick={() => orderFulfilled(order.id, false)}>reopen?</button> : null : null}
-                <br/> 
+                <h5>Username: {user.username} </h5>
+                <h5>Order ID: {order.id}</h5>
+                <h5>Shipping Address: {formattedAddress}</h5>
                 ({ new Date(order.created_at).toLocaleString() }) 
                 <ul>
                   {
@@ -48,8 +47,15 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses })=> {
                     
                   }
                 </ul>
+                <p>
+                  {order.fulfilled ? `Order Fulfilled ` : 'order pending '}
+                  {auth.is_admin ? 
+                  order.fulfilled ? 
+                  <button onClick={() => orderFulfilled(order.id, false)}>Mark Pending</button> 
+                  : <button onClick={() => orderFulfilled(order.id, true)}>Mark Fulfilled</button> 
+                  : null}
+                </p>
                 <h4>{`Total Price: $${(total / 100).toFixed(2)}`}</h4>
-                {auth.is_admin ? !order.fulfilled ? <button onClick={() => orderFulfilled(order.id, true)}>Mark order as fulfilled</button> : null : null}
               </li>
             );
           })

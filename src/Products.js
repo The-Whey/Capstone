@@ -36,6 +36,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
                 <li>
                   <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
                 </li>
+                <img src={product.image}/>
                 {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
                 {
                     auth.id ? (
