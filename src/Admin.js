@@ -7,8 +7,6 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
 
-  // if (addresses.length) console.log(addresses[0].data.properties.formatted)
-
   const setVipTrue = async (user) => {
     user.is_vip = true;
     const response = await api.updateUser(user);
@@ -54,9 +52,6 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
       </form>
       <hr/>
       <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth} addresses={addresses}/>
-      <hr/>
-      <h3>---- end of admin page here ----</h3>
-      <hr/>
     </div>
   )
 }
