@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import api from "./api";
 
-const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews }) => {
+const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews, onError }) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleReviewSubmission = async () => {
-    //try {
-      // Make an API call to submit the review using your API functions
-      const json = {txt: reviewText, rating, product_id: productId}
+    try {
+      const json = { txt: reviewText, rating, product_id: productId };
       const response = await api.submitReview(json);
 
-      // If the submission is successful, show a success message to the user
-      // update the reviews state or take any other necessary action
-       setReviews([...reviews, response]);
-    // } catch (error) {
-    //   console.error("Error submitting review:", error);
-    // }
+      if (response.error) {
+        console.error(response.error);
+        setErrorMessage(response.error);
+        onError(response.error);
+      } else {
+        setReviews([...reviews, response]);
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      errorMessage("Error: You've already submitted a review for this product.");
+    }
   };
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews }) =>
   return (
     <div>
       {hasSubmittedReview ? (
-        <p>You've already submitted a review for this product.</p>
+        <p>{errorMessage}</p>
       ) : (
         <form onSubmit={handleReviewSubmission}>
           <label>

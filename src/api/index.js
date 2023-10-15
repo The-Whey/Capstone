@@ -128,10 +128,24 @@ const orderFulfilled = async(json) => {
   return response.data;
 }
 
-const submitReview = async(json) => {
-  const response = await axios.post(`/api/products/reviews`, json);
-  return response.data;
-}
+const submitReview = async (json) => {
+  try {
+    const existingReviews = await axios.get(`/api/products/reviews?product_id=${json.product_id}&user_id=${json.user_id}`);
+
+    if (existingReviews.data.length > 0) {
+      return {
+        error: "You've already submitted a review for this product.",
+        status: 400, 
+      };
+    } else {
+      const response = await axios.post(`/api/products/reviews`, json);
+      return response.data; 
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const api = {
   login,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from './ReviewForm';
 import api from "./api";
@@ -17,19 +17,28 @@ const Product = ({
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
 
-  const handleReviewSubmission = async (newReview) => {
-    //try {
-      // Make an API call to submit the review using your API functions
-      const response = await api.submitReview(newReview);
-      console.log(response);
+  const [errorMessage, setErrorMessage] = useState("");
 
-      // If the submission is successful, show a success message to the user
-      // update the reviews state or take any other necessary action
-    //   setReviews([...reviews, newReview]);
-    // } catch (error) {
-    //   console.error("Error submitting review:", error);
-    // }
+  const handleReviewError = (error) => {
+    setErrorMessage(error);
   };
+
+  const handleReviewSubmission = async () => {
+    try {
+      const response = await api.submitReview(json);
+  
+      if (response.error) {
+        console.error(response.error);
+        handleReviewError(response.error); 
+      } else {
+        setReviews([...reviews, response]);
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      handleReviewError("An error occurred while submitting your review.");
+    }
+  };
+  
 
   return product ? (
     <>
@@ -39,6 +48,7 @@ const Product = ({
       {productReviews.map((review) => (
         <p key={review.id}>{review.text}</p> 
       ))}
+      {errorMessage && <p>{errorMessage}</p>} 
       {auth.id ? (
         cartItem ? (
           <button onClick={() => updateLineItem(cartItem)}>Add Another</button>
@@ -47,7 +57,7 @@ const Product = ({
         )
       ) : null}
 
-      {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} />}
+      {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
     </>
   ) : (
     <h2>Loading</h2>

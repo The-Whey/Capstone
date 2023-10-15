@@ -4,6 +4,7 @@ const {
   createProduct,
   createReview, 
   fetchReviews, 
+  checkExistingReview,
 } = require('../db');
 
 const express = require('express');
@@ -36,7 +37,17 @@ app.put('/:id', async (req, res, next) => {
 
 app.post('/reviews', async (req, res, next) => {
   try {
-    res.send(await createReview(req.body));
+    const { user_id, product_id } = req.body; // check these are correct values
+    const existingReview = await checkExistingReview(user_id, product_id);
+
+    if (existingReview) {
+      return res.status(400).json({ error: 'You have already reviewed this product.' });
+    }
+
+    const newReview = req.body;
+    await createReview(newReview);
+
+    res.status(200).json({ message: 'Review submitted successfully' });
   } catch (error) {
     next(error);
   }

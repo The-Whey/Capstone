@@ -47,6 +47,20 @@ const createBookmark = async(bookmark)=> {
   return response.rows[0];
 };
 
+const checkExistingReview = async (user_id, product_id) => {
+  const SQL = `
+    SELECT *
+    FROM reviews
+    WHERE user_id = $1 AND product_id = $2
+  `;
+  const response = await client.query(SQL, [user_id, product_id]);
+
+  if (response.rows.length > 0) {
+    return response.rows[0];
+  } else {
+    return null;
+  }
+};
 
 const seed = async()=> {
   const SQL = `
@@ -119,6 +133,7 @@ const seed = async()=> {
       product_id UUID REFERENCES products(id) NOT NULL,
       txt VARCHAR(3000) NOT NULL,
       rating INTEGER NOT NULL CHECK (rating>0 AND rating<6)
+      CONSTRAINT unique_user_product_review UNIQUE (user_id, product_id);
     );
 
   `;
@@ -201,5 +216,6 @@ module.exports = {
   deleteBookmark,
   createBookmark,
   updateOrderFulfilled,
+  checkExistingReview,
   client
 };
