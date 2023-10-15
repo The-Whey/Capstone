@@ -2,17 +2,32 @@ import React, { useEffect, useRef, useState } from 'react';
 import H from '@here/maps-api-for-javascript';
 
 const Map = ( props ) => {
-    const [test, setTest] = useState('')
     const mapRef = useRef(null);
     const map = useRef(null);
     const platform = useRef(null)
     const { apikey } = props;
-    const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
+    const ourlocation = {lat: 47.6038302, lng: -122.3391395}
+
+    function getMarkerIcon(color) {
+        const svgCircle = `<svg width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g id="marker">
+                    <circle cx="10" cy="10" r="7" fill="${color}" stroke="${color}" stroke-width="4" />
+                    </g></svg>`;
+        return new H.map.Icon(svgCircle, {
+            anchor: {
+                x: 10,
+                y: 10
+            }
+        });
+    }
+    
+    getMarkerIcon('red')
 
     useEffect(
         () => {
             // Check if the map object has already been created
             if (!map.current) {
+            
             // Create a platform object with the API key
             platform.current = new H.service.Platform({ apikey });
             // Create a new Raster Tile service instance
@@ -32,26 +47,26 @@ const Map = ( props ) => {
             // Create a new map instance with the Tile layer, center and zoom level
             const newMap = new H.Map(mapRef.current, rasterTileLayer, {
                 pixelRatio: window.devicePixelRatio,
-                center: {
-                lat: 47.580096,
-                lng: -122.5736721,
-                },
-                zoom: 10,
+                center: ourlocation,
+                zoom: 11,
             });
         
             // Add panning and zooming behavior to the map
             const behavior = new H.mapevents.Behavior(
-                new H.mapevents.MapEvents(newMap)
+                new H.mapevents.MapEvents(newMap),
+                new H.map.Marker(ourlocation, getMarkerIcon('red'))
             );
         
             // Set the map object to the reference
             map.current = newMap;
+            getMarkerIcon('red')
+
             }
         },
         // Dependencies array
         [apikey]
         );
-        
+
         // Return a div element to hold the map
         return (
         <div>

@@ -51,7 +51,7 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
         <button disabled={!name || !description || price === 0}>Create New Product</button>
       </form>
       <hr/>
-      <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth} addresses={addresses}/>
+      <Orders orders={allOrders} setorders={setAllOrders} lineItems={allLineItems} products={products} auth={auth} addresses={addresses} users={users}/>
     </div>
   )
 }

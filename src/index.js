@@ -265,13 +265,15 @@ const App = ()=> {
                 auth={auth}
               />}/>
 
-              <Route path='/orders' element={<Orders
+              <Route path='/orders' element={
+              <Orders
                 orders = { orders }
                 setorders={ setOrders}
                 products = { products }
                 lineItems = { lineItems }
                 auth={auth}
                 addresses={addresses}
+                users={users}
               />}/>
 
             </Routes>
