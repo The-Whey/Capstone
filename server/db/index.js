@@ -16,6 +16,7 @@ const {
   fetchTags,
   insertProductTags,
   createTags,
+  fetchTagList
 } = require('./tags');
 
 const {
@@ -39,7 +40,9 @@ const {
   fetchBookmarks,
   createBookmark,
   deleteBookmark,
-  updateOrderFulfilled
+  updateOrderFulfilled,
+  createAddress,
+  fetchAddresses
 } = require('./cart');
 
 const loadImage = (filepath) => {
@@ -67,6 +70,7 @@ const seed = async()=> {
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS addresses;
     DROP TABLE IF EXISTS users;
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -89,12 +93,21 @@ const seed = async()=> {
       image TEXT DEFAULT '${productImage}'
     );
 
+    CREATE TABLE addresses(
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP DEFAULT now(),
+      data JSON DEFAULT '{}',
+      user_id UUID REFERENCES users(id) NOT NULL,
+      nickname VARCHAR(50)
+    );
+
     CREATE TABLE orders(
       id UUID PRIMARY KEY,
       created_at TIMESTAMP DEFAULT now(),
       is_cart BOOLEAN NOT NULL DEFAULT true,
       user_id UUID REFERENCES users(id) NOT NULL,
-      fulfilled BOOLEAN NOT NULL DEFAULT false
+      fulfilled BOOLEAN NOT NULL DEFAULT false,
+      address UUID REFERENCES addresses(id)
     );
 
     CREATE TABLE line_items(
@@ -143,24 +156,24 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
-
   const [guitar, bass, keyboard, drums] = await Promise.all([
     createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
     createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
     createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
     createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
-  await editProduct({...guitar, image: profileImage})
+
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
     createBookmark({ user_id: ethyl.id, product_id: bass.id }),
     createBookmark({ user_id: moe.id, product_id: drums.id }),
     createBookmark({ user_id: moe.id, product_id: keyboard.id })
-
   ]);
+
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
   let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
+  
   // Creates a generic description for development
   const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
   await Promise.all([
@@ -172,15 +185,18 @@ const seed = async()=> {
   lineItem.quantity++;
   await updateLineItem(lineItem);
   lineItem = await createLineItem({ order_id: cart.id, product_id: bass.id});
+  const address = await createAddress({user_id: ethyl.id, nickname: 'Home', data: {properties: {formatted: '742 Evergreen Terrace, Springfield, MO 77747'}}})
   cart.is_cart = false;
+  cart.address = address.id
   await updateOrder(cart);
+
   const [string, percussion, keyboards, woodwinds] = await Promise.all([
     createTags({tag : "string"}),
     createTags({tag : "percussion"}),
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
   ]);
-
+  
   const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),
@@ -215,5 +231,8 @@ module.exports = {
   deleteBookmark,
   createBookmark,
   updateOrderFulfilled,
+  createAddress,
+  fetchAddresses,
+  fetchTagList,
   client
 };

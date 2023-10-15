@@ -12,10 +12,21 @@ const fetchProducts = async(setProducts)=> {
   const response = await axios.get('/api/products');
   setProducts(response.data);
 };
+
+const fetchAddresses = async(setAddresses) => {
+  const response = await axios.get('/api/orders/addresses');
+  setAddresses(response.data)
+}
+
 const fetchTags = async(setTags)=> {
   const response = await axios.get('/api/tags');
   setTags(response.data);
 };
+
+const fetchTagsList = async(setTagsList)=> {
+  const response = await axios.get('/api/tags/list');
+  setTagsList(response.data)
+}
 
 const fetchReviews = async(setReviews)=> {
   const response = await axios.get('/api/products');
@@ -73,6 +84,11 @@ const removeFromCart = async({ lineItem, lineItems, setLineItems })=> {
   const response = await axios.delete(`/api/lineItems/${lineItem.id}`, getHeaders());
   setLineItems(lineItems.filter( _lineItem => _lineItem.id !== lineItem.id));
 };
+
+const addAddress = async(json) => {
+  const response = await axios.post(`/api/orders/addresses`, json);
+  return response.data;
+}
 
 const attemptLoginWithToken = async(setAuth)=> {
   const token = window.localStorage.getItem('token');
@@ -152,7 +168,10 @@ const api = {
   fetchAllOrders,
   fetchAllLineItems,
   orderFulfilled,
-  fetchTags
+  addAddress,
+  fetchTags,
+  fetchAddresses,
+  fetchTagsList
 };
 
 export default api;
