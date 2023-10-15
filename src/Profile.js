@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react'
 import api from './api';
 
-const Profile = ({auth, users}) => {
+const Profile = ({auth, users, addresses}) => {
   const [image, setImage] = useState('');
   const [username, setUsername] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [is_vip, setIs_vip] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([])
   const user = users.find(user => user.id === auth.id);
   const el = useRef();
 
@@ -19,13 +20,17 @@ const Profile = ({auth, users}) => {
 
   useEffect(() => {
     const user = users.find(user => user.id === auth.id);
-
+  
     if (user){
       setImage(user.image);
       setUsername(user.username);
       setIs_vip(user.is_vip);
     }
-  }, [auth, users])
+    if (user && addresses){
+      const userAddresses = addresses.filter(address => address.nickname).filter(address => address.user_id === user.id);
+      setSavedAddresses(userAddresses)
+    }
+  }, [auth, users, addresses])
 
   useEffect(() => {
     if (editMode){
@@ -62,6 +67,16 @@ const Profile = ({auth, users}) => {
             {user.image ? <img src={image} /> : null}
             <h4>{`Username: ${username}`}</h4>
             <h4>{is_vip ? 'Thanks for being a vip!' : 'Upgrade to our VIP club for exclusive deals and promotions.'}</h4>
+            {savedAddresses.length ? 
+              <div>
+                <h4>Saved Addresses:</h4>
+                {
+                  savedAddresses.map(addy => <div key={addy.id}>{`${addy.nickname}: ${addy.data.properties.formatted}`}</div>)
+                }
+              </div>
+              : <div>You have no saved addresses</div>
+            }
+            <br/>
             <button onClick={() => setEditMode(true)}>Edit Profile</button>
           </div>
         }

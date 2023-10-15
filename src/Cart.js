@@ -5,9 +5,12 @@ import api from './api';
 
 
 const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses })=> {
-  const [addressMode, setAddressMode] = useState(false);
+  const [addressMode, setAddressMode] = useState(false); 
   const [data, setData] = useState({})
+  const [checked, setChecked] = useState(false)
+  const [nickname, setNickname] = useState('');
   const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
+
   // Update adds 1 to quantity, so i subtract two here to make it subtract 1 instead of adding.
   const minus = (lineItem) => {
     lineItem.quantity -= 2;
@@ -17,11 +20,18 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
   const submitOrder = async() => {
     const json = {data, user_id: cart.user_id}
+    if (nickname) json.nickname = nickname;
+    console.log(json)
     const response = await api.addAddress(json)
+    console.log(response)
     setAddresses([...addresses, response])
     updateOrder({...cart, is_cart: false, address: response.id })
     setAddressMode(false)
     // when routing is done have this navigate to orders.
+  }
+
+  const handlCheck = async() => {
+    setChecked(!checked);
   }
 
 
@@ -60,6 +70,14 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
       <GeoapifyContext  apiKey={geoapifyapikey}>
         <GeoapifyGeocoderAutocomplete filterByCountryCode={['us']} biasbylocation={true} placeSelect={(value) => setData(value)}/>
       </GeoapifyContext>
+      {checked ? <input type='text' placeholder='Home, Work, etc...' value={nickname} onChange={(ev) => setNickname(ev.target.value)}/>: null}
+      <div>
+        <label>
+          <input type='checkbox' value={checked} onChange={handlCheck} />
+          Save address for future purchases?
+        </label>
+      </div>
+      <br/>
       <button disabled={!Object.keys(data).length} onClick={() => submitOrder()}>Submit Order</button>
       <button onClick={() => setAddressMode(false)}>Cancel</button>
     </div>

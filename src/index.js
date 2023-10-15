@@ -110,7 +110,7 @@ const App = ()=> {
   }, [orders, auth])
 
   useEffect(() => {
-    if(auth.is_admin){
+    if(auth){
       const fetchData = async() => {
         await api.fetchUsers(setUsers);
       }
@@ -223,7 +223,8 @@ const App = ()=> {
               <Route path='/profile' element={
                 <Profile
                   auth={auth}
-                  users={users} />}/>
+                  users={users}
+                  addresses={addresses} />}/>
 
               <Route path='/products' element={<Products
                 tags={tags}
