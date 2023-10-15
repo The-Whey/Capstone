@@ -110,7 +110,7 @@ const App = ()=> {
   }, [orders, auth])
 
   useEffect(() => {
-    if(auth.is_admin){
+    if(auth){
       const fetchData = async() => {
         await api.fetchUsers(setUsers);
       }
@@ -223,9 +223,11 @@ const App = ()=> {
               <Route path='/profile' element={
                 <Profile
                   auth={auth}
-                  users={users} />}/>
+                  users={users}
+                  addresses={addresses} />}/>
 
-              <Route path='/products' element={<Products
+              <Route path='/products' element={
+              <Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -237,7 +239,8 @@ const App = ()=> {
                 removeBookmark={ removeBookmark}
               />}/>
 
-              <Route path='/products/search/:term' element={<Products
+              <Route path='/products/search/:term' element={
+              <Products
                 tags={tags}
                 auth = { auth }
                 products={ products }
@@ -249,7 +252,8 @@ const App = ()=> {
                 removeBookmark={ removeBookmark}
               />}/>
 
-              <Route path='/cart' element={<Cart
+              <Route path='/cart' element={
+              <Cart
                 cart = { cart }
                 lineItems = { lineItems }
                 products = { products }
@@ -258,6 +262,7 @@ const App = ()=> {
                 updateLineItem = { updateLineItem }
                 setAddresses = {setAddresses}
                 addresses = {addresses}
+                auth={auth}
               />}/>
 
               <Route path='/orders' element={<Orders
@@ -278,43 +283,51 @@ const App = ()=> {
           <div>
             <p>{error}</p>
             <Login login={ login }/>
+
             <Routes>
+              
               <Route path='/products/:id' element={
-              <Product 
-              tags={tags}
-              products={products} 
-              auth={auth} 
-              cartItems={cartItems} 
-              createLineItem={createLineItem} 
-              updateLineItem={updateLineItem}/>}/>
+                <Product 
+                tags={tags}
+                products={products} 
+                auth={auth} 
+                cartItems={cartItems} 
+                createLineItem={createLineItem} 
+                updateLineItem={updateLineItem}
+                />}/>
+
               <Route path="/products/tags/:tag" element={
                 <FilteredProducts 
                   products={products} 
-                  tags={tags}/>} />
-            </Routes>
-            <Routes>
-            <Route path='/products' element={<Products
-                tags={tags}
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-                bookmarks = {bookmarks}
-                createBookmark= { createBookmark}
-                removeBookmark={ removeBookmark}
-              />}/>
-              <Route path='/products/search/:term' element={<Products
-                tags={tags}
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-                bookmarks = {bookmarks}
-                createBookmark= { createBookmark}
-                removeBookmark={ removeBookmark}
-              />}/>
+                  tags={tags}
+                />}/>
+
+              <Route path='/products' element={
+                <Products
+                    tags={tags}
+                    auth = { auth }
+                    products={ products }
+                    cartItems = { cartItems }
+                    createLineItem = { createLineItem }
+                    updateLineItem = { updateLineItem }
+                    bookmarks = {bookmarks}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                />}/>
+
+                <Route path='/products/search/:term' element={
+                  <Products
+                    tags={tags}
+                    auth = { auth }
+                    products={ products }
+                    cartItems = { cartItems }
+                    createLineItem = { createLineItem }
+                    updateLineItem = { updateLineItem }
+                    bookmarks = {bookmarks}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                  />}/>
+
               </Routes>
               <Map apikey={HEREapikey} />
           </div>
