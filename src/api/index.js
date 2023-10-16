@@ -166,6 +166,10 @@ const submitReview = async (json) => {
   }
 };
 
+const submitTag = async (json) => {
+  const response = await axios.post(`/api/tags`, json);
+  return response.data
+}
 
 const api = {
   login,
@@ -191,7 +195,8 @@ const api = {
   addAddress,
   fetchTags,
   fetchAddresses,
-  fetchTagsList
+  fetchTagsList,
+  submitTag
 };
 
 export default api;

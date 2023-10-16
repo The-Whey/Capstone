@@ -28,8 +28,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
       <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
-      {/* {!tagsList ? <button onClick={()=>{setTagId(null)}}>All</button> : null} */}
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
       {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
@@ -52,13 +51,13 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     <div>
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
-      
-      <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
       <h3>{bookmarks.length} Bookmarks</h3>
       {/* //products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
 //           .map( product => {
 //             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id); */}
+
       {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
