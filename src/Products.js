@@ -41,7 +41,8 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
             {
               auth.id ? (
                 cartItem ? <button onClick={ ()=> updateLineItem(cartItem)}>Add Another</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
-              ): null{tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj
+              ): null}
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
             }
           </div>
         )
