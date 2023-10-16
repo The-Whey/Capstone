@@ -6,8 +6,7 @@ const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews, onEr
   const [rating, setRating] = useState(0);
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-console.log(reviewText);
-console.log(rating);
+
   const handleReviewSubmission = async (ev) => {
     ev.preventDefault()
     try {
@@ -28,14 +27,6 @@ console.log(rating);
       errorMessage("Error: You've already submitted a review for this product.");
     }
   };
-
-  // useEffect(() => {
-  //   if (existingReview) {
-  //     setHasSubmittedReview(true);
-  //     setReviewText(existingReview.txt);
-  //     setRating(existingReview.rating);
-  //   }
-  // }, [existingReview]);
 
   return (
     <div>

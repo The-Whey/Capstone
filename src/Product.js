@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import ReviewForm from './ReviewForm';
 import api from "./api";
@@ -13,17 +13,22 @@ const Product = ({
   cartItems,
   createLineItem,
   updateLineItem,
-  //handleReviewSubmission,
   tags,
+  setTags,
+  setTagsList,
+  tagsList
 }) => {
-  const [editMode, setEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(false);
+  const [addTagMode, setAddTagMode] = useState(false);
+  const [newTag, setNewTag] = useState('')
   const { id } = useParams();
   const product = products.find((item) => item.id === id);
   if (!product){return <div>Loading</div>}
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
-
   const [errorMessage, setErrorMessage] = useState("");
+  let productTags;
+
 
   const handleReviewError = (error) => {
     setErrorMessage(error);
@@ -44,9 +49,28 @@ const Product = ({
       handleReviewError("An error occurred while submitting your review.");
     }
   };
+
+  const submitTag = async(product) => {
+    const response = await api.submitTag({
+      tag: newTag.toLowerCase(),
+      product_id: product.id
+    });
+    setTags([...tags, response])
+    if (!tagsList.find(obj => obj.id === response.tag_id)) setTagsList([...tagsList, {id: response.tag_id, tag: response.tag}])
+    console.log(tagsList)
+    setNewTag('')
+    setAddTagMode(false)
+  }
+
   
-  const productTags = tags.filter((tag) => tag.product_id === product.id);
-  if (product && !editMode) return (
+  
+  if (tags) productTags = tags.filter((tag) => tag.product_id === product.id);
+
+
+  
+
+  if (product && !editMode) {
+    return (
     <>
 
       <h2>{product.name} {auth.is_admin ? <button onClick={() => setEditMode(true)} >Edit Product</button> : null}</h2>
@@ -58,10 +82,12 @@ const Product = ({
       ))}
       {errorMessage && <p>{errorMessage}</p>} 
       <h5>Tags:</h5>
+      {auth.is_admin && !addTagMode ? <button onClick={() => setAddTagMode(true)}>Add Tag</button> : null}
+      {addTagMode ? <div><input value={newTag} onChange={(ev) => setNewTag(ev.target.value)}></input><button onClick={() => submitTag(product)}>Submit</button></div> : null}
       <ul>
-        {productTags.map((tag) => (
+        {!addTagMode ? productTags.map((tag) => (
           <li key={tag.id}>{tag.tag}</li>
-        ))}
+        )): null}
       </ul>
       {auth.id ? (
         cartItem ? (
@@ -73,11 +99,12 @@ const Product = ({
 
       {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
     </>
-  )
+  )}
 
-  if (product && editMode) return (
+  if (product && editMode) {
+    return (
     <Edit products={products} setProducts={setProducts} setEditMode={setEditMode}/>
-  )
+  )}
 };
 
 export default Product;

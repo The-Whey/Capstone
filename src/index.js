@@ -198,6 +198,9 @@ const App = ()=> {
               <Route path='/products/:id' element={
                 <Product 
                   tags={tags}
+                  setTags = {setTags}
+                  setTagsList = {setTagsList}
+                  tagsList = {tagsList}
                   products={products}
                   setProducts={setProducts} 
                   reviews={reviews}
