@@ -13,7 +13,7 @@ const Product = ({
   cartItems,
   createLineItem,
   updateLineItem,
-  handleReviewSubmission,
+  //handleReviewSubmission,
   tags,
 }) => {
   const [editMode, setEditMode] = useState(false)

@@ -45,13 +45,13 @@ const {
   fetchAddresses
 } = require('./cart');
 
-const createBookmark = async(bookmark)=> {
-  const SQL = `
-  INSERT INTO bookmarks (product_id, user_id, id) VALUES($1, $2, $3) RETURNING *
-`;
- response = await client.query(SQL, [ bookmark.product_id, bookmark.user_id, uuidv4()]);
-  return response.rows[0];
-};
+// const createBookmark = async(bookmark)=> {
+//   const SQL = `
+//   INSERT INTO bookmarks (product_id, user_id, id) VALUES($1, $2, $3) RETURNING *
+// `;
+//  response = await client.query(SQL, [ bookmark.product_id, bookmark.user_id, uuidv4()]);
+//   return response.rows[0];
+// };
 
 const checkExistingReview = async (user_id, product_id) => {
   const SQL = `
