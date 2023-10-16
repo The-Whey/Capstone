@@ -16,7 +16,9 @@ const {
   fetchTags,
   insertProductTags,
   createTags,
-  fetchTagList
+  fetchTagList,
+  checkDupeTags,
+  checkDupeProductTags
 } = require('./tags');
 
 const {
@@ -259,5 +261,8 @@ module.exports = {
   createAddress,
   fetchAddresses,
   fetchTagList,
+  checkDupeTags,
+  insertProductTags,
+  checkDupeProductTags,
   client
 };

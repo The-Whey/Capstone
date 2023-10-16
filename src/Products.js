@@ -35,7 +35,7 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
         ))}
         </ul>
       <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
       {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
@@ -66,11 +66,12 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
         ))}
         </ul>
       <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
       <h3>{bookmarks.length} Bookmarks</h3>
       {/* //products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
 //           .map( product => {
 //             const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id); */}
+
       {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
