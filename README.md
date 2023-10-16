@@ -1,5 +1,6 @@
 # the store 
 
+- npm config set @here:registry https://repo.platform.here.com/artifactory/api/npm/maps-api-for-javascript/
 - npm install
 - modify connection string
 - create database
