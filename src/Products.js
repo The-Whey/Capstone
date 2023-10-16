@@ -27,15 +27,9 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     <div>
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
-      <ul className='uniqueTags'>
-         {uniqueTagNames.map((tagName) => (
-          <li key={tagName}>
-            <Link to={`/products/tags/${tagName}`}>{tagName}</Link>
-          </li>
-        ))}
-        </ul>
+      
       <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+      {tagsList ? tagsList.map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
       {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
@@ -58,15 +52,9 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     <div>
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
-      <ul>
-         {uniqueTagNames.map((tagName) => (
-          <li key={tagName}>
-            <Link to={`/products/tags/${tagName}`}>{tagName}</Link>
-          </li>
-        ))}
-        </ul>
+      
       <p>--- or ---</p>
-      {tagsList ? tagsList.map(obj => <button onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+      {tagsList ? tagsList.map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
       <h3>{bookmarks.length} Bookmarks</h3>
       {/* //products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1)
 //           .map( product => {

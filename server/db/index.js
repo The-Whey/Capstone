@@ -214,18 +214,23 @@ const seed = async()=> {
   cart.address = address.id
   await updateOrder(cart);
 
-  const [string, percussion, keyboards, woodwinds] = await Promise.all([
+  const [string, percussion, keyboards, woodwinds, all] = await Promise.all([
     createTags({tag : "string"}),
     createTags({tag : "percussion"}),
     createTags({tag : "keyboards"}),
     createTags({tag : "woodwinds"}),
+    createTags({tag : "all"}),
   ]);
   
-  const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
+  const [guitar_tag1, bass_tag1, keyboard_tag1, keyboard_tag2, guitar_tag2, bass_tag2, keyboard_tag3, drums_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),
     insertProductTags(keyboard.id, keyboards.id, keyboards.tag),
     insertProductTags(keyboard.id, percussion.id, percussion.tag),
+    insertProductTags(guitar.id, all.id, all.tag),
+    insertProductTags(bass.id,all.id, all.tag),
+    insertProductTags(keyboard.id, all.id, all.tag),
+    insertProductTags(drums.id, all.id, all.tag),
   ]);
 };
 
