@@ -189,6 +189,7 @@ const App = ()=> {
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
               <Link to='/profile'>Profile</Link>
+              <Link to='/wishlist'>Wishlist</Link>
               {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
               <span>
                 Welcome { auth.username }!
@@ -297,12 +298,14 @@ const App = ()=> {
                   users={users}
               />}/>
 
+              <Route path='/wishlist' element={
+                <Wishlist
+                  products={products}
+                  bookmarks={bookmarks}
+                  />}/>
+
             </Routes>
             <main>
-              <Wishlist
-              products={products}
-              bookmarks={bookmarks}/>
-
               <Map apikey={HEREapikey} />
             </main>
             </>

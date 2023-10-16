@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReviewForm from './ReviewForm';
 import api from "./api";
 import Edit from './Edit';
@@ -12,7 +12,6 @@ const Product = ({
   auth,
   cartItems,
   createLineItem,
-  updateLineItem,
   tags,
   setTags,
   setTagsList,
@@ -27,6 +26,7 @@ const Product = ({
   const productReviews = reviews ? reviews.filter((review) => review.product_id === id) : [];
   const cartItem = cartItems ? cartItems.find((lineItem) => lineItem.product_id === product?.id) : null;
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   let productTags;
 
 
@@ -100,7 +100,7 @@ const Product = ({
       <br/><br/>
       {auth.id ? (
         cartItem ? (
-          <button onClick={() => updateLineItem(cartItem)}>Add Another</button>
+          <button onClick={() => navigate('/cart')}>View In Cart</button>
         ) : (
           <button onClick={() => createLineItem(product)}>Add to Cart</button>
         )
