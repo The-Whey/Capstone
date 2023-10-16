@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Wishlist = ({bookmarks, products}) => {
     console.log(bookmarks)
@@ -10,7 +11,11 @@ const Wishlist = ({bookmarks, products}) => {
     {
         bookmarks.map(bookmark => {
             const product = products.find(obj => obj.id === bookmark.product_id);
-            return <h3 key={product.id}>{product.name}</h3>
+            return <div key={product.id}>
+            <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
+            <img src={product.image}/>
+            {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+          </div>
         })
     }
     </div>
