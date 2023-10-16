@@ -223,7 +223,7 @@ const seed = async()=> {
     createTags({tag : "woodwinds"}),
   ]);
   
-  const [guitar_tag1, bass_tag1, keyboard_tag1] = await Promise.all([
+  const [guitar_tag1, bass_tag1, keyboard_tag1, keyboard_tag2, guitar_tag2, bass_tag2, keyboard_tag3, drums_tag1] = await Promise.all([
     insertProductTags(guitar.id, string.id, string.tag),
     insertProductTags(bass.id,string.id, string.tag),
     insertProductTags(keyboard.id, keyboards.id, keyboards.tag),
