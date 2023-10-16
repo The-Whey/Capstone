@@ -27,9 +27,9 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     <div>
       <h2>Products</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
-      
       <p>--- or ---</p>
       {tagsList ? tagsList.map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>) : null}
+      {/* {!tagsList ? <button onClick={()=>{setTagId(null)}}>All</button> : null} */}
       {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         return (
