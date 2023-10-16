@@ -13,6 +13,7 @@ import Edit from './Edit';
 import Profile from './Profile';
 import FilteredProducts from './FilteredProducts';
 import Map from './Map';
+import Wishlist from './Wishlist';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -298,6 +299,10 @@ const App = ()=> {
 
             </Routes>
             <main>
+              <Wishlist
+              products={products}
+              bookmarks={bookmarks}/>
+
               <Map apikey={HEREapikey} />
             </main>
             </>
