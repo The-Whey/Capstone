@@ -51,13 +51,20 @@ const Product = ({
   };
 
   const submitTag = async(product) => {
-    const response = await api.submitTag({
-      tag: newTag.toLowerCase(),
-      product_id: product.id
-    });
-    setTags([...tags, response])
-    if (!tagsList.find(obj => obj.id === response.tag_id)) setTagsList([...tagsList, {id: response.tag_id, tag: response.tag}])
-    console.log(tagsList)
+    
+  
+    try {
+      const response = await api.submitTag({
+        tag: newTag.toLowerCase(),
+        product_id: product.id
+      });
+      setTags([...tags, response])
+    if (!tagsList.find(obj => obj.id === response.tag_id)) {
+      setTagsList([...tagsList, {id: response.tag_id, tag: response.tag}])
+    }
+    } catch (error) {
+      console.log(error)
+    }
     setNewTag('')
     setAddTagMode(false)
   }
@@ -82,13 +89,15 @@ const Product = ({
       ))}
       {errorMessage && <p>{errorMessage}</p>} 
       <h5>Tags:</h5>
-      {auth.is_admin && !addTagMode ? <button onClick={() => setAddTagMode(true)}>Add Tag</button> : null}
+
       {addTagMode ? <div><input value={newTag} onChange={(ev) => setNewTag(ev.target.value)}></input><button onClick={() => submitTag(product)}>Submit</button></div> : null}
       <ul>
         {!addTagMode ? productTags.map((tag) => (
           <li key={tag.id}>{tag.tag}</li>
         )): null}
       </ul>
+      {auth.is_admin && !addTagMode ? <button onClick={() => setAddTagMode(true)}>Add Tag</button> : null}
+      <br/><br/>
       {auth.id ? (
         cartItem ? (
           <button onClick={() => updateLineItem(cartItem)}>Add Another</button>

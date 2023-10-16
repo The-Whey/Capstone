@@ -27,6 +27,15 @@ const checkDupeTags = async(json) => {
   return response.rows[0]
 }
 
+const checkDupeProductTags = async(product_id, tag_id) => {
+  const SQL =`
+  SELECT * FROM product_tags
+  WHERE product_id = $1 AND tag_id = $2
+  `
+  const response = await client.query(SQL, [product_id, tag_id]);
+  return response.rows[0]
+}
+
 
 const insertProductTags = async (product_id, tag_id, tag) => {
 
@@ -53,5 +62,6 @@ module.exports = {
   insertProductTags,
   createTags,
   fetchTagList,
-  checkDupeTags
+  checkDupeTags,
+  checkDupeProductTags
 };
