@@ -15,7 +15,8 @@ const Product = ({
   tags,
   setTags,
   setTagsList,
-  tagsList
+  tagsList,
+  users
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [addTagMode, setAddTagMode] = useState(false);
@@ -28,7 +29,7 @@ const Product = ({
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   let productTags;
-
+  console.log(reviews)
 
   const handleReviewError = (error) => {
     setErrorMessage(error);
@@ -107,6 +108,16 @@ const Product = ({
       ) : null}
 
       {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
+      <ul>
+        {reviews.filter(review => review.product_id === product.id).map(review => {
+          const user = users.find(user => user.id === review.user_id)
+          return (
+            <li key={review.id}>
+              <h5>{user.username} - {review.rating} {review.rating > 1 ? 'stars' : 'star'}</h5>
+              <p>{review.txt}</p>
+            </li>
+            )})}
+      </ul>
     </>
   )}
 

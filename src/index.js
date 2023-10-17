@@ -211,6 +211,7 @@ const App = ()=> {
                   cartItems={cartItems} 
                   createLineItem={createLineItem} 
                   updateLineItem={updateLineItem}
+                  users={users}
                 />}/>
                   
               <Route path="/products/tags/:tag" element={
@@ -330,6 +331,7 @@ const App = ()=> {
                 cartItems={cartItems} 
                 createLineItem={createLineItem} 
                 updateLineItem={updateLineItem}
+                users={users}
                 />}/>
 
               <Route path="/products/tags/:tag" element={

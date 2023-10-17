@@ -9,7 +9,8 @@ const {
   createProduct,
   editProduct,
   fetchReviews,
-  createReview
+  createReview,
+  checkExistingReview
 } = require('./products');
 
 const {
@@ -55,20 +56,7 @@ const {
 //   return response.rows[0];
 // };
 
-const checkExistingReview = async (user_id, product_id) => {
-  const SQL = `
-    SELECT *
-    FROM reviews
-    WHERE user_id = $1 AND product_id = $2
-  `;
-  const response = await client.query(SQL, [user_id, product_id]);
 
-  if (response.rows.length > 0) {
-    return response.rows[0];
-  } else {
-    return null;
-  }
-};
 
 const loadImage = (filepath) => {
   return new Promise((resolve, reject) => {
