@@ -136,6 +136,7 @@ const Product = ({
     );
   }
 
+
   if (product && editMode) {
     return (
       <Edit
