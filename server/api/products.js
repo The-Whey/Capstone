@@ -37,18 +37,12 @@ app.put('/:id', async (req, res, next) => {
 
 app.post('/reviews', async (req, res, next) => {
   try {
-    const { user_id, product_id } = req.body; 
-    const existingReview = await checkExistingReview(user_id, product_id);
-  
-   if (existingReview) {
-      return res.status(400).json({ error: 'You have already reviewed this product.' });
-    
+   if (await checkExistingReview(req.body)) {
+      throw new Error('Item already exists')
+    } else {
+      response = await createReview(req.body)
+      res.send(response)
     }
-
-    const newReview = req.body;
-    return await createReview(newReview);
-
-    res.status(200).json({ message: 'Review submitted successfully' });
   } catch (error) {
     next(error);
   }

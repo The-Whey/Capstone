@@ -5,33 +5,24 @@ const ReviewForm = ({ productId, auth, existingReview, reviews, setReviews, onEr
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [hasSubmittedReview, setHasSubmittedReview] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleReviewSubmission = async (ev) => {
     ev.preventDefault()
     try {
-      console.log(productId);
-      const json = { txt: reviewText, rating, product_id: productId, user_id:auth.id };
+      const json = { txt: reviewText, rating, product_id: productId, user_id: auth.id};
       const response = await api.submitReview(json);
-      console.log(response);
-
-      if (response.error) {
-        console.error(response.error);
-        setErrorMessage(response.error);
-        onError(response.error);
-      } else {
-        setReviews([...reviews, response]);
-      }
+      setReviews([...reviews, response])
+      setErrorMessage('')
     } catch (error) {
-      console.error("Error submitting review:", error);
-      errorMessage("Error: You've already submitted a review for this product.");
+      setErrorMessage('You have already submitted a review for this')
     }
   };
-
+  const alreadyReviewed = reviews.filter(review => review.product_id === productId).find(review => review.user_id === auth.id)
   return (
     <div>
-      {hasSubmittedReview ? (
-        <p>{errorMessage}</p>
+      {alreadyReviewed ? (
+        <p>You have already reviewed this product.</p>
       ) : (
         <form onSubmit={handleReviewSubmission}>
           <label>

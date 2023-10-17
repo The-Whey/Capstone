@@ -29,6 +29,17 @@ const createProduct = async(product)=> {
   return response.rows[0];
 };
 
+const checkExistingReview = async (json) => {
+  const SQL = `
+    SELECT *
+    FROM reviews
+    WHERE user_id = $1 AND product_id = $2
+  `;
+  const response = await client.query(SQL, [json.user_id, json.product_id]);
+  return response.rows[0]
+  
+};
+
 const createReview = async(review)=> {
   const SQL = `
   INSERT INTO reviews (id, product_id, user_id, txt, rating) VALUES($1, $2, $3, $4, $5) RETURNING * 
@@ -56,5 +67,6 @@ module.exports = {
   fetchReviews,
   createProduct,
   createReview,
-  editProduct
+  editProduct,
+  checkExistingReview
 };
