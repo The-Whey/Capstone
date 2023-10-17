@@ -78,12 +78,13 @@ body {
   background-color: rgb(114, 183, 217);
   margin:0;
   padding:0;
-  overflow:hidden;
+  overflow:auto;
   }
   section{
-  height:100%;
-  width:100%;
-    position:absolute ;  background:radial-gradient(#333,#000);
+  height:100% auto;
+  width:100vw;
+  position:absolute ;  
+  background:radial-gradient(#333,#000);
   }
   .leaf div:nth-child(1) {
   left: 20%;
@@ -153,9 +154,6 @@ body {
 }
 
 .leaf div {
-  --random-x: calc((var(--random) * 20px) - 10px);
   position: absolute;
   display: block;
-  animation: fall var(--fall-duration) linear infinite;
-  animation-delay: var(--fall-delay);
 }
