@@ -21,7 +21,13 @@ app.get('/', async (req, res, next) => {
 
 app.post('/', async (req, res, next) => {
   try {
+    if (req.body.image){
+      const newproduct = await createProduct(req.body);
+      newproduct.image = req.body.image;
+      res.send(await editProduct(newproduct))
+    } else {
     res.send(await createProduct(req.body));
+    }
   } catch (error) {
     next(error);
   }
