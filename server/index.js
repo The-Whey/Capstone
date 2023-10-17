@@ -1,3 +1,11 @@
+try {
+  require('../env')
+} catch (error) {
+  console.log('If running locally add env.js file to root directory set process.env.HEREapi && set process.env.geoAPIfy')
+    
+}
+
+
 const {
   seed,
   client,

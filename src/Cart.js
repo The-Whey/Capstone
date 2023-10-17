@@ -11,7 +11,9 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
   const [nickname, setNickname] = useState('');
   const [savedAddresses, setSavedAddresses] = useState([]);
   const navigate = useNavigate();
-  const geoapifyapikey = '2c1d919212f0470fbaa34d495ad970c2'
+  const geoapifyapikey = window.geoAPIfy
+
+  
 
   // Update adds 1 to quantity, so i subtract two here to make it subtract 1 instead of adding.
   const minus = (lineItem) => {
