@@ -1,6 +1,6 @@
 
 h2 {
-  color: darkslategrey; 
+  color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
   margin-top: 0;
 }
@@ -25,14 +25,28 @@ nav{
 nav a {
   margin-right: 10px;
   text-decoration: none;
-  color: darkslategrey; 
+  color: rgb(252, 238, 222); /* changed to cream to match logo */
   transition: color 0.3s;
   font-weight: bold;
 }
+
+.product-link {
+  color: rgb(114, 183, 217); 
+  text-decoration: underline; 
+}
+
+.product-link:hover {
+  color: rgb(208, 203, 203); 
+}
+
+.product-link:visited {
+  color: rgb(70, 148, 175); 
+}
+
 button {
   padding: 10px 20px; /* Add padding to buttons */
-  background-color: #ff6600; /* Orange background color */
-  color: #fff; /* White text color */
+  background-color: rgb(114, 183, 217); /* changed to blue to match logo */
+  color: rgb(252, 238, 222); /* changed to cream to match logo */
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -41,14 +55,14 @@ button {
 }
 
 button:hover {
-  background-color: #ff9900; /* Lighter orange on hover */
+  background-color: rgb(208, 203, 203); /* gray on hover */
 }
 
 nav a:hover {
-  color: tomato;
+  color: rgb(114, 183, 217);
 }
 .product-container {
-  border: 1px solid #ccc; /* Gray border */
+  border: 1px solid rgb(208, 203, 203); /* Gray border */
   border-radius: 4px;
   margin: 10px;
   padding: 10px;
@@ -57,11 +71,11 @@ nav a:hover {
 }
 
 .uniqueTags a:hover {
-  color: tomato;
+  color: rgb(114, 183, 217);
 }
 body {
   font-family: verdana;
-  background-color: powderblue;
+  background-color: rgb(114, 183, 217);
   margin:0;
   padding:0;
   overflow:hidden;
