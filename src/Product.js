@@ -105,7 +105,7 @@ const Product = ({
           <button onClick={() => createLineItem(product)}>Add to Cart</button>
         )
       ) : null}
-
+      
       {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
       <ul>
         {reviews.filter(review => review.product_id === product.id).map(review => {
