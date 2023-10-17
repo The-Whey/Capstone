@@ -18,6 +18,12 @@ const Profile = ({auth, users, addresses}) => {
     setEditMode(false)
   }
 
+  const deleteAddress = async(id) => {
+    const json = {id}
+    const response = await api.deleteAddress(json)
+    console.log(response)
+  }
+
   useEffect(() => {
     const user = users.find(user => user.id === auth.id);
   

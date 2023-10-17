@@ -157,6 +157,16 @@ const createAddress = async(json) => {
   return response.rows[0];
 }
 
+const deleteAddress = async(id) => {
+  const SQL = `
+  UPDATE addresses set
+  nickname = NULL
+  WHERE id = $1
+  RETURNING *
+  `
+  const response = await client.query(SQL, [id])
+}
+
 const fetchAddresses = async() => {
   const SQL =`
   SELECT * FROM addresses
@@ -179,5 +189,6 @@ module.exports = {
   createBookmark,
   updateOrderFulfilled,
   createAddress,
-  fetchAddresses
+  fetchAddresses,
+  deleteAddress
 };

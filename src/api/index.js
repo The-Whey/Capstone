@@ -90,6 +90,11 @@ const addAddress = async(json) => {
   return response.data;
 }
 
+const deleteAddress = async(json) => {
+  const response = await axios.put('/api/orders/addresses', json, getHeaders());
+  return response.data;
+}
+
 const attemptLoginWithToken = async(setAuth)=> {
   const token = window.localStorage.getItem('token');
   if(token){
@@ -154,7 +159,7 @@ const submitReview = async (json) => {
 };
 
 const submitTag = async (json) => {
-  const response = await axios.post(`/api/tags`, json);
+  const response = await axios.post(`/api/tags`, json, getHeaders());
   return response.data
 }
 
@@ -183,7 +188,8 @@ const api = {
   fetchTags,
   fetchAddresses,
   fetchTagsList,
-  submitTag
+  submitTag,
+  deleteAddress
 };
 
 export default api;

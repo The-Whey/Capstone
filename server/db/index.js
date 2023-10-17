@@ -45,7 +45,8 @@ const {
   deleteBookmark,
   updateOrderFulfilled,
   createAddress,
-  fetchAddresses
+  fetchAddresses,
+  deleteAddress,
 } = require('./cart');
 
 // const createBookmark = async(bookmark)=> {
@@ -252,5 +253,6 @@ module.exports = {
   checkDupeTags,
   insertProductTags,
   checkDupeProductTags,
+  deleteAddress,
   client
 };
