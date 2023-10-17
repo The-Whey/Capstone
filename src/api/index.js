@@ -91,7 +91,7 @@ const addAddress = async(json) => {
 }
 
 const deleteAddress = async(json) => {
-  const response = await axios.put('/api/orders/addresses', json, getHeaders());
+  const response = await axios.patch(`/api/orders/addresses/${json.id}`, json, getHeaders());
   return response.data;
 }
 

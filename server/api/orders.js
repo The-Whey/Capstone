@@ -97,10 +97,9 @@ app.get('/addresses', async(req, res, next) => {
   }
 })
 
-app.put('/addresses', async(req, res, next) => {
+app.patch(`/addresses/:id`, async(req, res, next) => {
   try {
-    console.log(req.body.id)
-    res.send(await deleteAddress(req.body))
+    res.send(await deleteAddress(req.params.id))
   } catch (error) {
     next(error)
   }

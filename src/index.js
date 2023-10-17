@@ -245,6 +245,7 @@ const App = ()=> {
                   auth={auth}
                   users={users}
                   addresses={addresses} 
+                  setAddresses={setAddresses}
                 />}/>
 
               <Route path='/products' element={

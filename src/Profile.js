@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import api from './api';
 
-const Profile = ({auth, users, addresses}) => {
+const Profile = ({auth, users, addresses, setAddresses}) => {
   const [image, setImage] = useState('');
   const [username, setUsername] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -18,10 +18,10 @@ const Profile = ({auth, users, addresses}) => {
     setEditMode(false)
   }
 
-  const deleteAddress = async(id) => {
-    const json = {id}
+  const deleteAddress = async(addy) => {
+    const json = {id: addy.id}
     const response = await api.deleteAddress(json)
-    console.log(response)
+    setAddresses(addresses.map(address => address.id === response.id ? response : address))
   }
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const Profile = ({auth, users, addresses}) => {
               <div>
                 <h4>Saved Addresses:</h4>
                 {
-                  savedAddresses.map(addy => <div key={addy.id}>{`${addy.nickname}: ${addy.data.properties.formatted}`}</div>)
+                  savedAddresses.map(addy => <div key={addy.id}>{`${addy.nickname}: ${addy.data.properties.formatted}`} <button onClick={() => deleteAddress(addy)}>Delete</button></div>)
                 }
               </div>
               : <div>You have no saved addresses</div>
