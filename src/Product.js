@@ -29,7 +29,6 @@ const Product = ({
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   let productTags;
-  console.log(reviews)
 
   const handleReviewError = (error) => {
     setErrorMessage(error);
