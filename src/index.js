@@ -259,6 +259,7 @@ const App = ()=> {
                   bookmarks = {bookmarks}
                   createBookmark= { createBookmark}
                   removeBookmark={ removeBookmark}
+                  reviews={reviews}
               />}/>
 
               <Route path='/products/search/:term' element={
@@ -273,6 +274,7 @@ const App = ()=> {
                   bookmarks = {bookmarks}
                   createBookmark= { createBookmark}
                   removeBookmark={ removeBookmark}
+                  reviews={reviews}
               />}/>
 
               <Route path='/cart' element={
