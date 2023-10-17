@@ -159,12 +159,13 @@ const createAddress = async(json) => {
 
 const deleteAddress = async(id) => {
   const SQL = `
-  UPDATE addresses set
-  nickname = NULL
+  UPDATE addresses 
+  SET nickname = NULL
   WHERE id = $1
   RETURNING *
   `
   const response = await client.query(SQL, [id])
+  return response.rows[0]
 }
 
 const fetchAddresses = async() => {
