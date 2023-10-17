@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ReviewForm from './ReviewForm';
 import api from "./api";
 import Edit from './Edit';
+import Reviews from "./Reviews";
 
 const Product = ({
   products,
@@ -108,14 +109,7 @@ const Product = ({
 
       {auth.id && <ReviewForm productId={product.id} onSubmit={handleReviewSubmission} reviews={reviews} setReviews={setReviews} auth={auth} onError={handleReviewError} />}
       <ul>
-        {reviews.filter(review => review.product_id === product.id).map(review => {
-          const user = users.find(user => user.id === review.user_id)
-          return (
-            <li key={review.id}>
-              <h5>{user.username} - {review.rating} {review.rating > 1 ? 'stars' : 'star'}</h5>
-              <p>{review.txt}</p>
-            </li>
-            )})}
+        <Reviews users={users} reviews={reviews} product={product}/>
       </ul>
     </>
   )}
