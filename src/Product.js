@@ -23,8 +23,21 @@ const Product = ({
   const [addTagMode, setAddTagMode] = useState(false);
   const [newTag, setNewTag] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [avgRating, setAvgRating] = useState(0);
   const { id } = useParams();
   const product = products.find((item) => item.id === id);
+
+  useEffect(() => {
+  if (product){
+    const currentReviews = reviews.filter(review => review.product_id === product.id)
+    if(currentReviews.length){
+      setAvgRating(currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length)
+
+    }else{
+      setAvgRating(0)
+    }}
+  }, [reviews])
+
   
   const productReviews = reviews
     ? reviews.filter((review) => review.product_id === id)
@@ -83,6 +96,7 @@ const Product = ({
             <button onClick={() => setEditMode(true)}>Edit Product</button>
           ) : null}
         </h2>
+        <h4>{avgRating ? `Average Rating: ${avgRating} ${avgRating > 1 ? `stars` : `star`}` : null}</h4>
         <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
         <img src={product.image} />
         <p>{product.description}</p>
