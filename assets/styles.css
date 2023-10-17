@@ -64,7 +64,7 @@ body {
   background-color: powderblue;
   margin:0;
   padding:0;
-  overflow:hidden;
+  overflow:auto;
   }
   section{
   height:100%;

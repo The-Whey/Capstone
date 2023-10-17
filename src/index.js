@@ -29,7 +29,7 @@ const App = ()=> {
   const [tags, setTags] = useState([]);
   const [tagsList, setTagsList] = useState([]);
   const [addresses, setAddresses] = useState([]);
-  const HEREapikey = 'HCMF4gcOgfJDejFC9z45wPFgOpI6fpauNvDqfCBXiy4'
+  const HEREapikey = window.HEREapi
 
   const getHeaders = ()=> {
     return {

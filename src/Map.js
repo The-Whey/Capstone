@@ -7,6 +7,7 @@ const Map = ( props ) => {
     const platform = useRef(null)
     const { apikey } = props;
     const ourlocation = {lat: 47.6038302, lng: -122.3391395}
+    
 
     function getMarkerIcon(color) {
         const svgCircle = `<svg width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
