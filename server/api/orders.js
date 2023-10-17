@@ -7,7 +7,8 @@ const {
   createBookmark,
   updateOrderFulfilled,
   createAddress,
-  fetchAddresses
+  fetchAddresses,
+  deleteAddress
 } = require('../db');
 
 
@@ -91,6 +92,15 @@ app.post('/addresses', async(req, res, next)=> {
 app.get('/addresses', async(req, res, next) => {
   try {
     res.send(await fetchAddresses())
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/addresses', async(req, res, next) => {
+  try {
+    console.log(req.body.id)
+    res.send(await deleteAddress(req.body))
   } catch (error) {
     next(error)
   }
