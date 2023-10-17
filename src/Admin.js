@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import api from './api';
 import Orders from './Orders';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders, allLineItems, auth, addresses}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('')
+  const navigate = useNavigate()
   const el = useRef();
 
   const setVipTrue = async (user) => {
@@ -26,6 +28,11 @@ const Admin = ({users, setUsers, products, setProducts, allOrders, setAllOrders,
     const json = {name, price: (price *  100), description, image};
     const response = await api.submitNewProduct(json);
     setProducts([...products, response])
+    navigate(`/products/${response.id}`)
+    setName('');
+    setPrice(0);
+    setDescription('');
+    setImage('')
   }
 
   useEffect(() => {
