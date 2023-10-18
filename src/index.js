@@ -198,7 +198,9 @@ const App = ()=> {
               <span>
                 Welcome { auth.username }!
               </span>
-              <div className='dropdown'>
+              
+            </nav>
+            <div className='dropdown'>
               <button className='dropbtn button'><img
                 src={getUserImage(auth.id)}
                 alt="User Profile"
@@ -209,7 +211,6 @@ const App = ()=> {
               <a><button onClick={ logout }>Logout</button></a>
               </div>
               </div>
-            </nav>
             <Routes>
             <Route path='/' element={
                 <Products
