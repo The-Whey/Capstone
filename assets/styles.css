@@ -86,6 +86,7 @@ body {
   position:absolute ;  
   background:radial-gradient(#333,#000);
   z-index: 0;
+  min-height:100vh;
   }
   .leaf div:nth-child(1) {
   left: 20%;
@@ -174,7 +175,7 @@ body {
 }
 
 .geoapify-autocomplete-items {
-  position: absolute;
+  position: fixed;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   background-color: #fff;
