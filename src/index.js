@@ -179,7 +179,10 @@ const App = ()=> {
   const logout = ()=> {
     api.logout(setAuth);
   }
-
+  const getUserImage = (userId) => {
+    const user = users.find((user) => user.id === userId);
+    return user ? user.image : null;
+  };
   return (
     <div>
       {
@@ -194,9 +197,20 @@ const App = ()=> {
               {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
               <span>
                 Welcome { auth.username }!
-                <button onClick={ logout }>Logout</button>
               </span>
+              
             </nav>
+            <div className='dropdown'>
+              <button className='dropbtn button'><img
+                src={getUserImage(auth.id)}
+                alt="User Profile"
+                width="40"
+                height="40"
+              /></button>
+              <div class="dropdown-content">
+              <a><button onClick={ logout }>Logout</button></a>
+              </div>
+              </div>
             <Routes>
             <Route path='/' element={
                 <Products
