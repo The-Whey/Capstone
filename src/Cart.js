@@ -71,7 +71,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
       </ul>
       <h4>{`Total Price: $${totalPrice.toFixed(2)}`}</h4>
       {
-        lineItems.filter(lineItem => lineItem.order_id === cart.id ).length ? <button onClick={() => setAddressMode(true)}>Create Order</button>: null
+        lineItems.filter(lineItem => lineItem.order_id === cart.id ).length ? <button onClick={() => setAddressMode(true)}>Checkout</button>: null
       }
     </div>
   );

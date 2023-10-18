@@ -15,7 +15,6 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
   const [tagId, setTagId] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
   const navigate = useNavigate();
   const {term} = useParams();
   const location = useLocation();
@@ -69,7 +68,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
         return (
           <div key={product.id}>
             <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
-            <h5>{avgRating ? avgRating > 1  ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</h5>  
+            <h5>{avgRating ? avgRating > 1  ? `Average Rating: ${avgRating} stars` : `Average Rating: ${avgRating} star` : 'no reviews'}</h5>  
             <Link to={`/products/${product.id}`}><img src={product.image}/></Link>
             {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
             {
