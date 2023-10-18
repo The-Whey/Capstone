@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import ReviewForm from "./ReviewForm";
 import api from "./api";
 import Edit from "./Edit";
@@ -146,6 +146,7 @@ const Product = ({
         <ul>
           <Reviews users={users} reviews={reviews} product={product} />
         </ul>
+        <Link to={'/products'}>Back to all products</Link>
       </>
     );
   }

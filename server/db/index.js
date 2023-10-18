@@ -178,6 +178,8 @@ const seed = async()=> {
     createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
     createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
+  editProduct({...guitar, image: 'https://cdn11.bigcommerce.com/s-e3wpevzfi1/images/stencil/1280x1280/products/4491/83164/4588-2__99148.1683139892.jpg?c=2'})
+  editProduct({...bass, image: 'https://cdn11.bigcommerce.com/s-e3wpevzfi1/images/stencil/1280x1280/products/4491/83164/4588-2__99148.1683139892.jpg?c=2'})
 
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
