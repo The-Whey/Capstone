@@ -1,4 +1,6 @@
-
+*{
+  z-index: 2;
+}
 h2 {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
@@ -85,7 +87,7 @@ body {
   width:100vw;
   position:absolute ;  
   background:radial-gradient(#333,#000);
-  z-index: -2;
+  z-index: 0;
   }
   .leaf div:nth-child(1) {
   left: 20%;
@@ -157,7 +159,7 @@ body {
 .leaf div {
   position: absolute;
   display: block;
-  z-index: -1;
+  z-index: 1;
 }
 
 .geoapify-autocomplete-input {
