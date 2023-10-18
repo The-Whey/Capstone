@@ -24,7 +24,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
   const submitOrder = async(addy) => {
     if (!savedAddresses.length){
-    const json = {data: Object.keys(data), user_id: cart.user_id}
+    const json = {data, user_id: cart.user_id}
     if (nickname) json.nickname = nickname;
     const response = await api.addAddress(json)
     setAddresses([...addresses, response])
