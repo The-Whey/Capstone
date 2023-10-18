@@ -85,6 +85,7 @@ body {
   width:100vw;
   position:absolute ;  
   background:radial-gradient(#333,#000);
+  z-index: -2;
   }
   .leaf div:nth-child(1) {
   left: 20%;
@@ -148,7 +149,7 @@ body {
     transform: translateX(calc(-20px + var(--random-x))) rotate(180deg);
   }
   100% {
-    top: 110%;
+    top: 95%;
     transform: translateX(calc(-20px + var(--random-x))) rotate(225deg);
   }
 }
@@ -156,6 +157,7 @@ body {
 .leaf div {
   position: absolute;
   display: block;
+  z-index: -1;
 }
 
 .geoapify-autocomplete-input {
