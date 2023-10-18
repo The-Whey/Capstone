@@ -42,7 +42,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
         
         return (
           <div key={product.id}>
-            <h3><Link to={`/products/${product.id}`} className='product-link'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
+            <h3><Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
             <h5>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</h5>  
             <img src={product.image}/>
             {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
@@ -67,9 +67,9 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
         return (
           <div key={product.id}>
-            <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
+            <h3><Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
             <h5>{avgRating ? avgRating > 1  ? `Average Rating: ${avgRating} stars` : `Average Rating: ${avgRating} star` : 'no reviews'}</h5>  
-            <Link to={`/products/${product.id}`}><img src={product.image}/></Link>
+            <Link to={`/products/${product.id}`} className='link-style'><img src={product.image}/></Link>
             {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
             {
               auth.id ? (

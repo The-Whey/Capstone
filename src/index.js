@@ -196,7 +196,7 @@ const App = ()=> {
         auth.id ? (
           <>
             <nav>
-              <Link to='/products'>Products ({ products.length })</Link>
+              <Link to='/products'className='link-style'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
               <Link to='/wishlist'>Wishlist ({bookmarks.length})</Link>
