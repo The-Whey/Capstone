@@ -172,13 +172,42 @@ const seed = async()=> {
     createUser({ username: 'ethyl', password: '1234', is_admin: true, is_vip: true})
   ]);
   
-  const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Epiphone PRO-1 Acoustic', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
-    createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
-    createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
-    createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
+  const [guitar, bass, keyboard, drums,fenderbassWhite, fenderbassSilver, fenderStrat, gibsonlespaulBlue, gibsonlespaulBlack, martinSpecial, rogueStarter, yamahaGuitar, rogueJunior, yamahaRydeen, yamahakeyboardBlack, yamahakeyboardWhite] = await Promise.all([
+    createProduct({ name: 'Epiphone PRO-1 Acoustic', price: 18999, description: "Epiphone's PRO-1 is the fastest and easiest way to start playing the guitar! Specifically designed to make learning how to play as easy as possible!"}),
+    createProduct({ name: 'Fender Jazz Bass', price: 129999, description: "This model is characterized by its distinctive color and is built with a basswood body paired to a maple neck and fingerboard. Dual vintage-style single-coil pickups top off the look and sound of this slick electric and deliver classic tones for limitless inspiration." }),
+    createProduct({ name: 'Williams Legato IV 88-key Digital Piano', price: 34999, description: "The Williams Legato IV digital piano motivates aspiring keyboardists with a stunning concert grand sound—as well as a collection of electric pianos, organs, strings, basses and a synth." }),
+    createProduct({ name: 'Roland VAD507 V-Drums', price: 499999, description: "The Roland VAD507 V-drums kit delivers the commanding presence of a full acoustic drum set on stage with the convenience and control of electronic drums." }),
+    createProduct({ name: 'Fender Player Jazz Bass (White)', price: 84999, description: "With its dual single-coil pickups and smooth playing feel, the Player Jazz Bass is an inspiring instrument with classic, elevated style and authentic Fender bass tone." }),
+    createProduct({ name: 'Fender Player Jazz Bass (Silver)', price: 79900, description: "With its dual single-coil pickups and smooth playing feel, the Player Jazz Bass is an inspiring instrument with classic, elevated style and authentic Fender bass tone." }),
+    createProduct({ name: 'Fender Stratocaster', price: 89999, description: "Loaded with innovative features catering to discerning players searching for ultimate precision, tone and comfort, this state of the art Stratocaster is a bold step forward." }),
+    createProduct({ name: 'Gibson Les Paul (Blue)', price: 299900, description: "This Les Paul Standard features a mahogany body with an AA figured maple top and a slim taper mahogany neck with a rosewood fretboard for resonant tone and fast playability." }),
+    createProduct({ name: 'Gibson Les Paul (Black)', price: 299900, description: "This Les Paul Standard features a mahogany body with an AA figured maple top and a slim taper mahogany neck with a rosewood fretboard for resonant tone and fast playability." }),
+    createProduct({ name: 'Martin Special Road Series', price: 149900, description: "With a gorgeous glossed Sitka spruce top and Etimoe back and sides, this Martin cutaway model is a great sounding guitar at an affordable price." }),
+    createProduct({ name: 'Rogue Starter Acoustic Guitar', price: 7999, description: "The small-bodied Rogue Starter acoustic guitar is an amazing deal for a starter guitar. Its smaller profile makes it very playable for kids or aspiring guitarists with smaller body frames and hands." }),
+    createProduct({ name: 'Yamaha F335', price: 18999, description: "The F335 acoustic guitar from Yamaha is a stellar blend of quality, playability and affordability that offers an appealing option for both beginners and seasoned musicians alike." }),
+    createProduct({ name: 'Rogue Junior Kicker 5pc Drum Set', price: 29999, description: "This drum set has a compact frame to appease smaller rockers but maintains Rogue's great playability and sound that its customers have grown accustomed to." }),
+    createProduct({ name: 'Yamaha Rydeen 5- Piece Drum set', price: 41999, description: "This set utilizes genuine Yamaha tom holders for simple adjustments and features solid and glitter finishes. Yamaha Hardware allows creative setup variations and grows with the needs of a younger player." }),
+    createProduct({ name: 'Yamaha P-125A Digial Piano (Black)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
+    createProduct({ name: 'Yamaha P-125A Digial Piano (White)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
   ]);
-  editProduct({...guitar, image: 'https://imgur.com/AHBcSQc'})
+
+  editProduct({...guitar, image: 'https://i.imgur.com/AHBcSQc.png'}),
+  editProduct({...bass, image: 'https://i.imgur.com/nVdnXCh.png'}),
+  editProduct({...keyboard, image: 'https://i.imgur.com/3bx0RvN.png'}),
+  editProduct({...drums, image: 'https://i.imgur.com/RSyLpZa.png'}),
+  editProduct({...fenderbassWhite, image: 'https://i.imgur.com/j3Sb9lc.png'}),
+  editProduct({...fenderbassSilver, image: 'https://i.imgur.com/pPFphWA.png'}),
+  editProduct({...fenderStrat, image: 'https://i.imgur.com/wPWBac3.png'}),
+  editProduct({...gibsonlespaulBlue, image: 'https://i.imgur.com/eK07wzy.png'}),
+  editProduct({...gibsonlespaulBlack, image: 'https://i.imgur.com/AQowZ9S.png'}),
+  editProduct({...martinSpecial, image: 'https://i.imgur.com/z2K9atU.png'}),
+  editProduct({...rogueStarter, image: 'https://i.imgur.com/Kg6LnhI.png'}),
+  editProduct({...yamahaGuitar, image: 'https://i.imgur.com/7wzXRoQ.png'}),
+  editProduct({...rogueJunior, image: 'https://i.imgur.com/kv4LlAa.png'}),
+  editProduct({...yamahaRydeen, image: 'https://i.imgur.com/4fhELwB.png'}),
+  editProduct({...yamahakeyboardBlack, image: 'https://i.imgur.com/yG2NIpO.png'}),
+  editProduct({...yamahakeyboardWhite, image: 'https://i.imgur.com/hb6HBkw.png'}),
+
 
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
