@@ -5,7 +5,7 @@ const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   return (
     <div>
       {
-        bookmark ? <button onClick={ ()=> removeBookmark(bookmark)}>Remove Bookmark</button> : <button onClick={ ()=> createBookmark({ product_id: product.id })}>Add Bookmark</button>
+        bookmark ? <button onClick={ ()=> removeBookmark(bookmark)}>Remove From Wishlist</button> : <button onClick={ ()=> createBookmark({ product_id: product.id })}>Add to Wishlist</button>
       }
     </div>
   );
