@@ -209,7 +209,7 @@ const App = ()=> {
                 width="40"
                 height="40"
               /></button>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
               <a><button onClick={moveProfile}>{auth.username}</button></a>
               {auth.is_admin ? <a><button onClick={moveAdmin}>Admin</button></a> : null}
               <a><button onClick={ logout }>Logout</button></a>
@@ -275,6 +275,7 @@ const App = ()=> {
                   users={users}
                   addresses={addresses} 
                   setAddresses={setAddresses}
+                  setUsers={setUsers}
                 />}/>
 
               <Route path='/products' element={
