@@ -197,14 +197,18 @@ const App = ()=> {
               {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
               <span>
                 Welcome { auth.username }!
-                <img
+              </span>
+              <div className='dropdown'>
+              <button className='dropbtn button'><img
                 src={getUserImage(auth.id)}
                 alt="User Profile"
                 width="40"
                 height="40"
-              />
-                <button onClick={ logout }>Logout</button>
-              </span>
+              /></button>
+              <div class="dropdown-content">
+              <a><button onClick={ logout }>Logout</button></a>
+              </div>
+              </div>
             </nav>
             <Routes>
             <Route path='/' element={
