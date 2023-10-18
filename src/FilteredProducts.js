@@ -1,33 +1,87 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const FilteredProducts = ({ products, tags }) => {
-  const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
-  const { tag } = useParams();
-  const filteredProducts = products.filter((product) => {
-    const productTags = tags.filter((t) => t.product_id === product.id);
-    return productTags.some((t) => t.tag === tag);
-  })
+const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   return (
     <div>
-      <h2>Products with Tag: {tag}</h2>
-      <ul className='uniqueTags'>{uniqueTagNames.map((tagName) => (
-          <li key={tagName}>
-            <Link to={`/products/tags/${tagName}`}>{tagName}</Link>
-          </li>
-        ))}</ul>
-      {filteredProducts.map((product) => (
-        <div key={product.id}>
-          <h3>
-            <Link to={`/products/${product.id}`}>{product.name}</Link>
-          </h3>
-          <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
-          <img src={product.image}/>
-          <p>{product.description}</p>
-        </div>
-      ))}
+      {
+        bookmark ? <button onClick={ ()=> removeBookmark(bookmark)}>Remove Bookmark</button> : <button onClick={ ()=> createBookmark({ product_id: product.id })}>Add Bookmark</button>
+      }
     </div>
   );
+}
+
+const FilteredProducts = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark, tags, tagsList, reviews})=> {
+
+  const [tagId, setTagId] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
+  const navigate = useNavigate();
+  const {term}=useParams();
+
+  useEffect(() => {
+    setFilteredProducts(tags.filter(item => item.tag_id === tagId).map(obj => products.find(item => item.id === obj.product_id)))
+  }, [tagId])
+  
+  if (filteredProducts.length) return(
+    <div>
+      <h2>Products</h2>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
+ 
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
+      {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
+
+      {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
+        const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
+
+        let avgRating = 0;
+        const currentReviews = reviews.filter(review => review.product_id === product.id)
+        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length)
+
+        
+        return (
+          <div key={product.id}>
+            <h3><Link to={`/products/${product.id}`} className='product-link'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
+            <h5>{avgRating ? avgRating > 1  ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</h5>  
+            <img src={product.image}/>
+            {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+            {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
+            {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null } 
+          </div>
+        )
+      })}
+    </div>
+  );
+
+  return(
+    <div>
+      <h2>Products</h2>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
+      <h3>{bookmarks.length} Bookmarks</h3>
+      {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
+        const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
+        let avgRating = 0;
+        const currentReviews = reviews.filter(review => review.product_id === product.id)
+        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length)
+
+        return (
+          <div key={product.id}>
+            <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
+            <h5>{avgRating ? avgRating > 1  ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</h5>  
+            <Link to={`/products/${product.id}`}><img src={product.image}/></Link>
+            {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+            {
+              auth.id ? (
+                cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
+              ): null
+            }
+          { auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null } 
+          </div>
+        )
+      })}
+    </div>
+  )
 };
 
 export default FilteredProducts;
