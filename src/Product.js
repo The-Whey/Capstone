@@ -96,7 +96,7 @@ const Product = ({
             <button onClick={() => setEditMode(true)}>Edit Product</button>
           ) : null}
         </h2>
-        <h4>{avgRating ? `Average Rating: ${avgRating} ${avgRating > 1 ? `stars` : `star`}` : null}</h4>
+        <h4>{avgRating ? `Average Rating: ${avgRating.toFixed(1)} ${avgRating.toFixed(1) > 1 ? `stars` : `star`}` : null}</h4>
         <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
         <img src={product.image} />
         <p>{product.description}</p>

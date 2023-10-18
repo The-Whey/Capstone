@@ -27,7 +27,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
   if (filteredProducts.length) return(
     <div>
-      <h2>Products</h2>
+      <h2>Harmonic Harbor</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
  
       {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
@@ -57,7 +57,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
   return(
     <div>
-      <h2>Products</h2>
+      <h2>Harmonic Harbor</h2>
       <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value.trim() ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
       {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
       {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
