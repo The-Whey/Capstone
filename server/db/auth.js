@@ -75,16 +75,17 @@ const fetchUser = async(id) => {
   return response.rows[0]
 }
 
-const updateUser = async(user, id)=> {
+const updateUser = async(user)=> {
   const SQL =`
   UPDATE users
   SET is_vip = $1,
   username = $2,
-  is_admin = $3
-  WHERE id = $4
+  is_admin = $3,
+  image = $4
+  WHERE id = $5
   RETURNING *
   `;
-  const response = await client.query(SQL, [user.is_vip, user.username, user.is_admin, user.id]);
+  const response = await client.query(SQL, [user.is_vip, user.username, user.is_admin, user.image, user.id]);
   return response.rows[0];
 }
 
