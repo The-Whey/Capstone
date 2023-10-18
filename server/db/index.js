@@ -173,11 +173,12 @@ const seed = async()=> {
   ]);
   
   const [guitar, bass, keyboard, drums] = await Promise.all([
-    createProduct({ name: 'Guitar', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
+    createProduct({ name: 'Epiphone PRO-1 Acoustic', price: 100, description: 'A high-quality acoustic guitar, perfect for beginners and experienced players.'}),
     createProduct({ name: 'Bass', price: 500, description: 'A versatile electric bass guitar with a rich tone, ideal for bassists.' }),
     createProduct({ name: 'Keyboard', price: 1000, description: 'An advanced digital keyboard with a wide range of sounds and features.' }),
     createProduct({ name: 'Drums', price: 12000, description: 'A professional drum kit for drummers who demand the best in sound and durability.' }),
   ]);
+  editProduct({...guitar, image: 'https://imgur.com/AHBcSQc'})
 
   await Promise.all([
     createBookmark({ user_id: ethyl.id, product_id: guitar.id }),
