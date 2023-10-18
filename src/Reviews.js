@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Reviews = ({reviews, users, product}) => {
-    console.log(reviews)
+
   return (
     reviews.filter(review => review.product_id === product.id).map(review => {
         const user = users.find(user => user.id === review.user_id)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Link, HashRouter, Routes, Route } from 'react-router-dom';
+import { Link, HashRouter, Routes, Route, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
@@ -30,6 +30,7 @@ const App = ()=> {
   const [tagsList, setTagsList] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const HEREapikey = window.HEREapi
+  const {term} = useParams();
 
   const getHeaders = ()=> {
     return {
@@ -197,6 +198,22 @@ const App = ()=> {
               </span>
             </nav>
             <Routes>
+            <Route path='/' element={
+                <Products
+                tags={tags}
+                tagsList={tagsList}
+                auth = { auth }
+                products={ products }
+                cartItems = { cartItems }
+                createLineItem = { createLineItem }
+                updateLineItem = { updateLineItem }
+                bookmarks = {bookmarks}
+                createBookmark= { createBookmark}
+                removeBookmark={ removeBookmark}
+                reviews={reviews}
+            />}/>
+
+
               <Route path='/products/:id' element={
                 <Product 
                   tags={tags}
@@ -213,12 +230,6 @@ const App = ()=> {
                   updateLineItem={updateLineItem}
                   users={users}
                 />}/>
-                  
-              <Route path="/products/tags/:tag" element={
-                <FilteredProducts 
-                  products={products} 
-                  tags={tags}
-                />} />
 
               <Route path='/admin' element={
                 <Admin
@@ -323,7 +334,6 @@ const App = ()=> {
             <Login login={ login }/>
 
             <Routes>
-              
               <Route path='/products/:id' element={
                 <Product 
                 tags={tags}
@@ -335,28 +345,6 @@ const App = ()=> {
                 createLineItem={createLineItem} 
                 updateLineItem={updateLineItem}
                 users={users}
-                />}/>
-
-              <Route path="/products/tags/:tag" element={
-                <FilteredProducts 
-                  products={products} 
-                  tags={tags}
-                />}/>
-
-              <Route path='/products' element={
-                <Products
-                    tags={tags}
-                    tagsList = {tagsList}
-                    auth = { auth }
-                    reviews={reviews}
-                    setReviews={setReviews}
-                    products={ products }
-                    cartItems = { cartItems }
-                    createLineItem = { createLineItem }
-                    updateLineItem = { updateLineItem }
-                    bookmarks = {bookmarks}
-                    createBookmark= { createBookmark}
-                    removeBookmark={ removeBookmark}
                 />}/>
 
                 <Route path='/products/search/:term' element={
@@ -375,7 +363,22 @@ const App = ()=> {
                     removeBookmark={ removeBookmark}
                   />}/>
 
+              <Route path='*' element={<Products
+                    tags={tags}
+                    tagsList = {tagsList}
+                    auth = { auth }
+                    reviews={reviews}
+                    setReviews={setReviews}
+                    products={ products }
+                    cartItems = { cartItems }
+                    createLineItem = { createLineItem }
+                    updateLineItem = { updateLineItem }
+                    bookmarks = {bookmarks}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                />}/>
               </Routes>
+
               <Map apikey={HEREapikey} />
           </div>
         )

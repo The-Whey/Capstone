@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
 import api from './api';
 
 
 const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLineItem, setAddresses, addresses, auth })=> {
   const [addressMode, setAddressMode] = useState(false);
   const [data, setData] = useState({});
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState({});
   const [nickname, setNickname] = useState('');
   const [savedAddresses, setSavedAddresses] = useState([]);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
   const submitOrder = async(addy) => {
     if (!savedAddresses.length){
-    const json = {data, user_id: cart.user_id}
+    const json = {data: Object.keys(data), user_id: cart.user_id}
     if (nickname) json.nickname = nickname;
     const response = await api.addAddress(json)
     setAddresses([...addresses, response])
@@ -80,7 +80,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     <div>
       <h3>Where do you want your order shipped?</h3>
       <GeoapifyContext  apiKey={geoapifyapikey}>
-        <GeoapifyGeocoderAutocomplete filterByCountryCode={['us']} biasbylocation={true} placeSelect={(value) => setData(value)}/>
+        <GeoapifyGeocoderAutocomplete filterByCountryCode={['us']} biasByProximity={true} placeSelect={(value) => setData(value)}/>
       </GeoapifyContext>
       {checked ? <input type='text' placeholder='Home, Work, etc...' value={nickname} onChange={(ev) => setNickname(ev.target.value)}/>: null}
       <div>
@@ -91,7 +91,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
       </div>
 
       <br/>
-      <button disabled={!Object.keys(data).length} onClick={() => submitOrder()}>Submit Order</button>
+      <button disabled={data === null || !Object.keys(data)} onClick={() => submitOrder()}>Submit Order</button>
       <button onClick={() => setAddressMode(false)}>Cancel</button>
     </div>
   ): (

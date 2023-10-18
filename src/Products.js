@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const Bookmark = ({ product, bookmark, createBookmark, removeBookmark })=> {
   return (
@@ -17,12 +17,14 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
   const [filteredProducts, setFilteredProducts] = useState([]);
   const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
   const navigate = useNavigate();
-  const {term}=useParams();
+  const {term} = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     setFilteredProducts(tags.filter(item => item.tag_id === tagId).map(obj => products.find(item => item.id === obj.product_id)))
   }, [tagId])
   
+
   if (filteredProducts.length) return(
     <div>
       <h2>Products</h2>
