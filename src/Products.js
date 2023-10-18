@@ -44,7 +44,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
         return (
           <div key={product.id}>
             <h3><Link to={`/products/${product.id}`} className='product-link'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>
-            <h5>{avgRating ? avgRating > 1  ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</h5>  
+            <h5>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</h5>  
             <img src={product.image}/>
             {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
             {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
@@ -64,12 +64,12 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
         const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
         let avgRating = 0;
         const currentReviews = reviews.filter(review => review.product_id === product.id)
-        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length)
+        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length).toFixed(1)
 
         return (
           <div key={product.id}>
             <h3><Link to={`/products/${product.id}`}>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
-            <h5>{avgRating ? avgRating > 1  ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</h5>  
+            <h5>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</h5>  
             <Link to={`/products/${product.id}`}><img src={product.image}/></Link>
             {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
             {
