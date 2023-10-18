@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Link, HashRouter, Routes, Route, useParams } from 'react-router-dom';
+import { Link, HashRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
@@ -31,7 +31,7 @@ const App = ()=> {
   const [addresses, setAddresses] = useState([]);
   const HEREapikey = window.HEREapi
   const {term} = useParams();
-
+  const navigate = useNavigate()
   const getHeaders = ()=> {
     return {
       headers: {
@@ -39,7 +39,14 @@ const App = ()=> {
       }
     };
   };
-  
+  const moveAdmin = ()=>{
+    console.log('admin')
+    navigate("/admin")
+  }
+  const moveProfile = ()=>{
+    console.log('prpofile')
+    navigate("/profile")
+  }
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
@@ -192,12 +199,7 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/profile'>Profile</Link>
               <Link to='/wishlist'>Wishlist ({bookmarks.length})</Link>
-              {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
-              <span>
-                Welcome { auth.username }!
-              </span>
               
             </nav>
             <div className='dropdown'>
@@ -208,6 +210,8 @@ const App = ()=> {
                 height="40"
               /></button>
               <div class="dropdown-content">
+              <a><button onClick={moveProfile}>{auth.username}</button></a>
+              {auth.is_admin ? <a><button onClick={moveAdmin}>Admin</button></a> : null}
               <a><button onClick={ logout }>Logout</button></a>
               </div>
               </div>

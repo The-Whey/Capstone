@@ -21,6 +21,7 @@ form > * {
 }
 nav{
   display: flex;
+  max-width: 90%;
 }
 nav a {
   margin-right: 10px;
