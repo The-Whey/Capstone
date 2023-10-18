@@ -57,7 +57,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
             totalPrice += product.price * lineItem.quantity / 100
             return (
               <li key={ lineItem.id }>
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link>
                 ({ lineItem.quantity })
                 <button onClick={lineItem.quantity === 1 ? () => removeFromCart(lineItem) 
                   :() => minus(lineItem)}>-</button>

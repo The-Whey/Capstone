@@ -40,7 +40,7 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses, users
                       
                       return (
                         <li key={ lineItem.id }>
-                          <Link to={`/products/${product.id}`}>{product.name}</Link> ({lineItem.quantity}) at ${(product.price / 100).toFixed(2)} each
+                          <Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link> ({lineItem.quantity}) at ${(product.price / 100).toFixed(2)} each
                         </li>
                       );
                     })

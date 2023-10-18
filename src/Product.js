@@ -146,7 +146,7 @@ const Product = ({
         <ul>
           <Reviews users={users} reviews={reviews} product={product} />
         </ul>
-        <Link to={'/products'}>Back to all products</Link>
+        <Link to={'/products'} className='link-style'>Back to all products</Link>
       </>
     );
   }

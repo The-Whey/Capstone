@@ -31,19 +31,6 @@ nav a {
   font-weight: bold;
 }
 
-.product-link {
-  color: rgb(114, 183, 217); 
-  text-decoration: underline; 
-}
-
-.product-link:hover {
-  color: rgb(208, 203, 203); 
-}
-
-.product-link:visited {
-  color: rgb(70, 148, 175); 
-}
-
 button {
   padding: 10px 20px; /* Add padding to buttons */
   background-color: rgb(114, 183, 217); /* changed to blue to match logo */
@@ -295,4 +282,17 @@ body {
 }
 .dropbtn {
   float: right;
+}
+
+.link-style {
+  color: rgb(114, 183, 217); 
+  text-decoration: underline; 
+}
+
+.link-style:hover {
+  color: rgb(208, 203, 203); 
+}
+
+.link-style:visited {
+  color: rgb(70, 148, 175); 
 }
