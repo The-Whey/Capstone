@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Link, HashRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import { Link, HashRouter, Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
@@ -32,6 +32,8 @@ const App = ()=> {
   const HEREapikey = window.HEREapi
   const {term} = useParams();
   const navigate = useNavigate()
+  const {pathname} = useLocation()
+
   const getHeaders = ()=> {
     return {
       headers: {
@@ -196,10 +198,10 @@ const App = ()=> {
         auth.id ? (
           <>
             <nav>
-              <Link to='/products'className='link-style'>Products ({ products.length })</Link>
-              <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
-              <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/wishlist'>Wishlist ({bookmarks.length})</Link>
+              <Link to='/products'className={pathname === '/products' ? 'selected' : 'link-style'}>Products ({ products.length })</Link>
+              <Link to='/orders' className={pathname === '/orders' ? 'selected' : 'link-style'}>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
+              <Link to='/cart' className={pathname === '/cart' ? 'selected' : 'link-style'}>Cart ({ cartCount })</Link>
+              <Link to='/wishlist' className={pathname === '/wishlist' ? 'selected' : 'link-style'}>Wishlist ({bookmarks.length})</Link>
               
             </nav>
             <div className='dropdown'>
