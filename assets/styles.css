@@ -4,6 +4,15 @@
 Routes {
   flex: 3;
 } */
+.topform {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login {
+  display: flex;
+  align-self: right;
+}
 
 .products {
   display: flex;
@@ -59,6 +68,9 @@ h3 {
 form {
   display: flex;
   flex-direction: column;
+  width: 400px;
+  justify-content: space-around;
+  padding: 2rem;
 }
 
 form > * {
@@ -69,7 +81,6 @@ nav{
   display: flex;
   max-width: 100%;
   margin-top: 60px;
-  background-color: black;
 }
 
 nav a {
@@ -123,9 +134,8 @@ nav a:hover {
 
 body {
   font-family: verdana;
-  background-color: rgb(114, 183, 217);
+  background-color: radial-gradient(#333,#000);
   margin:0;
-  padding:0;
   overflow:auto;
   color: rgb(252, 238, 222);
   }
@@ -140,6 +150,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* padding: 20px; */
+
   }
 
 .leaf div:nth-child(1) {
@@ -381,4 +393,8 @@ body {
 
 .link-style:visited {
   color: rgb(70, 148, 175); 
+}
+
+ul {
+  list-style-type: none;
 }
