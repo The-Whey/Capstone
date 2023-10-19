@@ -1,3 +1,9 @@
+/* .animation {
+  flex: 1;
+}
+Routes {
+  flex: 3;
+} */
 
 h2 {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
@@ -61,6 +67,7 @@ nav a:hover {
 .uniqueTags a:hover {
   color: rgb(114, 183, 217);
 }
+
 body {
   font-family: verdana;
   background-color: rgb(114, 183, 217);
@@ -69,15 +76,20 @@ body {
   overflow:auto;
   color: rgb(252, 238, 222);
   }
-  section{
+
+.section{
   height:100% auto;
   width:100vw;
   position:absolute ;  
   background:radial-gradient(#333,#000);
   z-index: 0;
   min-height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   }
-  .leaf div:nth-child(1) {
+
+.leaf div:nth-child(1) {
   left: 0%;
   animation: fall 18s linear infinite;
   animation-delay: -1s;
