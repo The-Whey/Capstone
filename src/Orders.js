@@ -31,7 +31,7 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses, users
                 <h5>Order ID: {order.id}</h5>
                 <h5>Shipping Address: {formattedAddress}</h5>
                 ({ new Date(order.created_at).toLocaleString() }) 
-                <ul>
+
                   {
                     orderLineItems.map( lineItem => {
                       const product = products.find(product => product.id === lineItem.product_id);
@@ -39,14 +39,14 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses, users
                       total += lineItem.quantity * product.price
                       
                       return (
-                        <li key={ lineItem.id }>
+                        <div key={ lineItem.id }>
                           <Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link> ({lineItem.quantity}) at ${(product.price / 100).toFixed(2)} each
-                        </li>
+                        </div>
                       );
                     })
                     
                   }
-                </ul>
+
                 <p>
                   {order.fulfilled ? `Order Fulfilled ` : 'order pending '}
                   {auth.is_admin ? 

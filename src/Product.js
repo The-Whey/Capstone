@@ -92,17 +92,16 @@ const Product = ({
       <>
         <h2>
           {product.name}{" "}
+          </h2>
           {auth.is_admin ? (
-            <button onClick={() => setEditMode(true)}>Edit Product</button>
+            <div className="product" ><button onClick={() => setEditMode(true)}>Edit Product</button></div>
           ) : null}
-        </h2>
-        <h4 className="product">{avgRating ? `Average Rating: ${avgRating.toFixed(1)} ${avgRating.toFixed(1) > 1 ? `stars` : `star`}` : null}</h4>
-        <h4 className="product">{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
-        <div className="product"><img src={product.image} /></div>
-        <p className="product">{product.description}</p>
-        {productReviews.map((review) => (
-          < p key={review.id} className="product">{review.text}</p>
-        ))}
+          <h4 className="product">{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
+          <div className="product"><img src={product.image} /></div>
+          <h4 className="product">{avgRating ? `Average Rating: ${avgRating.toFixed(1)} ${avgRating.toFixed(1) > 1 ? `stars` : `star`}` : null}</h4>
+          <p className="product">{product.description}</p>
+        <br/>
+        <br/>
         <div className="product">{errorMessage && <p>{errorMessage}</p>}
         {auth.id ? (
           cartItem ? (
@@ -114,19 +113,9 @@ const Product = ({
         </div>
         <br/>
         <br/>
-        {auth.id && (
-          <ReviewForm
-            productId={product.id}
-            onSubmit={handleReviewSubmission}
-            reviews={reviews}
-            setReviews={setReviews}
-            auth={auth}
-            onError={handleReviewError}
-          />
-        )}
-        <ul>
-          <Reviews users={users} reviews={reviews} product={product} />
-        </ul>
+        {productReviews.map((review) => (
+          < p key={review.id} className="product">{review.text}</p>
+        ))}
         <br/>
         <br/>
         <div  className="product">
@@ -149,6 +138,23 @@ const Product = ({
           <button onClick={() => setAddTagMode(true)}>Add Tag</button>
         ) : null}
         </div>
+        <br/>
+        <br/>
+        {auth.id && (
+          <ReviewForm
+            productId={product.id}
+            onSubmit={handleReviewSubmission}
+            reviews={reviews}
+            setReviews={setReviews}
+            auth={auth}
+            onError={handleReviewError}
+          />
+        )}
+        <ul>
+          <Reviews users={users} reviews={reviews} product={product} />
+        </ul>
+        <br/>
+        <br/>
         
         <Link to={'/products'} className='link-style'>Back to all products</Link>
       </>
