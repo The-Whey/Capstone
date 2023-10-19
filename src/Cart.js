@@ -49,7 +49,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
  if (!addressMode) return (
     <div>
-      <h2>Cart ({lineItems.filter(lineItem => lineItem.order_id === cart.id && !lineItem.is_cart).reduce((total, lineItem) => total + lineItem.quantity, 0)})</h2>
+      <h2  className="left-title">Cart ({lineItems.filter(lineItem => lineItem.order_id === cart.id && !lineItem.is_cart).reduce((total, lineItem) => total + lineItem.quantity, 0)})</h2>
       <ul>
         {
           lineItems.filter(lineItem=> lineItem.order_id === cart.id).map( lineItem => {
@@ -78,7 +78,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
 
   if (addressMode) return !savedAddresses.length ?(
     <div>
-      <h3>Where do you want your order shipped?</h3>
+      <h2  className="left-title">Where do you want your order shipped?</h2>
       <GeoapifyContext  apiKey={geoapifyapikey}>
         <GeoapifyGeocoderAutocomplete filterByCountryCode={['us']} biasByProximity={true} placeSelect={(value) => setData(value)}/>
       </GeoapifyContext>
@@ -96,7 +96,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
     </div>
   ): (
     <div>
-      <h2>Where should we send your package?</h2>
+      <h2 className="left-title">Where should we send your package?</h2>
       {
         savedAddresses.map(addy => {
           return <button onClick={() => submitOrder(addy)} key={addy.id}>{addy.nickname}</button>
