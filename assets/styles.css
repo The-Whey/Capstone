@@ -42,13 +42,21 @@ Routes {
 }
 
 
-h2, .centered-title {
+.centered-title {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
   margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center,
+}
+h2{
+  color: rgb(252, 238, 222); /* changed to cream to match logo */
+  text-transform: uppercase; 
+  margin-top: 0;
+  display: flex;
+  justify-content: left;
+  align-items: left;
 }
 
 h3 {
