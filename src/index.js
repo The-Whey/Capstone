@@ -388,6 +388,45 @@ const App = ()=> {
             <p>{error}</p>
             <Login login={ login }/>
 
+            <div className='animation'>
+                <div className="leaf">
+                   <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+                  <div className="leaf leaf1">
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+                  <div className="leaf leaf2">
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+              </div>
+
             <Routes>
               <Route path='/products/:id' element={
                 <Product 
