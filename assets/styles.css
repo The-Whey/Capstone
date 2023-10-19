@@ -67,6 +67,7 @@ body {
   margin:0;
   padding:0;
   overflow:auto;
+  color: rgb(252, 238, 222);
   }
   section{
   height:100% auto;
@@ -77,45 +78,63 @@ body {
   min-height:100vh;
   }
   .leaf div:nth-child(1) {
-  left: 20%;
-  animation: fall 15s linear infinite;
-  animation-delay: -2s;
+  left: 0%;
+  animation: fall 18s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(2) {
-  left: 70%;
-  animation: fall 15s linear infinite;
-  animation-delay: -4s;
+  left: 10%;
+  animation: fall 20s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(3) {
-  left: 10%;
-  animation: fall 20s linear infinite;
-  animation-delay: -7s;
+  left: 20%;
+  animation: fall 22s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(4) {
-  left: 50%;
-  animation: fall 18s linear infinite;
-  animation-delay: -5s;
+  left: 30%;
+  animation: fall 20s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(5) {
-  left: 85%;
-  animation: fall 14s linear infinite;
-  animation-delay: -5s;
+  left: 40%;
+  animation: fall 22s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(6) {
-  left: 15%;
-  animation: fall 16s linear infinite;
-  animation-delay: -10s;
+  left: 50%;
+  animation: fall 24s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(7) {
-  left: 90%;
-  animation: fall 15s linear infinite;
-  animation-delay: -4s;
+  left: 60%;
+  animation: fall 22s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(8) {
+  left: 70%;
+  animation: fall 24s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(9) {
+  left: 80%;
+  animation: fall 26s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(10) {
+  left: 95%;
+  animation: fall 24s linear infinite;
+  animation-delay: -3s;
 }
 
 @keyframes fall {
@@ -143,10 +162,12 @@ body {
   }
 }
 
+
 .leaf div {
   position: absolute;
   display: block;
   z-index: -1;
+  
 }
 
 .geoapify-autocomplete-input {
