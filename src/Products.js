@@ -20,7 +20,8 @@ const Container = styled.div`
 
 const ProductWrapper = styled.div`
   display: flex;
-  margin: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const ProductImage = styled.img`
@@ -31,21 +32,21 @@ const ProductImage = styled.img`
 const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-around;
   background-color: rgb(252, 238, 222);
   width 300px;
-  flex-grow: 0;
   padding: 20px;
 `;
 
 const ProductDescription = styled.div`
   color: rgb(114, 183, 217);
-  font-family: verdana;
-  overflow: auto;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  flex: 1
+  // font-family: verdana;
+  // overflow: auto;
+  // text-align: left;
+  // display: flex;
+  // align-items: center;
+  // flex: 1
+  // width: 200px;
 `;
 
 const Price = styled.h4`
@@ -152,8 +153,8 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
                 <Rating>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</Rating>
                 <ProductDescription>{product.description}</ProductDescription>
                 <div className='cartButtons'>
-                {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null }
-                {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
+                  {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null }
+                  {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
                 </div>
                 </ProductDetails>
                </ProductWrapper>
