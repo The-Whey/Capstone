@@ -5,10 +5,34 @@ Routes {
   flex: 3;
 } */
 
-h2 {
+.logo {
+  position: absolute;
+  top: 10px; 
+  left: 10px;
+  z-index: 2; 
+}
+
+.center-title {
+  color: rgb(252, 238, 222); 
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 40px;
+}
+
+
+h2, .centered-title {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
   margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center,
 }
 
 h3 {
@@ -26,14 +50,24 @@ form > * {
 }
 nav{
   display: flex;
-  max-width: 90%;
+  max-width: 100%;
+  margin-top: 60px;
 }
 nav a {
-  margin-right: 10px;
+  margin-right: 30px;
   text-decoration: none;
+  text-transform: uppercase; 
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   transition: color 0.3s;
   font-weight: bold;
+  font-size: 22px;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  margin: 50px;
 }
 
 button {
@@ -54,6 +88,7 @@ button:hover {
 nav a:hover {
   color: rgb(114, 183, 217);
 }
+
 .product-container {
   border: 1px solid rgb(208, 203, 203); /* Gray border */
   border-radius: 4px;
