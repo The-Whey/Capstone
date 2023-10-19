@@ -193,22 +193,26 @@ const App = ()=> {
     return user ? user.image : null;
   };
   return (
+
     <div className='section'>
+      <div className="logo">
+        <img src="https://i.imgur.com/6oOinoq.jpg" alt="Harmonic Harbor Logo" width="150" height="150" />
+      </div>
       {
         auth.id ? (
           <>
-
-
-            <nav>
-              <Link to='/products'className={pathname === '/products' ? 'selected' : 'link-style'}>Products ({ products.length })</Link>
-              <Link to='/orders' className={pathname === '/orders' ? 'selected' : 'link-style'}>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
-              <Link to='/cart' className={pathname === '/cart' ? 'selected' : 'link-style'}>Cart ({ cartCount })</Link>
-              <Link to='/wishlist' className={pathname === '/wishlist' ? 'selected' : 'link-style'}>Wishlist ({bookmarks.length})</Link>
-            </nav>
+            <div className="nav-wrapper">
+              <nav>
+                <Link to='/products' className={pathname === '/products' ? 'selected' : 'link-style'}>Products ({ products.length })</Link>
+                <Link to='/orders' className={pathname === '/orders' ? 'selected' : 'link-style'}>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
+                <Link to='/cart' className={pathname === '/cart' ? 'selected' : 'link-style'}>Cart ({ cartCount })</Link>
+                <Link to='/wishlist' className={pathname === '/wishlist' ? 'selected' : 'link-style'}>Wishlist ({bookmarks.length})</Link>
+              </nav>
+            </div>
 
             <div className='content'>
               <div className='animation'>
-                <div class="leaf">
+                <div className="leaf">
                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
                     <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
                     <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
@@ -220,7 +224,7 @@ const App = ()=> {
                     <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
                     <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
                   </div>
-                  <div class="leaf leaf1">
+                  <div className="leaf leaf1">
                     <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
                     <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
                     <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
@@ -232,7 +236,7 @@ const App = ()=> {
                     <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
                     <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
                   </div>
-                  <div class="leaf leaf2">
+                  <div className="leaf leaf2">
                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
                    <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>

@@ -96,7 +96,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
   if (filteredProducts.length) return(
     
       <div>
-        <h2>Harmonic Harbor</h2>
+        <h1 className="center-title">Harmonic Harbor</h1>
         
           <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
           {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
@@ -112,7 +112,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
             <ProductWrapper key={product.id}>
                <ProductImage src={product.image} />
                <ProductDetails>
-                <h3><Link to={`/products/${product.id}`} className='link-style-product'>{product.name}</Link></h3>
+                <h3><Link to={`/products/${product.id}`} className="link-style">{product.name}</Link></h3>
                 <Price>{`$${(product.price/100).toFixed(2)}`}</Price>
                 <Rating>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</Rating>
                 <ProductDescription>{product.description.length > 100 ? ( <ProductDescription>{`${product.description.substring(0, 150)}...`}</ProductDescription> ) : ( <ProductDescription>{product.description}</ProductDescription>)}</ProductDescription>
@@ -129,7 +129,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
   return(
 
       <div>
-        <h2>Harmonic Harbor</h2>
+        <h1 className="center-title">Harmonic Harbor</h1>
         <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
         {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
         <Container>
@@ -143,7 +143,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
             <ProductWrapper key={product.id}>
                <ProductImage src={product.image} />
                <ProductDetails>
-                <h3><Link to={`/products/${product.id}`} className='link-style-product'>{product.name}</Link></h3>
+                <h3><Link to={`/products/${product.id}`} className="link-style">{product.name}</Link></h3>
                 <Price>{`$${(product.price/100).toFixed(2)}`}</Price>
                 <Rating>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</Rating>
                 <ProductDescription>{product.description.length > 100 ? ( <ProductDescription>{`${product.description.substring(0, 150)}...`}</ProductDescription> ) : ( <ProductDescription>{product.description}</ProductDescription>)}</ProductDescription>
