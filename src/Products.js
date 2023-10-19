@@ -29,7 +29,6 @@ const ProductWrapper = styled.div`
 `;
 
 const ProductImage = styled.img`
-
   height: 200px;
   width: 200px;
 `;
