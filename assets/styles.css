@@ -4,6 +4,17 @@
 Routes {
   flex: 3;
 } */
+
+.searchBar{
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.search {
+  width: 500px;
+}
+
 .topform {
   display: flex;
   justify-content: space-between;

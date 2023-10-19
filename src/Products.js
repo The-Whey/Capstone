@@ -20,8 +20,8 @@ const Container = styled.div`
 
 const ProductWrapper = styled.div`
   display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 const ProductImage = styled.img`
@@ -98,10 +98,12 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
       <div className='products'>
         <h1 className="center-title">Harmonic Harbor</h1>
         
-          <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
-          <div className='tags'>
-            {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
-            {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
+          <div className='searchtags'>
+            <div className='searchBar'><input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
+            <div className='tags'>
+              {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
+              {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
+            </div>
           </div>
         
         <Container>
@@ -134,8 +136,10 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
       <div className='products'>
         <h1 className="center-title">Harmonic Harbor</h1>
-        <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
-        <div className='tags'>{tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}</div>
+        <div className='searchtags'>
+        <div className='searchBar'><input className='search' placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
+          <div className='tags'>{tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}</div>
+        </div>
         <Container>
         {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
           const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
