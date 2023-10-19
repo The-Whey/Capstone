@@ -28,8 +28,10 @@ const ProductWrapper = styled.div`
 `;
 
 const ProductImage = styled.img`
-  max-width: 75%;
-  height: auto;
+  width: fit-content;
+  height: fit-content;
+  max-width: 80%;
+  max-height: 50%;
 `;
 
 const ProductDetails = styled.div`
