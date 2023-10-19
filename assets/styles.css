@@ -1,10 +1,6 @@
-/* .animation {
-  flex: 1;
+.hello {
+  display: block;
 }
-Routes {
-  flex: 3;
-} */
-
 .searchBar{
   display: flex;
   justify-content: center;
@@ -71,7 +67,7 @@ h2 {
   align-items: center,
 }
 .left-title{
-  color: rgb(252, 238, 222); /* changed to cream to match logo */
+  color: rgb(252, 238, 222); 
   text-transform: uppercase; 
   margin-top: 0;
   display: flex;
@@ -169,7 +165,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* padding: 20px; */
+  padding: 20px;
 
   }
 
@@ -280,7 +276,7 @@ body {
 }
 
 .geoapify-autocomplete-items {
-  position: fixed;
+  position: absolute;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   background-color: #fff;
@@ -328,7 +324,7 @@ body {
   right: 5px;
   top: 0;
 
-  height: 0%;
+  height: 100%;
   display: none;
   align-items: center;
 }
