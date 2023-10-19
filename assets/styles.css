@@ -42,7 +42,7 @@ Routes {
 }
 
 
-.centered-title {
+h2 {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
   margin-top: 0;
@@ -50,7 +50,7 @@ Routes {
   justify-content: center;
   align-items: center,
 }
-h2{
+.left-title{
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   text-transform: uppercase; 
   margin-top: 0;
@@ -389,4 +389,14 @@ body {
 
 .link-style:visited {
   color: rgb(70, 148, 175); 
+}
+.product{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.product > *{
+  text-align: center;
+  align-items: center;
+
 }

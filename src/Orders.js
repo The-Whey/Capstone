@@ -14,7 +14,7 @@ const Orders = ({ orders, setorders, products, lineItems, auth, addresses, users
 
   return (
     <div>
-      <h2>Orders ({orders.length - 1})</h2>
+      <h2 className="left-title">Orders ({orders.length - 1})</h2>
       <ul>
         {
           orders.filter(order => !order.is_cart).map( order => {

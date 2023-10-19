@@ -6,7 +6,7 @@ const Wishlist = ({bookmarks, products, cartItems, createLineItem, removeBookmar
     const navigate = useNavigate();
   if (bookmarks.length && products.length) return(
     <div>
-        <h2 className="centered-title">Wishlist</h2>
+        <h2>Wishlist</h2>
     {
         bookmarks.map(bookmark => {
             const product = products.find(obj => obj.id === bookmark.product_id);

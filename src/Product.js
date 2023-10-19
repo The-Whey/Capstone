@@ -96,17 +96,42 @@ const Product = ({
             <button onClick={() => setEditMode(true)}>Edit Product</button>
           ) : null}
         </h2>
-        <h4>{avgRating ? `Average Rating: ${avgRating.toFixed(1)} ${avgRating.toFixed(1) > 1 ? `stars` : `star`}` : null}</h4>
-        <h4>{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
-        <img src={product.image} />
-        <p>{product.description}</p>
+        <h4 className="product">{avgRating ? `Average Rating: ${avgRating.toFixed(1)} ${avgRating.toFixed(1) > 1 ? `stars` : `star`}` : null}</h4>
+        <h4 className="product">{`Price: $${(product.price / 100).toFixed(2)}`}</h4>
+        <div className="product"><img src={product.image} /></div>
+        <p className="product">{product.description}</p>
         {productReviews.map((review) => (
-          <p key={review.id}>{review.text}</p>
+          < p key={review.id} className="product">{review.text}</p>
         ))}
         {errorMessage && <p>{errorMessage}</p>}
-        <h5>Tags:</h5>
 
-        {addTagMode ? (
+        <br />
+        {auth.id ? (
+          cartItem ? (
+            <button onClick={() => navigate("/cart")}>View In Cart</button>
+          ) : (
+            <button onClick={() => createLineItem(product)}>Add to Cart</button>
+          )
+        ) : null}
+        <br/>
+        <br/>
+        {auth.id && (
+          <ReviewForm
+            productId={product.id}
+            onSubmit={handleReviewSubmission}
+            reviews={reviews}
+            setReviews={setReviews}
+            auth={auth}
+            onError={handleReviewError}
+          />
+        )}
+        <ul>
+          <Reviews users={users} reviews={reviews} product={product} />
+        </ul>
+        <br/>
+        <br/>
+        <h5>Tags:</h5>
+         {addTagMode ? (
           <div>
             <input
               value={newTag}
@@ -123,29 +148,8 @@ const Product = ({
         {auth.is_admin && !addTagMode ? (
           <button onClick={() => setAddTagMode(true)}>Add Tag</button>
         ) : null}
-        <br />
-        <br />
-        {auth.id ? (
-          cartItem ? (
-            <button onClick={() => navigate("/cart")}>View In Cart</button>
-          ) : (
-            <button onClick={() => createLineItem(product)}>Add to Cart</button>
-          )
-        ) : null}
 
-        {auth.id && (
-          <ReviewForm
-            productId={product.id}
-            onSubmit={handleReviewSubmission}
-            reviews={reviews}
-            setReviews={setReviews}
-            auth={auth}
-            onError={handleReviewError}
-          />
-        )}
-        <ul>
-          <Reviews users={users} reviews={reviews} product={product} />
-        </ul>
+        
         <Link to={'/products'} className='link-style'>Back to all products</Link>
       </>
     );
