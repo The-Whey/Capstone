@@ -103,9 +103,7 @@ const Product = ({
         {productReviews.map((review) => (
           < p key={review.id} className="product">{review.text}</p>
         ))}
-        {errorMessage && <p>{errorMessage}</p>}
-
-        <br />
+        <div className="product">{errorMessage && <p>{errorMessage}</p>}
         {auth.id ? (
           cartItem ? (
             <button onClick={() => navigate("/cart")}>View In Cart</button>
@@ -113,6 +111,7 @@ const Product = ({
             <button onClick={() => createLineItem(product)}>Add to Cart</button>
           )
         ) : null}
+        </div>
         <br/>
         <br/>
         {auth.id && (
@@ -130,6 +129,7 @@ const Product = ({
         </ul>
         <br/>
         <br/>
+        <div  className="product">
         <h5>Tags:</h5>
          {addTagMode ? (
           <div>
@@ -148,7 +148,7 @@ const Product = ({
         {auth.is_admin && !addTagMode ? (
           <button onClick={() => setAddTagMode(true)}>Add Tag</button>
         ) : null}
-
+        </div>
         
         <Link to={'/products'} className='link-style'>Back to all products</Link>
       </>
