@@ -20,8 +20,8 @@ const Container = styled.div`
 
 const ProductWrapper = styled.div`
   display: flex;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 30px;
+  flex: 1;
 `;
 
 const ProductImage = styled.img`
