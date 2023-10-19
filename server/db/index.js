@@ -187,8 +187,8 @@ const seed = async()=> {
     createProduct({ name: 'Yamaha F335', price: 18999, description: "The F335 acoustic guitar from Yamaha is a stellar blend of quality, playability and affordability that offers an appealing option for both beginners and seasoned musicians alike." }),
     createProduct({ name: 'Rogue Junior Kicker 5pc Drum Set', price: 29999, description: "This drum set has a compact frame to appease smaller rockers but maintains Rogue's great playability and sound that its customers have grown accustomed to." }),
     createProduct({ name: 'Yamaha Rydeen 5- Piece Drum set', price: 41999, description: "This set utilizes genuine Yamaha tom holders for simple adjustments and features solid and glitter finishes. Yamaha Hardware allows creative setup variations and grows with the needs of a younger player." }),
-    createProduct({ name: 'Yamaha P-125A Digial Piano (Black)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
-    createProduct({ name: 'Yamaha P-125A Digial Piano (White)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
+    createProduct({ name: 'Yamaha P-125A Digital Piano (Black)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
+    createProduct({ name: 'Yamaha P-125A Digital Piano (White)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
   ]);
 
   editProduct({...guitar, image: 'https://i.imgur.com/EtIXBar.png'}),
@@ -221,7 +221,7 @@ const seed = async()=> {
   let lineItem = await createLineItem({ order_id: cart.id, product_id: guitar.id});
   
   // Creates a generic description for development
-  const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lacus nec odio auctor, in congue lacus ultricies. Quisque non ligula et enim consequat scelerisque. Integer interdum leo tristique feugiat lobortis. Phasellus nunc erat, hendrerit vitae neque in, scelerisque convallis eros. Cras vitae purus bibendum, placerat lectus ut, consectetur arcu. Praesent porta, tellus dignissim cursus elementum, dolor ipsum iaculis purus, sed consequat erat magna et odio. In volutpat mi enim, eu tempus eros porta nec.'
+  const loremIpsum = "I can't believe it took me this long to find this instrument! I can't imagine playing anything else from now on!"
   const [reviews] = await Promise.all([
     createReview({ product_id: bass.id, user_id: moe.id, txt: loremIpsum, rating: '4' }),
     createReview({ product_id: guitar.id, user_id: moe.id, txt: loremIpsum, rating: '5' }),
@@ -235,18 +235,49 @@ const seed = async()=> {
   cart.address = address.id
   await updateOrder(cart);
 
-  const [string, percussion, keyboards, woodwinds] = await Promise.all([
-    createTags({tag : "string"}),
-    createTags({tag : "percussion"}),
-    createTags({tag : "keyboards"}),
-    createTags({tag : "woodwinds"}),
+  const [electric, acoustic, drum, keys, guitars, basses] = await Promise.all([
+    createTags({tag : "Electric"}),
+    createTags({tag : "Acoustic"}),
+    createTags({tag : "Drums"}),
+    createTags({tag : "Keyboard"}),
+    createTags({tag : "Guitar"}),
+    createTags({tag : "Bass"}),
+
   ]);
   
-  const [guitar_tag1, bass_tag1, keyboard_tag1, keyboard_tag2, guitar_tag2, bass_tag2, keyboard_tag3, drums_tag1] = await Promise.all([
-    insertProductTags(guitar.id, string.id, string.tag),
-    insertProductTags(bass.id,string.id, string.tag),
-    insertProductTags(keyboard.id, keyboards.id, keyboards.tag),
-    insertProductTags(keyboard.id, percussion.id, percussion.tag),
+  const [a,aa,b,bb,c,cc,d,dd,e,ee,f,ff,g,gg,h,hh,i,ii,j,jj,k,kk,l,ll,m,mm,n,nn,o,oo,p,pp]  = await Promise.all([
+    insertProductTags(guitar.id, acoustic.id, acoustic.tag),
+    insertProductTags(guitar.id, guitars.id, guitars.tag),
+    insertProductTags(bass.id,electric.id, electric.tag),
+    insertProductTags(bass.id,basses.id, basses.tag),
+    insertProductTags(keyboard.id, keys.id, keys.tag),
+    insertProductTags(keyboard.id, electric.id, electric.tag),
+    insertProductTags(drums.id, drum.id, drum.tag),
+    insertProductTags(drums.id, electric.id, electric.tag),
+    insertProductTags(fenderbassWhite.id, electric.id, electric.tag),
+    insertProductTags(fenderbassWhite.id, basses.id, basses.tag),
+    insertProductTags(fenderbassSilver.id, electric.id, electric.tag),
+    insertProductTags(fenderbassSilver.id, basses.id, basses.tag),
+    insertProductTags(fenderStrat.id, electric.id, electric.tag),
+    insertProductTags(fenderStrat.id, guitars.id, guitars.tag),
+    insertProductTags(gibsonlespaulBlue.id, electric.id, electric.tag),
+    insertProductTags(gibsonlespaulBlue.id, guitars.id, guitars.tag),
+    insertProductTags(gibsonlespaulBlack.id, electric.id, electric.tag),
+    insertProductTags(gibsonlespaulBlack.id, guitars.id, guitars.tag),
+    insertProductTags(martinSpecial.id, acoustic.id, acoustic.tag),
+    insertProductTags(martinSpecial.id, guitars.id, guitars.tag),
+    insertProductTags(rogueStarter.id, acoustic.id, acoustic.tag),
+    insertProductTags(rogueStarter.id, guitars.id, guitars.tag),
+    insertProductTags(yamahaGuitar.id, acoustic.id, acoustic.tag),
+    insertProductTags(yamahaGuitar.id, guitars.id, guitars.tag),
+    insertProductTags(rogueJunior.id, drum.id, drum.tag),
+    insertProductTags(rogueJunior.id, acoustic.id, acoustic.tag),
+    insertProductTags(yamahaRydeen.id, drum.id, drum.tag),
+    insertProductTags(yamahaRydeen.id, acoustic.id, acoustic.tag),
+    insertProductTags(yamahakeyboardBlack.id, keys.id, keys.tag),
+    insertProductTags(yamahakeyboardBlack.id,electric.id, electric.tag),
+    insertProductTags(yamahakeyboardWhite.id, keys.id, keys.tag),
+    insertProductTags(yamahakeyboardWhite.id,electric.id, electric.tag),
   ]);
 };
 
