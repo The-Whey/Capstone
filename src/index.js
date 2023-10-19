@@ -196,7 +196,7 @@ const App = ()=> {
 
     <div className='section'>
       <div className="logo">
-        <img src="https://i.imgur.com/6oOinoq.jpg" alt="Harmonic Harbor Logo" width="150" height="150" />
+        <img src="https://i.imgur.com/woCZyEc.png" alt="Harmonic Harbor Logo" width="150" height="150" />
       </div>
       {
         auth.id ? (

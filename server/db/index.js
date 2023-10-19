@@ -173,7 +173,7 @@ const seed = async()=> {
   ]);
   
   const [guitar, bass, keyboard, drums,fenderbassWhite, fenderbassSilver, fenderStrat, gibsonlespaulBlue, gibsonlespaulBlack, martinSpecial, rogueStarter, yamahaGuitar, rogueJunior, yamahaRydeen, yamahakeyboardBlack, yamahakeyboardWhite] = await Promise.all([
-    createProduct({ name: 'Epiphone PRO-1 Acoustic', price: 18999, description: "Epiphone's PRO-1 is the fastest and easiest way to start playing the guitar! Specifically designed to make learning how to play as easy as possible!"}),
+    createProduct({ name: 'Epiphone PRO-1 Acoustic', price: 18999, description: "The Epiphone PRO-1 Acoustic Guitar, a pioneering dreadnought that makes playing and learning a breeze. Epiphone, a leader in accessible, professional-grade instruments, has reimagined the iconic dreadnought profile with innovative features that reduce hand fatigue and simplify fretting. Now available at Guitar Center, the PRO-1 blends premium components like a solid spruce top and mahogany back and sides with a shorter scale length, slim neck, and slick fretboard for peerless playability."}),
     createProduct({ name: 'Fender Jazz Bass', price: 129999, description: "This model is characterized by its distinctive color and is built with a basswood body paired to a maple neck and fingerboard. Dual vintage-style single-coil pickups top off the look and sound of this slick electric and deliver classic tones for limitless inspiration." }),
     createProduct({ name: 'Williams Legato IV 88-key Digital Piano', price: 34999, description: "The Williams Legato IV digital piano motivates aspiring keyboardists with a stunning concert grand sound—as well as a collection of electric pianos, organs, strings, basses and a synth." }),
     createProduct({ name: 'Roland VAD507 V-Drums', price: 499999, description: "The Roland VAD507 V-drums kit delivers the commanding presence of a full acoustic drum set on stage with the convenience and control of electronic drums." }),
@@ -191,22 +191,22 @@ const seed = async()=> {
     createProduct({ name: 'Yamaha P-125A Digial Piano (White)', price: 79999, description: "The P-125A is an 88-key graded hammer action piano with a complement of common sounds including multiple grand piano voices, electric pianos from an authentic Rhodes to an FM-style piano, clavinet, strings, vibes and more." }),
   ]);
 
-  editProduct({...guitar, image: 'https://i.imgur.com/AHBcSQc.png'}),
-  editProduct({...bass, image: 'https://i.imgur.com/nVdnXCh.png'}),
-  editProduct({...keyboard, image: 'https://i.imgur.com/3bx0RvN.png'}),
-  editProduct({...drums, image: 'https://i.imgur.com/RSyLpZa.png'}),
-  editProduct({...fenderbassWhite, image: 'https://i.imgur.com/j3Sb9lc.png'}),
-  editProduct({...fenderbassSilver, image: 'https://i.imgur.com/pPFphWA.png'}),
-  editProduct({...fenderStrat, image: 'https://i.imgur.com/wPWBac3.png'}),
-  editProduct({...gibsonlespaulBlue, image: 'https://i.imgur.com/eK07wzy.png'}),
-  editProduct({...gibsonlespaulBlack, image: 'https://i.imgur.com/AQowZ9S.png'}),
-  editProduct({...martinSpecial, image: 'https://i.imgur.com/z2K9atU.png'}),
-  editProduct({...rogueStarter, image: 'https://i.imgur.com/Kg6LnhI.png'}),
-  editProduct({...yamahaGuitar, image: 'https://i.imgur.com/7wzXRoQ.png'}),
-  editProduct({...rogueJunior, image: 'https://i.imgur.com/kv4LlAa.png'}),
-  editProduct({...yamahaRydeen, image: 'https://i.imgur.com/4fhELwB.png'}),
-  editProduct({...yamahakeyboardBlack, image: 'https://i.imgur.com/yG2NIpO.png'}),
-  editProduct({...yamahakeyboardWhite, image: 'https://i.imgur.com/hb6HBkw.png'}),
+  editProduct({...guitar, image: 'https://i.imgur.com/EtIXBar.png'}),
+  editProduct({...bass, image: 'https://i.imgur.com/ymWDk3Z.png'}),
+  editProduct({...keyboard, image: 'https://i.imgur.com/zGLigId.png'}),
+  editProduct({...drums, image: 'https://i.imgur.com/IaORL3H.png'}),
+  editProduct({...fenderbassWhite, image: 'https://i.imgur.com/cZTSCWv.png'}),
+  editProduct({...fenderbassSilver, image: 'https://i.imgur.com/BXb6GRN.png'}),
+  editProduct({...fenderStrat, image: 'https://i.imgur.com/bkVxIF7.png'}),
+  editProduct({...gibsonlespaulBlue, image: 'https://i.imgur.com/4C1j9Ce.png'}),
+  editProduct({...gibsonlespaulBlack, image: 'https://i.imgur.com/TTGgStH.png'}),
+  editProduct({...martinSpecial, image: 'https://i.imgur.com/zMX7InU.png'}),
+  editProduct({...rogueStarter, image: 'https://i.imgur.com/gKSXDfU.png'}),
+  editProduct({...yamahaGuitar, image: 'https://i.imgur.com/ulzaYzz.png'}),
+  editProduct({...rogueJunior, image: 'https://i.imgur.com/KkAE0Xl.png'}),
+  editProduct({...yamahaRydeen, image: 'https://i.imgur.com/zPnOgt3.png'}),
+  editProduct({...yamahakeyboardBlack, image: 'https://i.imgur.com/Uufd0kw.png'}),
+  editProduct({...yamahakeyboardWhite, image: 'https://i.imgur.com/llSnIH1.png'}),
 
 
   await Promise.all([

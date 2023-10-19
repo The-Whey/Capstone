@@ -5,6 +5,21 @@ Routes {
   flex: 3;
 } */
 
+.products {
+  display: flex;
+  flex-direction: column;
+}
+
+.tags {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   position: absolute;
   top: 10px; 
@@ -23,6 +38,7 @@ Routes {
   left: 0;
   right: 0;
   margin: 40px;
+  z-index: -1;
 }
 
 
@@ -53,7 +69,9 @@ nav{
   display: flex;
   max-width: 100%;
   margin-top: 60px;
+  background-color: black;
 }
+
 nav a {
   margin-right: 30px;
   text-decoration: none;
