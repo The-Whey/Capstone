@@ -5,15 +5,9 @@ import styled from 'styled-components';
 const Bookmark = ({ product, bookmark, createBookmark, removeBookmark }) => {
   return (
     <div>
-      {bookmark ? (
-        <BookmarkButton onClick={() => removeBookmark(bookmark)}>
-          Remove Bookmark
-        </BookmarkButton>
-      ) : (
-        <BookmarkButton onClick={() => createBookmark({ product_id: product.id })}>
-          Add Bookmark
-        </BookmarkButton>
-      )}
+      {
+        bookmark ? <button onClick={ ()=> removeBookmark(bookmark)}>Remove From Wishlist</button> : <button onClick={ ()=> createBookmark({ product_id: product.id })}>Add to Wishlist</button>
+      }
     </div>
   );
 };
@@ -84,11 +78,10 @@ const BookmarkButton = styled.button`
   transition: background-color 0.3s;
 `;
 
-const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, bookmarks, createBookmark, removeBookmark, tags, tagsList, reviews})=> {
+const Products = ({ products, cartItems, createLineItem, auth, bookmarks, createBookmark, removeBookmark, tags, tagsList, reviews})=> {
 
   const [tagId, setTagId] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const uniqueTagNames = [...new Set(tags.map((tag) => tag.tag))];
   const navigate = useNavigate();
   const {term} = useParams();
   const location = useLocation();
@@ -97,78 +90,68 @@ const Products = ({ products, cartItems, createLineItem, updateLineItem, auth, b
     setFilteredProducts(tags.filter(item => item.tag_id === tagId).map(obj => products.find(item => item.id === obj.product_id)))
   }, [tagId])
   
+  if (filteredProducts.length) return(
+    <Container>
+      <h2>Harmonic Harbor</h2>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
+ 
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
+      {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
 
-  if (filteredProducts.length) {
-    return (
-      <Container>
-        <h2>Products</h2>
-        <input
-          placeholder="search by name" value={term || ''} onChange={(ev) => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}` : `/products`)}/>
-        {tagsList ? tagsList.filter((tag) => tags.find((obj) => obj.tag_id === tag.id)).map((obj) => (
-                <TagButton key={obj.id} onClick={() => setTagId(obj.id)}>
-                  {obj.tag}
-                </TagButton>
-              )): null}
-        {tagsList ? (
-          <TagButton onClick={() => setTagId('')}>Show All</TagButton>
-        ) : null}
-        {filteredProducts.filter((product) => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map((product) => {
-            const cartItem = cartItems.find((lineItem) => lineItem.product_id === product.id);
-            
-            let avgRating = 0;
-            const currentReviews = reviews.filter((review) => review.product_id === product.id);
-            if (currentReviews.length) avgRating = currentReviews.map((rating) => rating.rating).reduce((a, c) => a + c) / currentReviews.length;
+      {filteredProducts.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
+        const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
+
+        let avgRating = 0;
+        const currentReviews = reviews.filter(review => review.product_id === product.id)
+        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length)
 
         
-            return (
-              <ProductWrapper key={product.id}>
-                 <ProductImage src={product.image} />
-                 <ProductDetails>
-                  <h3><Link to={`/products/${product.id}`} className="product-link">{product.name}</Link></h3>
-                  <Price>{`$${(product.price / 100).toFixed(2)}`}</Price>
-                  <Rating>{avgRating ? avgRating > 1 ? `${avgRating} stars` : `${avgRating} star` : 'no reviews'}</Rating>
-                  <ProductDescription>{product.description.length > 100 ? ( <ProductDescription>{`${product.description.substring(0, 150)}...`}</ProductDescription> ) : ( <ProductDescription>{product.description}</ProductDescription>)}</ProductDescription>
-                  {auth.id ? ( cartItem ? (
-                      <BookmarkButton onClick={() => navigate('/cart')}>View In Cart</BookmarkButton>
-                    ) : (
-                      <BookmarkButton onClick={() => createLineItem(product)}>
-                        Add to Cart
-                      </BookmarkButton>
-                    )
-                  ) : null}
-                  {auth.id ? (
-                    <Bookmark
-                      product={product}
-                      bookmark={bookmarks.find((bookmark) => bookmark.product_id === product.id)}
-                      createBookmark={createBookmark}
-                      removeBookmark={removeBookmark}
-                    />
-                  ) : null}
-                </ProductDetails>
-              </ProductWrapper>
-            );
-          })}
-      </Container>
-    );
-  }
+        return (
+          <ProductWrapper key={product.id}>
+             <ProductImage src={product.image} />
+             <ProductDetails>
+              <h3><Link to={`/products/${product.id}`} className='link-style-product'>{product.name}</Link>
+              <Price>{`$${(product.price/100).toFixed(2)}`}</Price>
+              <Rating>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</Rating>  
+              <ProductDescription>{product.description.length > 100 ? ( <ProductDescription>{`${product.description.substring(0, 150)}...`}</ProductDescription> ) : ( <ProductDescription>{product.description}</ProductDescription>)}</ProductDescription>
+              {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
+              {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null } 
+              </ProductDetails>
+             </ProductWrapper>
+        )
+      })}
+    </Container>
+  );
 
-  return (
+  return(
     <Container>
-      <h2>Products</h2>
-      <input placeholder="search by name" value={term || ''} onChange={(ev) => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}` : `/products`)}/>
-      {tagsList ? tagsList.filter((tag) => tags.find((obj) => obj.tag_id === tag.id)).map((obj) => (
-              <TagButton key={obj.id} onClick={() => setTagId(obj.id)}>
-                {obj.tag}
-              </TagButton>
-            )) : null}
-      <h3>{bookmarks.length} Bookmarks</h3>
-      {products.filter((product) => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map((product) => {
-          const cartItem = cartItems.find((lineItem) => lineItem.product_id === product.id);
-          let avgRating = 0;
-          const currentReviews = reviews.filter((review) => review.product_id === product.id);
-          if (currentReviews.length)
-            avgRating =
-              currentReviews.map((rating) => rating.rating).reduce((a, c) => a + c) / currentReviews.length;
+      <h2>Harmonic Harbor</h2>
+      <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value.trim() ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/> 
+      {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj =><TagButton key={obj.id} onClick={() => setTagId(obj.id)}>{obj.tag}</TagButton>): null}
+      {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
+        const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
+        let avgRating = 0;
+        const currentReviews = reviews.filter(review => review.product_id === product.id)
+        if (currentReviews.length) avgRating = (currentReviews.map(rating => rating.rating).reduce((a,c) => a + c) / currentReviews.length).toFixed(1)
+
+        return (
+          <div key={product.id}>
+            <h3><Link to={`/products/${product.id}`} className='link-style'>{product.name}</Link>  {`$${(product.price/100).toFixed(2)}`}</h3>  
+            <h5>{avgRating ? avgRating > 1  ? `Average Rating: ${avgRating} stars` : `Average Rating: ${avgRating} star` : 'no reviews'}</h5>  
+            <Link to={`/products/${product.id}`} className='link-style'><img src={product.image}/></Link>
+            {product.description.length > 100 ? <p>{`${product.description.substring(0,150)}...`}</p> : <p>{product.description}</p>}
+            {
+              auth.id ? (
+                cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>
+              ): null
+            }
+          { auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null } 
+          </div>
+        )
+      })}
+    </Container>
+  )
+};
 
               return (
                 <ProductWrapper key={product.id}>

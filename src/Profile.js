@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import api from './api';
 
-const Profile = ({auth, users, addresses, setAddresses}) => {
+const Profile = ({auth, users, addresses, setAddresses, setUsers}) => {
   const [image, setImage] = useState('');
   const [username, setUsername] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -15,6 +15,7 @@ const Profile = ({auth, users, addresses, setAddresses}) => {
     user.image = image;
     user.username = username;
     const response = await api.updateUser(user);
+    setUsers([...users.filter(usr => usr.id !== response.id), response])
     setEditMode(false)
   }
 
@@ -58,7 +59,7 @@ const Profile = ({auth, users, addresses, setAddresses}) => {
     <div>
         { editMode ? 
         <div>
-          <form onSubmit={submitHandler}>
+          <form onSubmit={(ev) => submitHandler(ev)}>
             <img src={image} />
             <input type='file' ref={el}/>
             <label>Username:</label>

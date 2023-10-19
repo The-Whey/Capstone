@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Link, HashRouter, Routes, Route, useParams } from 'react-router-dom';
+import { Link, HashRouter, Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Products from './Products';
 import Product from './Product';
@@ -31,6 +31,8 @@ const App = ()=> {
   const [addresses, setAddresses] = useState([]);
   const HEREapikey = window.HEREapi
   const {term} = useParams();
+  const navigate = useNavigate()
+  const {pathname} = useLocation()
 
   const getHeaders = ()=> {
     return {
@@ -39,7 +41,14 @@ const App = ()=> {
       }
     };
   };
-  
+  const moveAdmin = ()=>{
+    console.log('admin')
+    navigate("/admin")
+  }
+  const moveProfile = ()=>{
+    console.log('prpofile')
+    navigate("/profile")
+  }
   const attemptLoginWithToken = async()=> {
     await api.attemptLoginWithToken(setAuth);
   }
@@ -179,87 +188,78 @@ const App = ()=> {
   const logout = ()=> {
     api.logout(setAuth);
   }
-
+  const getUserImage = (userId) => {
+    const user = users.find((user) => user.id === userId);
+    return user ? user.image : null;
+  };
   return (
-    <div>
+    <div className='section'>
       {
         auth.id ? (
           <>
+
+
             <nav>
-              <Link to='/products'>Products ({ products.length })</Link>
-              <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
-              <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/profile'>Profile</Link>
-              <Link to='/wishlist'>Wishlist ({bookmarks.length})</Link>
-              {auth.is_admin ? <Link to='/admin'>Admin</Link> : null}
-              <span>
-                Welcome { auth.username }!
-                <button onClick={ logout }>Logout</button>
-              </span>
+              <Link to='/products'className={pathname === '/products' ? 'selected' : 'link-style'}>Products ({ products.length })</Link>
+              <Link to='/orders' className={pathname === '/orders' ? 'selected' : 'link-style'}>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
+              <Link to='/cart' className={pathname === '/cart' ? 'selected' : 'link-style'}>Cart ({ cartCount })</Link>
+              <Link to='/wishlist' className={pathname === '/wishlist' ? 'selected' : 'link-style'}>Wishlist ({bookmarks.length})</Link>
             </nav>
-            <Routes>
-            <Route path='/' element={
-                <Products
-                tags={tags}
-                tagsList={tagsList}
-                auth = { auth }
-                products={ products }
-                cartItems = { cartItems }
-                createLineItem = { createLineItem }
-                updateLineItem = { updateLineItem }
-                bookmarks = {bookmarks}
-                createBookmark= { createBookmark}
-                removeBookmark={ removeBookmark}
-                reviews={reviews}
-            />}/>
 
-
-              <Route path='/products/:id' element={
-                <Product 
-                  tags={tags}
-                  setTags = {setTags}
-                  setTagsList = {setTagsList}
-                  tagsList = {tagsList}
-                  products={products}
-                  setProducts={setProducts} 
-                  reviews={reviews}
-                  setReviews={setReviews}
-                  auth={auth} 
-                  cartItems={cartItems} 
-                  createLineItem={createLineItem} 
-                  updateLineItem={updateLineItem}
-                  users={users}
-                />}/>
-
-              <Route path='/admin' element={
-                <Admin
-                  users={users}
-                  setUsers={setUsers}
-                  products={products}
-                  setProducts={setProducts}
-                  orders={orders}
-                  allOrders={allOrders}
-                  setAllOrders = {setAllOrders}
-                  allLineItems={allLineItems}
-                  auth={auth}
-                  addresses={addresses} 
-                />}/>
-
-              <Route path='/products/:id/edit' element={
-                <Edit 
-                  products={products}
-                  setProducts={setProducts} 
-                />}/>
-
-              <Route path='/profile' element={
-                <Profile
-                  auth={auth}
-                  users={users}
-                  addresses={addresses} 
-                  setAddresses={setAddresses}
-                />}/>
-
-              <Route path='/products' element={
+            <div className='content'>
+              <div className='animation'>
+                <div class="leaf">
+                   <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+                  <div class="leaf leaf1">
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                    <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                    <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                    <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+                  <div class="leaf leaf2">
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div><img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px" ></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                   <div> <img src="https://www.pngmart.com/files/7/Drum-Table-PNG-File.png" height="75px" width="75px"></img></div>
+                   <div>   <img src="https://www.pngmart.com/files/16/Piano-Instrument-PNG-Image.png" height="75px" width="75px"></img></div>
+                   <div>  <img src="https://www.pngmart.com/files/15/Yellow-Vector-Acoustic-Guitar-PNG.png" height="75px" width="75px"></img></div>
+                  </div>
+                  <div className='dropdown'>
+                  <button className='dropbtn button'><img
+                    src={getUserImage(auth.id)}
+                    alt="User Profile"
+                    width="40"
+                    height="40"
+                  /></button>
+                  <div className="dropdown-content">
+                  <a><button onClick={moveProfile}>{auth.username}</button></a>
+                  {auth.is_admin ? <a><button onClick={moveAdmin}>Admin</button></a> : null}
+                  <a><button onClick={ logout }>Logout</button></a>
+                  </div>
+                  </div>
+              </div>
+              <Routes>
+              <Route path='/' element={
                 <Products
                   tags={tags}
                   tagsList={tagsList}
@@ -272,61 +272,112 @@ const App = ()=> {
                   createBookmark= { createBookmark}
                   removeBookmark={ removeBookmark}
                   reviews={reviews}
-              />}/>
-
-              <Route path='/products/search/:term' element={
-                <Products
-                  tags={tags}
-                  tagsList={tagsList}
-                  auth = { auth }
-                  products={ products }
-                  cartItems = { cartItems }
-                  createLineItem = { createLineItem }
-                  updateLineItem = { updateLineItem }
-                  bookmarks = {bookmarks}
-                  createBookmark= { createBookmark}
-                  removeBookmark={ removeBookmark}
-                  reviews={reviews}
-              />}/>
-
-              <Route path='/cart' element={
-                <Cart
-                  cart = { cart }
-                  lineItems = { lineItems }
-                  products = { products }
-                  updateOrder = { updateOrder }
-                  removeFromCart = { removeFromCart }
-                  updateLineItem = { updateLineItem }
-                  setAddresses = {setAddresses}
-                  addresses = {addresses}
-                  auth={auth}
-              />}/>
-
-              <Route path='/orders' element={
-                <Orders
-                  orders = { orders }
-                  setorders={ setOrders}
-                  products = { products }
-                  lineItems = { lineItems }
-                  auth={auth}
-                  addresses={addresses}
-                  users={users}
-              />}/>
-
-              <Route path='/wishlist' element={
-                <Wishlist
-                  products={products}
-                  bookmarks={bookmarks}
-                  cartItems={cartItems}
-                  createLineItem={createLineItem}
-                  createBookmark= { createBookmark}
-                  removeBookmark={ removeBookmark}
+                />}/>
+                <Route path='/products/:id' element={
+                  <Product
+                    tags={tags}
+                    setTags = {setTags}
+                    setTagsList = {setTagsList}
+                    tagsList = {tagsList}
+                    products={products}
+                    setProducts={setProducts}
+                    reviews={reviews}
+                    setReviews={setReviews}
+                    auth={auth}
+                    cartItems={cartItems}
+                    createLineItem={createLineItem}
+                    updateLineItem={updateLineItem}
+                    users={users}
                   />}/>
-
-            </Routes>
-            <main>
-              <Map apikey={HEREapikey} />
-            </main>
+                <Route path='/admin' element={
+                  <Admin
+                    users={users}
+                    setUsers={setUsers}
+                    products={products}
+                    setProducts={setProducts}
+                    orders={orders}
+                    allOrders={allOrders}
+                    setAllOrders = {setAllOrders}
+                    allLineItems={allLineItems}
+                    auth={auth}
+                    addresses={addresses}
+                  />}/>
+                <Route path='/products/:id/edit' element={
+                  <Edit
+                    products={products}
+                    setProducts={setProducts}
+                  />}/>
+                <Route path='/profile' element={
+                  <Profile
+                    auth={auth}
+                    users={users}
+                    addresses={addresses}
+                    setAddresses={setAddresses}
+                    setUsers={setUsers}
+                  />}/>
+                <Route path='/products' element={
+                  <Products
+                    tags={tags}
+                    tagsList={tagsList}
+                    auth = { auth }
+                    products={ products }
+                    cartItems = { cartItems }
+                    createLineItem = { createLineItem }
+                    updateLineItem = { updateLineItem }
+                    bookmarks = {bookmarks}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                    reviews={reviews}
+                />}/>
+                <Route path='/products/search/:term' element={
+                  <Products
+                    tags={tags}
+                    tagsList={tagsList}
+                    auth = { auth }
+                    products={ products }
+                    cartItems = { cartItems }
+                    createLineItem = { createLineItem }
+                    updateLineItem = { updateLineItem }
+                    bookmarks = {bookmarks}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                    reviews={reviews}
+                />}/>
+                <Route path='/cart' element={
+                  <Cart
+                    cart = { cart }
+                    lineItems = { lineItems }
+                    products = { products }
+                    updateOrder = { updateOrder }
+                    removeFromCart = { removeFromCart }
+                    updateLineItem = { updateLineItem }
+                    setAddresses = {setAddresses}
+                    addresses = {addresses}
+                    auth={auth}
+                />}/>
+                <Route path='/orders' element={
+                  <Orders
+                    orders = { orders }
+                    setorders={ setOrders}
+                    products = { products }
+                    lineItems = { lineItems }
+                    auth={auth}
+                    addresses={addresses}
+                    users={users}
+                />}/>
+                <Route path='/wishlist' element={
+                  <Wishlist
+                    products={products}
+                    bookmarks={bookmarks}
+                    cartItems={cartItems}
+                    createLineItem={createLineItem}
+                    createBookmark= { createBookmark}
+                    removeBookmark={ removeBookmark}
+                    />}/>
+              </Routes>
+            </div>
+            <Map apikey={HEREapikey} />
+                
             </>
         ):(
           <div>

@@ -1,3 +1,9 @@
+/* .animation {
+  flex: 1;
+}
+Routes {
+  flex: 3;
+} */
 
 h2 {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
@@ -20,6 +26,7 @@ form > * {
 }
 nav{
   display: flex;
+  max-width: 90%;
 }
 nav a {
   margin-right: 10px;
@@ -27,19 +34,6 @@ nav a {
   color: rgb(252, 238, 222); /* changed to cream to match logo */
   transition: color 0.3s;
   font-weight: bold;
-}
-
-.product-link {
-  color: rgb(114, 183, 217); 
-  text-decoration: underline; 
-}
-
-.product-link:hover {
-  color: rgb(208, 203, 203); 
-}
-
-.product-link:visited {
-  color: rgb(70, 148, 175); 
 }
 
 button {
@@ -72,60 +66,86 @@ nav a:hover {
 .uniqueTags a:hover {
   color: rgb(114, 183, 217);
 }
+
 body {
   font-family: verdana;
   background-color: rgb(114, 183, 217);
   margin:0;
   padding:0;
   overflow:auto;
+  color: rgb(252, 238, 222);
   }
-  section{
+
+.section{
   height:100% auto;
   width:100vw;
   position:absolute ;  
   background:radial-gradient(#333,#000);
   z-index: 0;
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   }
-  .leaf div:nth-child(1) {
-  left: 20%;
-  animation: fall 15s linear infinite;
-  animation-delay: -2s;
+
+.leaf div:nth-child(1) {
+  left: 0%;
+  animation: fall 18s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(2) {
-  left: 70%;
-  animation: fall 15s linear infinite;
-  animation-delay: -4s;
+  left: 10%;
+  animation: fall 20s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(3) {
-  left: 10%;
-  animation: fall 20s linear infinite;
-  animation-delay: -7s;
+  left: 20%;
+  animation: fall 22s linear infinite;
+  animation-delay: -1s;
 }
 
 .leaf div:nth-child(4) {
-  left: 50%;
-  animation: fall 18s linear infinite;
-  animation-delay: -5s;
+  left: 30%;
+  animation: fall 20s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(5) {
-  left: 85%;
-  animation: fall 14s linear infinite;
-  animation-delay: -5s;
+  left: 40%;
+  animation: fall 22s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(6) {
-  left: 15%;
-  animation: fall 16s linear infinite;
-  animation-delay: -10s;
+  left: 50%;
+  animation: fall 24s linear infinite;
+  animation-delay: -2s;
 }
 
 .leaf div:nth-child(7) {
-  left: 90%;
-  animation: fall 15s linear infinite;
-  animation-delay: -4s;
+  left: 60%;
+  animation: fall 22s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(8) {
+  left: 70%;
+  animation: fall 24s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(9) {
+  left: 80%;
+  animation: fall 26s linear infinite;
+  animation-delay: -3s;
+}
+
+.leaf div:nth-child(10) {
+  left: 95%;
+  animation: fall 24s linear infinite;
+  animation-delay: -3s;
 }
 
 @keyframes fall {
@@ -153,10 +173,12 @@ body {
   }
 }
 
+
 .leaf div {
   position: absolute;
   display: block;
   z-index: -1;
+  
 }
 
 .geoapify-autocomplete-input {
@@ -173,7 +195,7 @@ body {
 }
 
 .geoapify-autocomplete-items {
-  position: absolute;
+  position: fixed;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   background-color: #fff;
@@ -247,4 +269,62 @@ body {
   margin-left: 10px;
   font-size: small;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.dropdown {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.dropdown-content {
+  right: 0;
+  display: none;
+  position: absolute;
+  background-color: rgb(114, 183, 217);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 10px 20px;
+  background-color: rgb(114, 183, 217); 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown-content a:hover {
+  background-color: rgb(114, 183, 217);
+  align-items: left;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  margin-top: 60px;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: rgb(114, 183, 217);
+}
+.dropbtn {
+  float: right;
+}
+
+.link-style {
+  color: rgb(114, 183, 217); 
+  text-decoration: underline; 
+}
+
+.link-style:hover {
+  color: rgb(208, 203, 203); 
+}
+
+.link-style:visited {
+  color: rgb(70, 148, 175); 
 }
