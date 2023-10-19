@@ -1,3 +1,6 @@
+# deployed site
+https://harmonic-harbor.onrender.com/
+
 # the store 
 
 - npm config set @here:registry https://repo.platform.here.com/artifactory/api/npm/maps-api-for-javascript/
