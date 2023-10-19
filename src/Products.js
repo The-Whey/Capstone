@@ -20,7 +20,8 @@ const Container = styled.div`
 
 const ProductWrapper = styled.div`
   display: flex;
-  margin: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 const ProductImage = styled.img`
@@ -31,21 +32,21 @@ const ProductImage = styled.img`
 const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-around;
   background-color: rgb(252, 238, 222);
   width 300px;
-  flex-grow: 0;
   padding: 20px;
 `;
 
 const ProductDescription = styled.div`
   color: rgb(114, 183, 217);
-  font-family: verdana;
-  overflow: auto;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  flex: 1
+  // font-family: verdana;
+  // overflow: auto;
+  // text-align: left;
+  // display: flex;
+  // align-items: center;
+  // flex: 1
+  // width: 200px;
 `;
 
 const Price = styled.h4`
@@ -97,10 +98,12 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
       <div className='products'>
         <h1 className="center-title">Harmonic Harbor</h1>
         
-          <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
-          <div className='tags'>
-            {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
-            {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
+          <div className='searchtags'>
+            <div className='searchBar'><input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
+            <div className='tags'>
+              {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
+              {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
+            </div>
           </div>
         
         <Container>
@@ -133,8 +136,10 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
 
       <div className='products'>
         <h1 className="center-title">Harmonic Harbor</h1>
-        <input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/>
-        <div className='tags'>{tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}</div>
+        <div className='searchtags'>
+        <div className='searchBar'><input className='search' placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
+          <div className='tags'>{tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}</div>
+        </div>
         <Container>
         {products.filter(product => !term || product.name.toLowerCase().indexOf(term.toLowerCase()) !== -1).map(product => {
           const cartItem = cartItems.find(lineItem => lineItem.product_id === product.id);
@@ -152,8 +157,8 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
                 <Rating>{avgRating ? avgRating > 1  ? `${avgRating.toFixed(1)} stars` : `${avgRating.toFixed(1)} star` : 'no reviews'}</Rating>
                 <ProductDescription>{product.description}</ProductDescription>
                 <div className='cartButtons'>
-                {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null }
-                {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
+                  {auth.id ? <Bookmark product={ product } bookmark = { bookmarks.find(bookmark => bookmark.product_id === product.id)} createBookmark={  createBookmark } removeBookmark={ removeBookmark }/>: null }
+                  {auth.id ? (cartItem ? <button onClick={ ()=> navigate('/cart')}>View In Cart</button>: <button onClick={ ()=> createLineItem(product)}>Add to Cart</button>): null}
                 </div>
                 </ProductDetails>
                </ProductWrapper>

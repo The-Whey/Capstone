@@ -26,21 +26,24 @@ const Login = ({ login })=> {
   }
 
   return (
-    <form onSubmit={ _login }>
-      <input
-        placeholder='username'
-        value={ username }
-        onChange={ ev => setUsername(ev.target.value)}
-      />
-      <input
-        type='password'
-        placeholder='password'
-        value={ password }
-        onChange={ ev => setPassword(ev.target.value)}
-      />
-      <button disabled={!username || !password}>Login</button>
-      <button type='button' onClick={ev => newUser(ev)} disabled={!username || !password}>Create New User</button>
-    </form>
+    <div className='topform'>
+      <div></div>
+      <form className='login' onSubmit={ _login }>
+        <input
+          placeholder='username'
+          value={ username }
+          onChange={ ev => setUsername(ev.target.value)}
+        />
+        <input
+          type='password'
+          placeholder='password'
+          value={ password }
+          onChange={ ev => setPassword(ev.target.value)}
+        />
+        <button disabled={!username || !password}>Login</button>
+        <button type='button' onClick={ev => newUser(ev)} disabled={!username || !password}>Create New User</button>
+      </form>
+    </div>
   );
 }
 
