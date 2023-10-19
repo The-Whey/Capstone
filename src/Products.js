@@ -99,7 +99,7 @@ const Products = ({ products, cartItems, createLineItem, auth, bookmarks, create
         <h1 className="center-title">Harmonic Harbor</h1>
         
           <div className='searchtags'>
-            <div className='searchBar'><input placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
+            <div className='searchBar'><input className='search' placeholder="search by name" value={term||''} onChange={ev => navigate(ev.target.value ? `/products/search/${ev.target.value.toLowerCase()}`: `/products`)}/></div>
             <div className='tags'>
               {tagsList ? tagsList.filter(tag => tags.find(obj => obj.tag_id === tag.id)).map(obj => <button className='tag-button' onClick={() => setTagId(obj.id)} key={obj.id}>{obj.tag}</button>): null}
               {tagsList ? <button onClick={() => setTagId('')}>Show All</button> : null}
