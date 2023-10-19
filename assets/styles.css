@@ -48,6 +48,7 @@ form {
 form > * {
   margin: 0.5rem;
 }
+
 nav{
   display: flex;
   max-width: 100%;
