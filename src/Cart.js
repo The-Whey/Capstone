@@ -91,7 +91,7 @@ const Cart = ({ updateOrder, removeFromCart, lineItems, cart, products, updateLi
       </div>
 
       <br/>
-      <button disabled={data === null || !Object.keys(data)} onClick={() => submitOrder()}>Submit Order</button>
+      <button disabled={data === null || !Object.keys(data).length} onClick={() => submitOrder()}>Submit Order</button>
       <button onClick={() => setAddressMode(false)}>Cancel</button>
     </div>
   ): (

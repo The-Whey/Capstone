@@ -2,7 +2,9 @@
 https://harmonic-harbor.onrender.com/
 
 # the store 
+https://harmonic-harbor.onrender.com
 
+# Deploy instructions
 - npm config set @here:registry https://repo.platform.here.com/artifactory/api/npm/maps-api-for-javascript/
 - npm install
 - modify connection string
@@ -10,6 +12,7 @@ https://harmonic-harbor.onrender.com/
 - npm run start:dev
 - npm run start:dev:sync (builds tables and syncs data)
 - npm run build:dev
+
 
 # features
 
