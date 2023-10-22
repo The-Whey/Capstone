@@ -30,11 +30,11 @@ const ProductImage = styled.img`
 `;
 
 const ProductDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-around;
   background-color: rgb(252, 238, 222);
-  width 300px;
+  width 100px;
   padding: 20px;
 `;
 
