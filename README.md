@@ -2,19 +2,6 @@
 
 https://harmonic-harbor.onrender.com/
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-
 ## Introduction
 
 Harmonic Harbor is a full-stack E-commerce website built using the PERN (PostgreSQL, Express, React, Node.js) stack. This platform provides a seamless shopping experience with a variety of features for both regular users and administrators.
