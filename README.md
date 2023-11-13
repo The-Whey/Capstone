@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Harmonic Harbor is a full-stack E-commerce website built using the PERN (PostgreSQL, Express, React, Node.js) stack. This platform provides a seamless shopping experience with a variety of features for both regular users and administrators.
+Harmonic Harbor is a full-stack E-commerce website built using the PERN (PostgreSQL, Express, React, Node.js) stack. This platform provides a seamless shopping experience with a variety of features for both regular users and administrators. This was created as a 2 week sprint project using Agile methodology.
 
 Visit the deployed website: [Harmonic Harbor](https://harmonic-harbor.onrender.com/)
 
@@ -29,7 +29,8 @@ Visit the deployed website: [Harmonic Harbor](https://harmonic-harbor.onrender.c
 
 5. **Order Management:**
    - Users can add a shipping address to an order.
-   - Google Places integration for entering an address.
+   - HERE Api integration for auto completing an address.
+   - Users can save an address for future purchases.
    - VIP users have a special indication.
 
 6. **Product Reviews:**
